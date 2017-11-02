@@ -1,13 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import Login from  './src/components/Login/Login';
 export default class App extends React.Component {
   render() {
-    return (
+;    return (
       <View style={styles.container}>
-        <Text>REEEEEEEEEEEEE</Text>
-        <Text>REEEEEEEEEEEEEEEEEEEEEEE</Text>
-        <Text>REEEEEEEEEEEEEEEEEEEEEEEEEEEEEXD</Text>
+        <Text>Log in to Karavaan</Text>
       </View>
     );
   }
