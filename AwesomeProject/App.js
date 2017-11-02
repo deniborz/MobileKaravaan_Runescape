@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Alert, StyleSheet, Text, View, TextInput } from 'react-native';
 
-import Login from  './src/Components/Login/Login';
-import Vrienden from './src/Components/Vrienden/Vrienden';
+import Login from './src/Components/Login/Login';
+
 export default class App extends React.Component {
     constructor(props){
         super(props);

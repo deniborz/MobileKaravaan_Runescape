@@ -1,12 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 
-export default class Vrienden extends React.Component {
+import Vrienden from '../Vrienden/Vrienden';
+
+export default class Settings extends React.Component {
+  
   render() {
     return (
-      <View style={styles.container}>
-          <Text>vriendenpagina</Text>
-      </View>
+      <View></View>
     );
   }
 }

@@ -1,11 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 
-import Vrienden from './src/Components/Vrienden/Vrienden';
+import Vrienden from '../Vrienden/Vrienden';
+
 export default class Login extends React.Component {
+  _onPressButton() {
+    return(
+    <Vrienden/>
+    );
+  }
   render() {
     return (
-       <text>dfff</text>
+      <View style={styles.container}>
+          <Text>Log in to Karavaan</Text>
+          
+          <Button onPress={this._onPressButton} title ="Log In" color = "#454"> </Button>
+      </View>
     );
   }
 }
