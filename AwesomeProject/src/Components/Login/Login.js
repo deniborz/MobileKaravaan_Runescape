@@ -5,9 +5,7 @@ export default class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>REEEEEEEEEEEEE</Text>
-        <Text>REEEEEEEEEEEEEEEEEEEEEEE</Text>
-        <Text>REEEEEEEEEEEEEEEEEEEEEEEEEEEEEXD</Text>
+          <Text>Log in to Karavaan</Text>
       </View>
     );
   }
