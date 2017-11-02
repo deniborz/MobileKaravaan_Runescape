@@ -1,13 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 
-export default class Login extends React.Component {
-
+export default class Vrienden extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-          <Text>Log in to Karavaan</Text>
-          
+          <Text>vriendenpagina</Text>
       </View>
     );
   }
