@@ -1,16 +1,9 @@
 import React from 'react';
-import { Button, Alert, StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-import Login from './src/Components/Login/Login';
+import Login from  './src/Components/Login/Login';
 
 export default class App extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {text: 'Lel'};
-    }
-    _onPressButton() {
-    Alert.alert('You tapped the button!')
-  }
   render() {
 ;    return (
       <Login />
@@ -20,19 +13,9 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      backgroundColor: 'lightblue',
-    
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  title: {
-      fontSize: 35,
-      textAlign: 'center',
-      marginTop: 25,
-  },
-  login: {
-      padding: 15,
-      marginTop: 50,
-
-  },
-
 });
