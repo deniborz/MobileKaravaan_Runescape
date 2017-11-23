@@ -7,7 +7,7 @@ export default class Groepen extends React.Component {
   
   render() {
     return (
-      <View></View>
+      <View style={styles.container}></View>
     );
   }
 }
