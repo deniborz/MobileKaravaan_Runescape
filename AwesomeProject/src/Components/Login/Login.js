@@ -1,38 +1,26 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, TextInput, KeyboardAvoidingView } from 'react-native';
 
 import Vrienden from '../Vrienden/Vrienden';
 import Layout from '../Layout/Layout';
+import LoginForm from './LoginForm';
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  _onPressButton() {
-    Alert.alert('KAK');
-  }
-  _onPressButton2() {
-    <Vrienden />
-  }
   render() {
     return (
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <View style={styles.container}>
-          <Text>Log in to Karavaan</Text>
-          <Text>Username</Text>
-          <TextInput
-        style={{height: 40, width: 300, borderColor: 'gray', borderWidth: 1}}
-        onChangeText={(text) => this.setState({text})}
-        
-      /> 
-      <Text>Password</Text>
-      <TextInput
-        style={{height: 40, width: 300, borderColor: 'gray', borderWidth: 1}}
-        onChangeText={(text) => this.setState({text})}
-        
-      />
-          <Button onPress={this._onPressButton} title ="Log In" color = "#454"> </Button>
-          <Button onPress={this._onPressButton2} title ="Vrienden" color = "#454"> </Button>
+      <View style={styles.logoContainer}>
+      <Text style={styles.Title}>KARAVAAN</Text>
       </View>
+         <LoginForm/>
+      </View>
+</KeyboardAvoidingView>
+      
+
     );
   }
 }
@@ -40,8 +28,14 @@ export default class Login extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#658',
+  },
+  logoContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    flexGrow: 1
   },
+  Title: {
+    fontSize: 50
+  }
 });
