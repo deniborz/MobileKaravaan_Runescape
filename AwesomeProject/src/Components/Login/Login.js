@@ -53,7 +53,7 @@ _loadInitialState = async () => {
         underlineColorAndroid="transparent"
         onChangeText={ (password) => this.setState({password})}
       /> 
-      <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("Groep", {})}>
+      <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("Overzicht", {})}>
           <Text style={styles.buttonText}>LOGIN</Text></TouchableOpacity>
           </View>
       </View>
