@@ -1,14 +1,32 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, TextInput, KeyboardAvoidingView, TouchableOpacity, AsyncStorage } from 'react-native';
 
-import Vrienden from '../Vrienden/Vrienden';
-import Layout from '../Layout/Layout';
 import {StackNavigator} from 'react-navigation';
 const util = require('util');
 export default class Login extends React.Component {
+
+constructor(props){
+  super(props);
+  this.state; {
+    username: '';
+    password: '';
+  }
+}
+componentDidMount() {
+  this._loadInitialState().done();
+}
+_loadInitialState = async () => {
+  var value = await AsyncStorage.getItem('user');
+  if(value!==null){
+    this.props.navigation.navigate('Second');
+  }
+}
+
   static navigationOptions= {
     title: 'Login',
 };
+
+
   render() {
     var{navigate} = this.props.navigation;
     return (
@@ -23,6 +41,7 @@ export default class Login extends React.Component {
         style={styles.input}
         onSubmitEditing={() => this.passwordInput.focus()}
         underlineColorAndroid="transparent"
+        onChangeText={ (username) => this.setState({username})}
       /> 
       <TextInput 
       placeholder="Password"
@@ -31,8 +50,9 @@ export default class Login extends React.Component {
         style={styles.input}
         ref={(input) => this.passwordInput = input}
         underlineColorAndroid="transparent"
+        onChangeText={ (password) => this.setState({password})}
       /> 
-      <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("Second")}>
+      <TouchableOpacity style={styles.buttonContainer} onPress={this.login}>
           <Text style={styles.buttonText}>LOGIN</Text></TouchableOpacity>
           </View>
       </View>
@@ -40,6 +60,31 @@ export default class Login extends React.Component {
       
 
     );
+  }
+  login = () => {
+    alert(this.state.username);
+    fetch('exp://192.168.0.244:19000/users', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json', 
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password,
+      })
+    })
+    .then((response) => response.json())
+    .then((res) => {
+      if(res.succes === true){
+        AsyncStorage.setItem('user', res.user);
+        this.props.navigation.navigate('Second');
+      }
+      else {
+        alert(res.message);
+      }
+    })
+    .done();
   }
 }
 
