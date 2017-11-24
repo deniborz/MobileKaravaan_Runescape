@@ -5,7 +5,7 @@ import {StackNavigator} from 'react-navigation';
 const util = require('util');
 export default class Login extends React.Component {
 
-constructor(props){
+/*constructor(props){
   super(props);
   this.state; {
     username: '';
@@ -20,7 +20,7 @@ _loadInitialState = async () => {
   if(value!==null){
     this.props.navigation.navigate('Second');
   }
-}
+}*/
 
   static navigationOptions= {
     title: 'Login',
@@ -52,7 +52,7 @@ _loadInitialState = async () => {
         underlineColorAndroid="transparent"
         onChangeText={ (password) => this.setState({password})}
       /> 
-      <TouchableOpacity style={styles.buttonContainer} onPress={this.login}>
+      <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("Groep", {})}>
           <Text style={styles.buttonText}>LOGIN</Text></TouchableOpacity>
           </View>
       </View>
@@ -62,7 +62,8 @@ _loadInitialState = async () => {
     );
   }
   login = () => {
-    alert(this.state.username);
+    
+    /*alert(this.state.username);
     fetch('exp://192.168.0.244:19000/users', {
       method: 'POST',
       headers: {
@@ -85,9 +86,9 @@ _loadInitialState = async () => {
       }
     })
     .done();
-  }
+  }*/
 }
-
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
