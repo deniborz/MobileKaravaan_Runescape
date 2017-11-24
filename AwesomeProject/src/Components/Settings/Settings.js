@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 import Vrienden from '../Vrienden/Vrienden';
 
 export default class Settings extends React.Component {
-  
+
   render() {
     return (
       <View></View>

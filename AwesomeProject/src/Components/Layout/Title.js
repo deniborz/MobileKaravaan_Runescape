@@ -11,5 +11,5 @@ export default class Title extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  
+
 });
