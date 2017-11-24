@@ -8,14 +8,18 @@ export default class Groepen extends React.Component {
   static navigationOptions= {
     title: 'Groepen',
 };
+
+
   render() {
+    var{navigate} = this.props.navigation;
     return (
       <View style={styles.container}>
+      <Text style= {styles.title}> Uw Groepen</Text>
           <TouchableOpacity style={styles.groepen}>
               <Text style={styles.groeptext}>GROEP 1</Text>
           </TouchableOpacity>
       
-          <TouchableOpacity style={styles.addGroep}>
+          <TouchableOpacity style={styles.addGroep} onPress={() => navigate("NewGroep", {})}>
               <Text style={styles.addGroepText}>New Group</Text>
           </TouchableOpacity>
       </View>
@@ -35,5 +39,11 @@ const styles = StyleSheet.create({
   },
   groeptext: {
     paddingHorizontal: 10
+  },
+  addGroep:{
+    backgroundColor: '#FDFEFE'
+  },
+  title: {
+    fontSize: 20
   }
 });

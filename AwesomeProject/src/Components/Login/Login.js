@@ -12,6 +12,7 @@ export default class Login extends React.Component {
     password: '';
   }
 }
+
 componentDidMount() {
   this._loadInitialState().done();
 }
