@@ -4,12 +4,21 @@ import { Button, Alert, StyleSheet, Text, View, TextInput } from 'react-native';
 import Login from './src/Components/Login/Login';
 import Groepen from './src/Components/Groepen/Groepen';
 import NewGroep from './src/Components/Groepen/NewGroep';
-import {StackNavigator } from 'react-navigation';
+import Vrienden from './src/Components/Vrienden/Vrienden';
+import AddVriend from './src/Components/Vrienden/AddVriend';
+import Overzicht from './src/Components/Overzicht/Overzicht';
+import Settings from './src/Components/Settings/Settings';
+
+import { StackNavigator } from 'react-navigation';
 
 const Navigation = StackNavigator({
-    Login: {screen: Groepen},
-    Groep:{screen: Login}, 
-    NewGroep:{screen: NewGroep},
+  Login: { screen: Login },
+  Groep: { screen: Groepen },
+  NewGroep: { screen: NewGroep },
+  Vrienden: { screen: Vrienden },
+  AddVriend: { screen: AddVriend },
+  Overzicht: { screen: Overzicht },
+  Instellingen: { screen: Settings}
 })
 export default Navigation;
 
