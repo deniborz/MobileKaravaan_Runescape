@@ -7,7 +7,10 @@ export default class NewGroep extends React.Component {
   static navigationOptions= {
     title: 'NewGroep',
 };
-
+constructor(props){
+  super(props);
+  this.state= {groupname: 'lel'};
+}
   render() {
     return (
       <View style={styles.container}>
@@ -17,8 +20,10 @@ export default class NewGroep extends React.Component {
         underlineColorAndroid="transparent"
         onChangeText={ (groupname) => this.setState({groupname})}
       /> 
-
-    
+       
+      <View>
+        <Text> groupname: {this.state.groupname}</Text>
+        </View>
       </View>
     );
   }

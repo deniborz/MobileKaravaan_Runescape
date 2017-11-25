@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, ScrollView } from 'react-native';
 
 import Vrienden from '../Vrienden/Vrienden';
 import {StackNavigator} from 'react-navigation';
@@ -10,18 +10,24 @@ export default class Groepen extends React.Component {
 };
 
 
+
   render() {
+
+   
+    
     var{navigate} = this.props.navigation;
     return (
       <View style={styles.container}>
       <Text style= {styles.title}> Uw Groepen</Text>
+      <ScrollView style={styles.scrollContainer}>
           <TouchableOpacity style={styles.groepen}>
               <Text style={styles.groeptext}>GROEP 1</Text>
           </TouchableOpacity>
-      
-          <TouchableOpacity style={styles.addGroep} onPress={() => navigate("NewGroep", {})}>
-              <Text style={styles.addGroepText}>New Group</Text>
-          </TouchableOpacity>
+          </ScrollView>
+          <TouchableOpacity style={styles.addGroup} onPress={() => navigate("NewGroep", {})}>
+                    <Text style={styles.addGroupText}>Voeg een nieuwe groep toe </Text>
+                </TouchableOpacity>
+                
       </View>
     );
   }
@@ -45,5 +51,18 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20
-  }
+  },
+  addGroup: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    height: 50,
+    width: '100%',
+    paddingVertical: 10,
+    backgroundColor: '#a3a3c2',
+},
+addGroupText: {
+    textAlign: 'center',
+    
+}
 });
