@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
     width: '80%',
     backgroundColor:'#a3a3c2',
     paddingVertical: 10,
-    margin: 20
+    margin: 20,
+    borderRadius: 5
   },
   navigationKnopText: {
     textAlign: 'center',

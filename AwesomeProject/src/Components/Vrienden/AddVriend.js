@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
 import { StackNavigator, NavigationActions } from 'react-navigation';
 const util = require('util');
-const backAction = NavigationActions.back({key: 'Profile'});
+const backAction = NavigationActions.back({key: 'Vrienden'});
 
 export default class AddVriend extends React.Component {
     static navigationOptions = {
@@ -11,7 +11,7 @@ export default class AddVriend extends React.Component {
     };
 
     addFriend() {
-        alert('Vriendje toevoegen xxx');
+        alert('Vriendje toevoegen');
         //this.props.navigation.dispatch(backAction);
     } 
 
