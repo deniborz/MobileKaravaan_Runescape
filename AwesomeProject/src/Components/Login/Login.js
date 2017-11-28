@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TextInput, KeyboardAvoidingView, TouchableOpacity, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
 const util = require('util');
@@ -38,7 +38,7 @@ export default class Login extends React.Component {
           </View>
           <View style={styles.containerForm}>
             <TextInput placeholder="Username"
-              placeholderTextColor='black'
+              placeholderTextColor='#3d7ca9'
               style={styles.input}
               onSubmitEditing={() => this.passwordInput.focus()}
               underlineColorAndroid="transparent"
@@ -46,7 +46,7 @@ export default class Login extends React.Component {
             />
             <TextInput
               placeholder="Password"
-              placeholderTextColor='black'
+              placeholderTextColor='#3d7ca9'
               secureTextEntry
               style={styles.input}
               ref={(input) => this.passwordInput = input}

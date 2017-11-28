@@ -8,30 +8,35 @@ export default class Settings extends React.Component {
         title: 'RegisterUser',
     };
     render() {
+        var { navigate } = this.props.navigation;
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
-                <View style={styles.container}>
-
+               
                     <Text style={styles.Title}>KARAVAAN</Text>
 
                     <Text style={styles.labels}>Username</Text>
                     <TextInput style={styles.input}
                         placeholder="Username"
-                        placeholderTextColor='black' />
+                        placeholderTextColor='#3d7ca9' />
 
                     <Text style={styles.labels}>Password</Text>
                     <TextInput style={styles.input}
                         placeholder="Password"
-                        placeholderTextColor='black' />
+                        placeholderTextColor='#3d7ca9' />
+
+                        <Text style={styles.labels}>Naam (Voor en achternaam)</Text>
+                    <TextInput style={styles.input}
+                        placeholder="Naam"
+                        placeholderTextColor='#3d7ca9' />
 
                     <Text style={styles.labels}>Email (Optioneel)</Text>
                     <TextInput style={styles.input}
                         placeholder="Email"
-                        placeholderTextColor='black' />
+                        placeholderTextColor='#3d7ca9' />
 
                     <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("Login", {})}>
                         <Text style={styles.buttonText}>REGISTER</Text></TouchableOpacity>
-                </View>
+                
             </KeyboardAvoidingView>
         );
     }
@@ -42,7 +47,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#659ec7',
     },
-
     Title: {
         textAlign: 'center',
         marginTop: 25,
