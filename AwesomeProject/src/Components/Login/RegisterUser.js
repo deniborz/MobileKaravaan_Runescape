@@ -6,6 +6,7 @@ import Vrienden from '../Vrienden/Vrienden';
 export default class Settings extends React.Component {
     static navigationOptions = {
         title: 'RegisterUser',
+        headerStyle: {marginTop: -100}
     };
     render() {
         var { navigate } = this.props.navigation;
@@ -37,9 +38,11 @@ export default class Settings extends React.Component {
                         placeholderTextColor='#3d7ca9'
                         underlineColorAndroid="transparent"
                         ref={(input) => this.emailInput = input} />
+                        
+                    
 
                     
-                    <View style={{ height: 60 }} />
+                    
 
                 </KeyboardAvoidingView>
 
@@ -58,7 +61,7 @@ const styles = StyleSheet.create({
     },
     Title: {
         textAlign: 'center',
-        marginTop: 25,
+        marginTop: 100,
         marginBottom: 25,
         fontSize: 50
     },

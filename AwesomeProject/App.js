@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Alert, StyleSheet, Text, View, TextInput } from 'react-native';
 
+
 import Login from './src/Components/Login/Login';
 import Groepen from './src/Components/Groepen/Groepen';
 import NewGroep from './src/Components/Groepen/NewGroep';
@@ -10,6 +11,7 @@ import Overzicht from './src/Components/Overzicht/Overzicht';
 import Settings from './src/Components/Settings/Settings';
 import GroepPage from './src/Components/Groepen/GroepPage';
 import RegisterUser from './src/Components/Login/RegisterUser';
+import VeranderCurrency from './src/Components/Settings/VeranderCurrency';
 
 import { StackNavigator } from 'react-navigation';
 
@@ -22,7 +24,8 @@ const Navigation = StackNavigator({
   Overzicht: { screen: Overzicht },
   Instellingen: { screen: Settings},
   GroepPage: { screen: GroepPage },
-  RegisterUser: { screen: RegisterUser }
+  RegisterUser: { screen: RegisterUser },
+  VeranderCurrency: { screen: VeranderCurrency}
 })
 export default Navigation;
 
