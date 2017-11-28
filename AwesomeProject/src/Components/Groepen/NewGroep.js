@@ -11,6 +11,7 @@ constructor(props){
   super(props);
   this.state= {groupname: 'lel'};
 }
+
   render() {
     return (
       <View style={styles.container}>
@@ -18,7 +19,7 @@ constructor(props){
           placeholderTextColor= 'black'
         style={styles.input}
         underlineColorAndroid="transparent"
-        onChangeText={ (groupname) => this.setState({groupname})}
+        onChangeText={ groupname => this.setState({groupname})}
       /> 
        
       <View>
