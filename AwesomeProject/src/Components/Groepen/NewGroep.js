@@ -6,7 +6,6 @@ const util = require('util');
 export default class NewGroep extends React.Component {
   static navigationOptions = {
     title: 'NewGroep',
-<<<<<<< HEAD
   };
   constructor(props) {
     super(props);
@@ -32,49 +31,6 @@ export default class NewGroep extends React.Component {
         <TouchableOpacity style={styles.addGroup} onPress={this.addGroup}>
           <Text style={styles.addGroupText}>Aanmaken</Text>
         </TouchableOpacity>
-=======
-};
-constructor(props){
-  super(props);
-  this.state= {groupname: 'lel'};
-}
-
-groupRegister = () =>{
-  const {groupName} = this.state;
-
-  fetch('server link', {
-    method: 'post',
-    header:{
-      'Accept': 'application/json',
-      'Content-type': 'application/json'
-    },
-    body:JSON.stringify({
-      name: groupName,
-    })
-  })
-  .then((response) => response.json())
-    .then((responseJson)=> {
-        alert(responseJson);
-    })
-    .catch((error)=>{
-      console.error(error);
-    })
-}
-
-  render() {
-    return (
-      <View style={styles.container}>
-      <TextInput placeholder="Groupname"
-          placeholderTextColor= 'black'
-        style={styles.input}
-        underlineColorAndroid="transparent"
-        onChangeText={ groupname => this.setState({groupname})}
-      /> 
-       
-      <View>
-        <Text> groupname: {this.state.groupname}</Text>
-        </View>
->>>>>>> 67e78d96f99c6853ee8cc3a829cfc884d34385f5
       </View>
     );
   }
