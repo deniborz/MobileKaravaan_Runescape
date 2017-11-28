@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingVertical: 10,
         backgroundColor: '#a3a3c2',
+        borderRadius: 5
     },
     addFriendsText: {
         textAlign: 'center',

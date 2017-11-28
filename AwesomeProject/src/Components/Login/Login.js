@@ -108,8 +108,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.2)',
     marginBottom: 20,
     paddingHorizontal: 10,
-
-
+    borderRadius: 5
   },
   containerForm: {
     padding: 20
@@ -120,7 +119,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     backgroundColor: '#245611',
-    paddingVertical: 10
+    paddingVertical: 10,
+    marginBottom: 10,
+    borderRadius: 5
   },
   buttonText: {
     textAlign: 'center',

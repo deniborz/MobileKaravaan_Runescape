@@ -35,12 +35,13 @@ const styles = StyleSheet.create({
   },
   navigationKnop: {
     width: '80%',
-    backgroundColor:'#a3a3c2',
+    backgroundColor: '#245611',
     paddingVertical: 10,
     margin: 20,
     borderRadius: 5
   },
   navigationKnopText: {
     textAlign: 'center',
+    color: 'white'
   }
 });

@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, ScrollView } from 'react-native';
 
 import Vrienden from '../Vrienden/Vrienden';
-import GroepPage from './GroepPage';
 import {StackNavigator} from 'react-navigation';
 const util = require('util');
 export default class Groepen extends React.Component {
@@ -37,14 +36,10 @@ const styles = StyleSheet.create({
   },
   groepen: {
     backgroundColor: '#545646',
-    height: 40
-
+    height: 40,
   },
   groeptext: {
     paddingHorizontal: 10
-  },
-  addGroep:{
-    backgroundColor: '#FDFEFE'
   },
   title: {
     fontSize: 20
