@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, ScrollView } from 'react-native';
 
 import Vrienden from '../Vrienden/Vrienden';
-import GroepPage from './GroepPage';
 import {StackNavigator} from 'react-navigation';
 const util = require('util');
 export default class Groepen extends React.Component {
@@ -15,11 +14,11 @@ export default class Groepen extends React.Component {
     var{navigate} = this.props.navigation;
     return (
       <View style={styles.container}>
-      <Text style= {styles.title}> Uw Groepen</Text>
       <ScrollView style={styles.scrollContainer}>
           <TouchableOpacity style={styles.groepen} onPress={() => navigate("GroepPage", {})}>
               <Text style={styles.groeptext}>GROEP 1</Text>
           </TouchableOpacity>
+          
           </ScrollView>
           <TouchableOpacity style={styles.addGroup} onPress={() => navigate("NewGroep", {})}>
                     <Text style={styles.addGroupText}>Voeg een nieuwe groep toe </Text>
@@ -37,29 +36,23 @@ const styles = StyleSheet.create({
   },
   groepen: {
     backgroundColor: '#545646',
-    height: 40
-
+    height: 75,
+    marginBottom: 3
   },
   groeptext: {
     paddingHorizontal: 10
-  },
-  addGroep:{
-    backgroundColor: '#FDFEFE'
-  },
-  title: {
-    fontSize: 20
   },
   addGroup: {
     position: 'absolute',
     bottom: 0,
     left: 0,
-    height: 50,
     width: '100%',
-    paddingVertical: 10,
-    backgroundColor: '#a3a3c2',
+    backgroundColor: '#245611',
+    paddingVertical: 25,
+    height: 75,
 },
 addGroupText: {
     textAlign: 'center',
-    
+    color: 'white'
 }
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TextInput, KeyboardAvoidingView, TouchableOpacity, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
 const util = require('util');
@@ -37,16 +37,16 @@ export default class Login extends React.Component {
             <Text style={styles.Title}>KARAVAAN</Text>
           </View>
           <View style={styles.containerForm}>
-            <TextInput placeholder="Username"
-              placeholderTextColor='black'
+            <TextInput placeholder="Gebruikersnaam"
+              placeholderTextColor='#3d7ca9'
               style={styles.input}
               onSubmitEditing={() => this.passwordInput.focus()}
               underlineColorAndroid="transparent"
               onChangeText={(username) => this.setState({ username })}
             />
             <TextInput
-              placeholder="Password"
-              placeholderTextColor='black'
+              placeholder="Wachtwoord"
+              placeholderTextColor='#3d7ca9'
               secureTextEntry
               style={styles.input}
               ref={(input) => this.passwordInput = input}
@@ -54,10 +54,10 @@ export default class Login extends React.Component {
               onChangeText={(password) => this.setState({ password })}
             />
             <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("Overzicht", {})}>
-              <Text style={styles.buttonText}>LOGIN</Text></TouchableOpacity>
+              <Text style={styles.buttonText}>LOG IN</Text></TouchableOpacity>
 
             <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("RegisterUser", {})}>
-              <Text style={styles.buttonText}>REGISTER</Text></TouchableOpacity>
+              <Text style={styles.buttonText}>REGISTREER</Text></TouchableOpacity>
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -108,8 +108,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.2)',
     marginBottom: 20,
     paddingHorizontal: 10,
-
-
+    borderRadius: 5
   },
   containerForm: {
     padding: 20
@@ -120,7 +119,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     backgroundColor: '#245611',
-    paddingVertical: 10
+    paddingVertical: 10,
+    marginBottom: 10,
+    borderRadius: 5
   },
   buttonText: {
     textAlign: 'center',
