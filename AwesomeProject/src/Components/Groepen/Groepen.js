@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, ScrollView } from 'react-native';
 
 import Vrienden from '../Vrienden/Vrienden';
+import GroepPage from './GroepPage';
 import {StackNavigator} from 'react-navigation';
 const util = require('util');
 export default class Groepen extends React.Component {
@@ -9,18 +10,14 @@ export default class Groepen extends React.Component {
     title: 'Groepen',
 };
 
-
-
   render() {
 
-   
-    
     var{navigate} = this.props.navigation;
     return (
       <View style={styles.container}>
       <Text style= {styles.title}> Uw Groepen</Text>
       <ScrollView style={styles.scrollContainer}>
-          <TouchableOpacity style={styles.groepen}>
+          <TouchableOpacity style={styles.groepen} onPress={() => navigate("GroepPage", {})}>
               <Text style={styles.groeptext}>GROEP 1</Text>
           </TouchableOpacity>
           </ScrollView>

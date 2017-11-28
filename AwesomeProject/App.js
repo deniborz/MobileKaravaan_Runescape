@@ -8,6 +8,8 @@ import Vrienden from './src/Components/Vrienden/Vrienden';
 import AddVriend from './src/Components/Vrienden/AddVriend';
 import Overzicht from './src/Components/Overzicht/Overzicht';
 import Settings from './src/Components/Settings/Settings';
+import GroepPage from './src/Components/Groepen/GroepPage';
+import RegisterUser from './src/Components/Login/RegisterUser';
 
 import { StackNavigator } from 'react-navigation';
 
@@ -18,7 +20,9 @@ const Navigation = StackNavigator({
   Vrienden: { screen: Vrienden },
   AddVriend: { screen: AddVriend },
   Overzicht: { screen: Overzicht },
-  Instellingen: { screen: Settings}
+  Instellingen: { screen: Settings},
+  GroepPage: { screen: GroepPage },
+  RegisterUser: { screen: RegisterUser }
 })
 export default Navigation;
 
