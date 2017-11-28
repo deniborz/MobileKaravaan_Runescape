@@ -12,7 +12,7 @@ export default class AddVriend extends React.Component {
 
     addFriend() {
         alert('Vriendje toevoegen');
-        //this.props.navigation.dispatch(backAction);
+      
     } 
 
     render() {
@@ -22,7 +22,7 @@ export default class AddVriend extends React.Component {
             <View style={styles.container} >
                 <TextInput style={styles.addFriendInput}
                  placeholder="Enter username of friend"
-                 placeholderTextColor= 'black'/>
+                 placeholderTextColor= '#3d7ca9'/>
                 <TouchableOpacity style={styles.addFriends} onPress={this.addFriend}>
                     <Text style={styles.addFriendsText}>Voeg toe! </Text>
                 </TouchableOpacity>
@@ -44,13 +44,13 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         width: '100%',
-        height: 50,
-        backgroundColor: '#a3a3c2',
-        paddingHorizontal: 10
+        backgroundColor: '#245611',
+        paddingVertical: 25,
+        height: 75,
     },
     addFriendsText: {
         textAlign: 'center',
-        lineHeight: 30,
+        color: 'white'
     },
     addFriendInput: {
         position: 'absolute',
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.2)',
         marginBottom: 20,
         paddingHorizontal: 10,
-        width: '80%'
+        width: '80%',
+        borderRadius: 5
     }
 });

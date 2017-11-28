@@ -33,12 +33,13 @@ const styles = StyleSheet.create({
         left: 0,
         height: 50,
         width: '100%',
-        paddingVertical: 10,
-        backgroundColor: '#a3a3c2',
-        borderRadius: 5
+        backgroundColor: '#245611',
+        paddingVertical: 25,
+        height: 75,
     },
     addFriendsText: {
         textAlign: 'center',
+        color: 'white'
         
     }
 });

@@ -37,7 +37,7 @@ export default class Login extends React.Component {
             <Text style={styles.Title}>KARAVAAN</Text>
           </View>
           <View style={styles.containerForm}>
-            <TextInput placeholder="Username"
+            <TextInput placeholder="Gebruikersnaam"
               placeholderTextColor='#3d7ca9'
               style={styles.input}
               onSubmitEditing={() => this.passwordInput.focus()}
@@ -45,7 +45,7 @@ export default class Login extends React.Component {
               onChangeText={(username) => this.setState({ username })}
             />
             <TextInput
-              placeholder="Password"
+              placeholder="Wachtwoord"
               placeholderTextColor='#3d7ca9'
               secureTextEntry
               style={styles.input}
@@ -54,10 +54,10 @@ export default class Login extends React.Component {
               onChangeText={(password) => this.setState({ password })}
             />
             <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("Overzicht", {})}>
-              <Text style={styles.buttonText}>LOGIN</Text></TouchableOpacity>
+              <Text style={styles.buttonText}>LOG IN</Text></TouchableOpacity>
 
             <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("RegisterUser", {})}>
-              <Text style={styles.buttonText}>REGISTER</Text></TouchableOpacity>
+              <Text style={styles.buttonText}>REGISTREER</Text></TouchableOpacity>
           </View>
         </View>
       </KeyboardAvoidingView>

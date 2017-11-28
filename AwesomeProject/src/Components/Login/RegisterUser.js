@@ -10,34 +10,43 @@ export default class Settings extends React.Component {
     render() {
         var { navigate } = this.props.navigation;
         return (
-            <KeyboardAvoidingView behavior="padding" style={styles.container}>
-               
+            <View style={styles.container}>
+
+                <KeyboardAvoidingView behavior="position">
                     <Text style={styles.Title}>KARAVAAN</Text>
 
-                    <Text style={styles.labels}>Username</Text>
+                    <Text style={styles.labels}>Gebruikersnaam</Text>
                     <TextInput style={styles.input}
-                        placeholder="Username"
-                        placeholderTextColor='#3d7ca9' />
+                        placeholder="Gebruikersnaam"
+                        placeholderTextColor='#3d7ca9'
+                        underlineColorAndroid="transparent"
+                        onSubmitEditing={() => this.passwordInput.focus()}/>
 
-                    <Text style={styles.labels}>Password</Text>
+                    <Text style={styles.labels}>Wachtwoord</Text>
                     <TextInput style={styles.input}
-                        placeholder="Password"
-                        placeholderTextColor='#3d7ca9' />
+                        placeholder="Wachtwoord"
+                        secureTextEntry
+                        placeholderTextColor='#3d7ca9'
+                        underlineColorAndroid="transparent"
+                        ref={(input) => this.passwordInput = input}
+                        onSubmitEditing={() => this.emailInput.focus()} />
 
-                        <Text style={styles.labels}>Naam (Voor en achternaam)</Text>
-                    <TextInput style={styles.input}
-                        placeholder="Naam"
-                        placeholderTextColor='#3d7ca9' />
-
-                    <Text style={styles.labels}>Email (Optioneel)</Text>
+                   <Text style={styles.labels}>Email (Optioneel)</Text>
                     <TextInput style={styles.input}
                         placeholder="Email"
-                        placeholderTextColor='#3d7ca9' />
+                        placeholderTextColor='#3d7ca9'
+                        underlineColorAndroid="transparent"
+                        ref={(input) => this.emailInput = input} />
 
-                    <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("Login", {})}>
-                        <Text style={styles.buttonText}>REGISTER</Text></TouchableOpacity>
-                
-            </KeyboardAvoidingView>
+                    
+                    <View style={{ height: 60 }} />
+
+                </KeyboardAvoidingView>
+
+                <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("Login", {})}>
+                    <Text style={styles.buttonText}>REGISTREER</Text></TouchableOpacity>
+
+            </View >
         );
     }
 }
@@ -46,6 +55,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#659ec7',
+    },
+    logoContainer: {
+        alignItems: 'center',
+        flexGrow: 1
     },
     Title: {
         textAlign: 'center',
@@ -72,8 +85,8 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         backgroundColor: '#245611',
-        paddingVertical: 10,
-        height: 50,
+        paddingVertical: 25,
+        height: 75,
         width: '100%'
     },
     buttonText: {
