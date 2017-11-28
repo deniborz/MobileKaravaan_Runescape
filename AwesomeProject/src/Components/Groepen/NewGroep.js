@@ -14,9 +14,10 @@ export default class NewGroep extends React.Component {
 
   addGroup() {
     alert('Vriendje toevoegen');
-
   }
+  
   render() {
+    var {navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
         <Text style={styles.Title}>Nieuwe Groep</Text>

@@ -11,8 +11,7 @@ export default class AddVriend extends React.Component {
     };
 
     addFriend() {
-        alert('Vriendje toevoegen');
-      
+        alert('Vriendje toevoegen');    
     } 
 
     render() {
