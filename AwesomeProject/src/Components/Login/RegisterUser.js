@@ -52,7 +52,7 @@ export default class Settings extends React.Component {
             </View >
         );
     }
-}
+}  
 
 const styles = StyleSheet.create({
     container: {
