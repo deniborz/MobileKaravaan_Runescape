@@ -11,13 +11,8 @@ export default class AddVriend extends React.Component {
     };
 
     addFriend() {
-<<<<<<< HEAD
-        alert('Vriendje toevoegen xxx');
-        this.props.navigation.dispatch(backAction);
-=======
         alert('Vriendje toevoegen');
       
->>>>>>> c32673162211c28c284ff1b8c9413973dcdd045c
     } 
 
     render() {

@@ -16,7 +16,7 @@ import VeranderCurrency from './src/Components/Settings/VeranderCurrency';
 import { StackNavigator } from 'react-navigation';
 
 const Navigation = StackNavigator({
-  Login: { screen: Settings },
+  Login: { screen: Login },
   Groep: { screen: Groepen },
   NewGroep: { screen: NewGroep },
   Vrienden: { screen: Vrienden },
