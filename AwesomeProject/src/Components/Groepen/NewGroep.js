@@ -12,6 +12,28 @@ constructor(props){
   this.state= {groupname: 'lel'};
 }
 
+groupRegister = () =>{
+  const {groupName} = this.state;
+
+  fetch('server link', {
+    method: 'post',
+    header:{
+      'Accept': 'application/json',
+      'Content-type': 'application/json'
+    },
+    body:JSON.stringify({
+      name: groupName,
+    })
+  })
+  .then((response) => response.json())
+    .then((responseJson)=> {
+        alert(responseJson);
+    })
+    .catch((error)=>{
+      console.error(error);
+    })
+}
+
   render() {
     return (
       <View style={styles.container}>
