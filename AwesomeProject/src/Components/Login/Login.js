@@ -25,6 +25,7 @@ export default class Login extends React.Component {
 
   static navigationOptions = {
     title: 'Login',
+    headerStyle: {marginTop: -100}
   };
 
 
