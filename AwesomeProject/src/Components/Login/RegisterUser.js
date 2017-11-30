@@ -7,6 +7,56 @@ export default class Settings extends React.Component {
     static navigationOptions = {
         title: 'RegisterUser',
     };
+
+    constructor(props) {
+        
+           super(props)
+        
+           this.state = {
+        
+             Username: '',
+             Email: '',
+             Password: ''
+        
+           }
+        
+    }
+
+    UserRegistrationFunction = () =>{
+        
+        const { Username }  = this.state ;
+        const { Email }  = this.state ;
+        const { Password }  = this.state ;
+        
+       fetch('http://localhost:3000/users/register', {
+         method: 'POST',
+         headers: {
+           'Accept': 'application/json',
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({
+        
+           name: Username,
+        
+           email: Email,
+        
+           password: Password
+        
+         })
+        
+       }).then((response) => response.json())
+             .then((responseJson) => {
+        
+       // Showing response message coming from server after inserting records.
+               Alert.alert(responseJson);
+        
+             }).catch((error) => {
+               console.error(error);
+             });
+        
+        
+    }
+
     render() {
         var { navigate } = this.props.navigation;
         return (
@@ -20,6 +70,7 @@ export default class Settings extends React.Component {
                         placeholder="Gebruikersnaam"
                         placeholderTextColor='#3d7ca9'
                         underlineColorAndroid="transparent"
+                        onChangeText={Username => this.setState({Username})}
                         onSubmitEditing={() => this.passwordInput.focus()}/>
 
                     <Text style={styles.labels}>Wachtwoord</Text>
@@ -29,6 +80,7 @@ export default class Settings extends React.Component {
                         placeholderTextColor='#3d7ca9'
                         underlineColorAndroid="transparent"
                         ref={(input) => this.passwordInput = input}
+                        onChangeText={Password => this.setState({Password})}
                         onSubmitEditing={() => this.emailInput.focus()} />
 
                    <Text style={styles.labels}>Email (Optioneel)</Text>
@@ -36,14 +88,15 @@ export default class Settings extends React.Component {
                         placeholder="Email"
                         placeholderTextColor='#3d7ca9'
                         underlineColorAndroid="transparent"
-                        ref={(input) => this.emailInput = input} />
+                        ref={(input) => this.emailInput = input} 
+                        onChangeText={Email => this.setState({Email})}/>
 
                     
                     <View style={{ height: 60 }} />
 
                 </KeyboardAvoidingView>
 
-                <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("Login", {})}>
+                <TouchableOpacity style={styles.buttonContainer} onPress={this.UserRegistrationFunction}>
                     <Text style={styles.buttonText}>REGISTREER</Text></TouchableOpacity>
 
             </View >
