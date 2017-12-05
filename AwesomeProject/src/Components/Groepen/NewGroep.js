@@ -1,23 +1,27 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, TextInput } from 'react-native';
-
+import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import {observable} from 'mobx';
 import { StackNavigator } from 'react-navigation';
+import Groepdes from './Groepdes';
 const util = require('util');
+
 export default class NewGroep extends React.Component {
   static navigationOptions = {
     title: 'NewGroep',
   };
   constructor(props) {
     super(props);
-    this.state = { groupname: 'lel' };
   }
+ 
 
   addGroup() {
     alert('Vriendje toevoegen');
-  }
+  };
   
   render() {
-    var {navigate } = this.props.navigation;
+   
+
+    var {navigate} = this.props.navigation;
     return (
       <View style={styles.container}>
         <Text style={styles.Title}>Nieuwe Groep</Text>
@@ -28,14 +32,27 @@ export default class NewGroep extends React.Component {
           underlineColorAndroid="transparent"
           onChangeText={(groupname) => this.setState({ groupname })}
         />
+        
 
-        <TouchableOpacity style={styles.addGroup} onPress={this.addGroup}>
+        <TouchableOpacity style={styles.addGroup} onPress={this.addGroep.bind(this)}>
           <Text style={styles.addGroupText}>Aanmaken</Text>
         </TouchableOpacity>
+        
       </View>
     );
   }
+  
+  addGroep(){
+    
+     this.state.groepenArray.push({'date': 'lel', 'note':this.state.groupname});
+     this.setState({groepenArray: this.state.groepenArray})
+     this.setState({groepText: ''});
+    
+
+  }
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
