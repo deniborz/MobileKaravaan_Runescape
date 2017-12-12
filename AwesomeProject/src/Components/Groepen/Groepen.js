@@ -6,7 +6,7 @@ import Groepdes from '../Groepen/Groepdes';
 import NewGroep from '../Groepen/NewGroep';
 import { StackNavigator } from 'react-navigation';
 const util = require('util');
-@observer
+//@observer
 export default class Groepen extends React.Component {
   static navigationOptions = {
     title: 'Groepen',
