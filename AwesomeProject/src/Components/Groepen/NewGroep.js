@@ -11,9 +11,7 @@ export default class NewGroep extends React.Component {
   };
   constructor(props) {
     super(props);
-  }
-  state = {
-    groupname: ''
+    this.state = {groupname: ''}
   }
 
 
@@ -46,12 +44,12 @@ export default class NewGroep extends React.Component {
   }
 
   addGroep() {
-
-    this.state.groepenArray.push({ 'date': 'lel', 'note': this.state.groupname });
-    this.setState({ groepenArray: this.state.groepenArray })
-    this.setState({ groepText: '' });
-
-
+    if(this.state.groupname == ''){
+      alert('Geen groepnaam ingevuld')
+    }
+    else{
+  this.props.navigation.navigate('Groep', {groupname: this.state.groupname})
+    }
   }
 }
 

@@ -15,8 +15,15 @@ export default class Groepen extends React.Component {
   state = {
     groepenArray: [{ 'date': 'testdate', 'note': 'testgroep1' }],
     groepText: '',
+    groupname: ''
   }
+  getGroupName()
+  {
+    return this.props.navigation.state.params.groupname;
+  }
+  
   render() {
+   
     let groepen = this.state.groepenArray.map((val, key) => {
       return <Groepdes key={key} keyval={key} val={val} />
     });
@@ -28,21 +35,20 @@ export default class Groepen extends React.Component {
 
         <ScrollView style={styles.scrollContainer}>
           <TouchableOpacity style={styles.groepen} onPress={() => navigate("GroepPage", {})}>
-            <Text style={styles.groeptext}>GROEP 1</Text>
+            <Text style={styles.groeptext}>{this.getGroupName()}</Text>
           </TouchableOpacity>
           {groepen}
+          
 
         </ScrollView>
         <TextInput style={styles.groepen}
           onChangeText={(groepText) => this.setState({ groepText })} value={this.state.groepText}>
         </TextInput>
-        <TouchableOpacity style={styles.addGroup} onPress={() => navigate("NewGroep", {})}>
+        <TouchableOpacity style={styles.addGroup} onPress={this.addGroep.bind(this)}>
           <Text style={styles.addGroupText}>Voeg een nieuwe groep toe </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={this.addGroep.bind(this)}>
-          <Text style={styles.addGroupText}>Voeg een nieuwe groep toe </Text>
-        </TouchableOpacity>
+        
 
 
 
@@ -52,8 +58,8 @@ export default class Groepen extends React.Component {
   }
 
   addGroep() {
-
-    this.state.groepenArray.push({ 'date': 'lel', 'note': 'lel' });
+    this.props.navigation.navigate("NewGroep", {})
+    this.state.groepenArray.push({ 'date': 'lel', 'note': this.getGroupName() });
     this.setState({ groepenArray: this.state.groepenArray })
     this.setState({ groepText: '' });
 
