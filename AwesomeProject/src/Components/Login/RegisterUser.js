@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, TextInput, KeyboardAvoidingView, TouchableOpacity, AsyncStorage } from 'react-native';
 
 import Vrienden from '../Vrienden/Vrienden';
 
@@ -15,9 +15,9 @@ export default class Settings extends React.Component {
         
            this.state = {
         
-             Username: '',
-             Email: '',
-             Password: ''
+             username: '',
+             email: '',
+             password: ''
         
            }
         
@@ -25,37 +25,27 @@ export default class Settings extends React.Component {
 
     UserRegistrationFunction = () =>{
         
-        const { Username }  = this.state ;
+        /*const { Username }  = this.state ;
         const { Email }  = this.state ;
-        const { Password }  = this.state ;
+        const { Password }  = this.state ;*/
         
-       fetch('http://localhost:3000/users/register', {
-         method: 'POST',
-         headers: {
-           'Accept': 'application/json',
-           'Content-Type': 'application/json',
-         },
-         body: JSON.stringify({
-        
-           name: Username,
-        
-           email: Email,
-        
-           password: Password
-        
-         })
-        
-       }).then((response) => response.json())
-             .then((responseJson) => {
-        
-       // Showing response message coming from server after inserting records.
-               Alert.alert(responseJson);
-        
-             }).catch((error) => {
-               console.error(error);
-             });
-        
-        
+        let newUser = {
+            Username: this.state.username,
+            Password: this.state.password,
+            Email: this.state.email
+        };
+        AsyncStorage.getItem(this.state.username)
+        .then((value) => {
+          const data = JSON.parse(value);
+          if (data == null) {
+            AsyncStorage.setItem(newUser.Username, JSON.stringify(newUser));
+            this.props.navigation.navigate('Login', {});
+          }
+          else {
+            alert('username already taken');
+          } 
+        });
+
     }
 
     render() {
@@ -64,14 +54,14 @@ export default class Settings extends React.Component {
             <View style={styles.container}>
 
                 <KeyboardAvoidingView behavior="position">
-                    <Text style={styles.Title}>KARAVAAN</Text>
+                    <Text style={styles.Title}>KARAVAAN   </Text>
 
                     <Text style={styles.labels}>Gebruikersnaam</Text>
                     <TextInput style={styles.input}
                         placeholder="Gebruikersnaam"
                         placeholderTextColor='#3d7ca9'
                         underlineColorAndroid="transparent"
-                        onChangeText={Username => this.setState({Username})}
+                        onChangeText={(username) => this.setState({username})}
                         onSubmitEditing={() => this.passwordInput.focus()}/>
 
                     <Text style={styles.labels}>Wachtwoord</Text>
@@ -81,7 +71,7 @@ export default class Settings extends React.Component {
                         placeholderTextColor='#3d7ca9'
                         underlineColorAndroid="transparent"
                         ref={(input) => this.passwordInput = input}
-                        onChangeText={Password => this.setState({Password})}
+                        onChangeText={password => this.setState({password})}
                         onSubmitEditing={() => this.emailInput.focus()} />
 
                    <Text style={styles.labels}>Email (Optioneel)</Text>
@@ -90,7 +80,7 @@ export default class Settings extends React.Component {
                         placeholderTextColor='#3d7ca9'
                         underlineColorAndroid="transparent"
                         ref={(input) => this.emailInput = input} 
-                        onChangeText={Email => this.setState({Email})}/>
+                        onChangeText={email => this.setState({email})}/>
                     
 
                 </KeyboardAvoidingView>

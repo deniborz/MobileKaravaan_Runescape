@@ -1,32 +1,42 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, TextInput, KeyboardAvoidingView, TouchableOpacity, AsyncStorage } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
 const util = require('util');
 export default class Login extends React.Component {
 
-  /*constructor(props){
+  constructor(props){
     super(props);
-    this.state; {
-      username: '';
-      password: '';
+    this.state = {
+      username: '',
+      password: ''
     }
   }
   
-  componentDidMount() {
-    this._loadInitialState().done();
-  }
-  _loadInitialState = async () => {
-    var value = await AsyncStorage.getItem('user');
-    if(value!==null){
-      this.props.navigation.navigate('Second');
-    }
-  }*/
-
   static navigationOptions = {
     title: 'Login',
     headerStyle: {marginTop: -100}
   };
+
+  UserLoginFunction = () =>{
+
+    if (AsyncStorage.getItem(this.state.username)) {
+      AsyncStorage.getItem(this.state.username)
+      .then((value) => {
+        const data = JSON.parse(value);
+        if(data == null) {
+          alert("De gebruikersnaam/wachtwoord is ongeldig.");
+        }
+        else if(data.Password == this.state.password) {
+          this.props.navigation.navigate("Overzicht", {});
+        }
+        else {
+          alert("De gebruikersnaam/wachtwoord is ongeldig.");
+        }
+      });         
+    }
+    
+  }
 
 
   render() {
@@ -45,6 +55,7 @@ export default class Login extends React.Component {
               underlineColorAndroid="transparent"
               onChangeText={(username) => this.setState({ username })}
             />
+            <Text>{this.username}</Text>
             <TextInput
               placeholder="Wachtwoord"
               placeholderTextColor='#3d7ca9'
@@ -54,7 +65,7 @@ export default class Login extends React.Component {
               underlineColorAndroid="transparent"
               onChangeText={(password) => this.setState({ password })}
             />
-            <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("Overzicht", {})}>
+            <TouchableOpacity style={styles.buttonContainer} onPress={this.UserLoginFunction}>
               <Text style={styles.buttonText}>LOG IN</Text></TouchableOpacity>
 
             <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("RegisterUser", {})}>
@@ -67,31 +78,9 @@ export default class Login extends React.Component {
     );
   }
   login = () => {
-
-    /*alert(this.state.username);
-    fetch('exp://192.168.0.244:19000/users', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json', 
-      },
-      body: JSON.stringify({
-        username: this.state.username,
-        password: this.state.password,
-      })
-    })
-    .then((response) => response.json())
-    .then((res) => {
-      if(res.succes === true){
-        AsyncStorage.setItem('user', res.user);
-        this.props.navigation.navigate('Second');
-      }
-      else {
-        alert(res.message);
-      }
-    })
-    .done();
-  }*/
+    AsyncStorage.getItem('UID123', (err, result) => {
+      console.log(result);
+    });
   }
 }
 const styles = StyleSheet.create({
