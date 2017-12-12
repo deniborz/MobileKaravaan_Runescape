@@ -17,13 +17,12 @@ export default class Groepen extends React.Component {
     groepText: '',
     groupname: ''
   }
-  getGroupName()
-  {
+  getGroupName() {
     return this.props.navigation.state.params.groupname;
   }
-  
+
   render() {
-   
+
     let groepen = this.state.groepenArray.map((val, key) => {
       return <Groepdes key={key} keyval={key} val={val} />
     });
@@ -38,7 +37,7 @@ export default class Groepen extends React.Component {
             <Text style={styles.groeptext}>{this.getGroupName()}</Text>
           </TouchableOpacity>
           {groepen}
-          
+
 
         </ScrollView>
         <TextInput style={styles.groepen}
@@ -48,7 +47,7 @@ export default class Groepen extends React.Component {
           <Text style={styles.addGroupText}>Voeg een nieuwe groep toe </Text>
         </TouchableOpacity>
 
-        
+
 
 
 

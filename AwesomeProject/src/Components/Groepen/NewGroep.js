@@ -15,13 +15,9 @@ export default class NewGroep extends React.Component {
   }
 
 
-  addGroup() {
-    alert('Vriendje toevoegen');
-  };
-
   render() {
 
-
+    
     var { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
@@ -48,9 +44,9 @@ export default class NewGroep extends React.Component {
       alert('Geen groepnaam ingevuld')
     }
     else{
-  this.props.navigation.navigate('Groep', {groupname: this.state.groupname})
-    }
+    this.props.navigation.navigate('Groep', {groupname: this.state.groupname})
   }
+}
 }
 
 
