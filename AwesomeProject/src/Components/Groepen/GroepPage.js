@@ -14,16 +14,16 @@ export default class GroepPage extends React.Component {
         var { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
-            <ScrollView>
-            <TouchableOpacity style={styles.groepen} >
-              <Text style={styles.groeptext}>Vakantie</Text>
-          </TouchableOpacity>
-          
-          </ScrollView>
-          <TouchableOpacity style={styles.addGroup}>
+                <ScrollView>
+                    <TouchableOpacity style={styles.groepen} >
+                        <Text style={styles.groeptext}>Vakantie</Text>
+                    </TouchableOpacity>
+
+                </ScrollView>
+                <TouchableOpacity style={styles.addGroup}>
                     <Text style={styles.addGroupText}>Voeg een nieuwe rekening toe </Text>
                 </TouchableOpacity>
-               
+
             </View>
         );
     }
@@ -38,11 +38,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#545646',
         height: 75,
         marginBottom: 3
-      },
-      groeptext: {
+    },
+    groeptext: {
         paddingHorizontal: 10
-      },
-      addGroup: {
+    },
+    addGroup: {
         position: 'absolute',
         bottom: 0,
         left: 0,

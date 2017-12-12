@@ -8,24 +8,24 @@ export default class Groepdes extends React.Component {
     static navigationOptions = {
         title: 'Groepdes',
     };
-    
+
     render() {
 
-        
+
         return (
             <View style={styles.container} key={this.props.keyval}>
-            <TouchableOpacity style={styles.addGroup}>
-            <Text style={styles.noteText}>{this.props.val.date}</Text>
-            <Text style={styles.noteText}>{this.props.val.note}</Text>
-</TouchableOpacity>
-          
+                <TouchableOpacity style={styles.addGroup}>
+                    <Text style={styles.noteText}>{this.props.val.date}</Text>
+                    <Text style={styles.noteText}>{this.props.val.note}</Text>
+                </TouchableOpacity>
+
             </View>
         );
     }
     componentWillReceiveProps(nextProps) {
         // update original states
         this.setState({
-          latitude: nextProps.latitude,
+            latitude: nextProps.latitude,
         });
     }
 }
@@ -51,5 +51,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#545646'
     }
 
-    
+
 });
