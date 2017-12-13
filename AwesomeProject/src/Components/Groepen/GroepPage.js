@@ -15,7 +15,7 @@ export default class GroepPage extends React.Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <TouchableOpacity style={styles.groepen} >
+                    <TouchableOpacity style={styles.groepen} onPress= {() => navigate('RekeningOverzicht', {})} >
                         <Text style={styles.groeptext}>Vakantie</Text>
                     </TouchableOpacity>
 

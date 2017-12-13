@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import { observable } from 'mobx';
+import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, TextInput, ScrollView, AsyncStorage, KeyboardAvoidingView } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Groepdes from './Groepdes';
 const util = require('util');
@@ -9,10 +8,114 @@ export default class NewGroep extends React.Component {
   static navigationOptions = {
     title: 'NewGroep',
   };
+
+  
   constructor(props) {
+    
+       super(props)
+    
+       this.state = {
+         groupname: ''
+        
+       }
+    
+}
+
+GroupRegistrationFunction = () =>{
+    
+    /*const { Username }  = this.state ;
+    const { Email }  = this.state ;
+    const { Password }  = this.state ;*/
+    
+    let newGroup = {
+        Groupname: this.state.groupname
+        
+    };
+    AsyncStorage.getItem(this.state.groupname)
+    .then((value) => {
+      const data = JSON.parse(value);
+      if (data == null) {
+        AsyncStorage.setItem(newGroup.Groupname, JSON.stringify(newGroup));
+        this.props.navigation.navigate('Groep', {});
+      }
+      else {
+        alert('groupname already taken');
+      } 
+    });
+
+}
+
+
+render() {
+    var { navigate } = this.props.navigation;
+    return (
+        <View style={styles.container}>
+
+            <KeyboardAvoidingView behavior="position">
+                <Text style={styles.Title}>KARAVAAN   </Text>
+
+                <Text style={styles.labels}>Groepsnaam</Text>
+                <TextInput style={styles.input}
+                    placeholder="Groepsnaam"
+                    placeholderTextColor='#3d7ca9'
+                    underlineColorAndroid="transparent"
+                    onChangeText={(groupname) => this.setState({groupname})}
+                    />
+
+            </KeyboardAvoidingView>
+
+            <TouchableOpacity style={styles.buttonContainer} onPress={this.GroupRegistrationFunction}>
+                <Text style={styles.buttonText}>Maak groep</Text></TouchableOpacity>
+
+        </View >
+    );
+}
+}  
+
+const styles = StyleSheet.create({
+container: {
+    flex: 1,
+    backgroundColor: '#659ec7',
+},
+Title: {
+    textAlign: 'center',
+    marginTop: 100,
+    marginBottom: 25,
+    fontSize: 50
+},
+labels: {
+    marginLeft: '10%',
+    marginTop: 5,
+    marginBottom: 5
+},
+input: {
+    height: 40,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    width: '80%',
+    marginLeft: '10%'
+},
+buttonContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    backgroundColor: '#245611',
+    paddingVertical: 25,
+    height: 75,
+    width: '100%'
+},
+buttonText: {
+    textAlign: 'center',
+    color: '#FFFFFF'
+}
+});
+  /*constructor(props) {
     super(props);
     this.state = {groupname: ''}
   }
+
 
 
   render() {
@@ -84,4 +187,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white'
   }
-});
+});*/

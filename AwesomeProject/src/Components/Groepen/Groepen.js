@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, ScrollView, TextInput, AsyncStorage } from 'react-native';
 import { observer } from 'mobx-react';
 import Vrienden from '../Vrienden/Vrienden';
 import Groepdes from '../Groepen/Groepdes';
@@ -17,9 +17,7 @@ export default class Groepen extends React.Component {
     groepText: '',
     groupname: ''
   }
-  getGroupName() {
-    return this.props.navigation.state.params.groupname;
-  }
+
 
   render() {
 
@@ -34,9 +32,10 @@ export default class Groepen extends React.Component {
 
         <ScrollView style={styles.scrollContainer}>
           <TouchableOpacity style={styles.groepen} onPress={() => navigate("GroepPage", {})}>
-            <Text style={styles.groeptext}>{this.getGroupName()}</Text>
+            <Text style={styles.groeptext}>{this.state.groupnameGet}</Text>
           </TouchableOpacity>
           {groepen}
+          
 
 
         </ScrollView>
@@ -55,14 +54,10 @@ export default class Groepen extends React.Component {
       </View>
     );
   }
-
+  
   addGroep() {
     this.props.navigation.navigate("NewGroep", {})
-    this.state.groepenArray.push({ 'date': 'lel', 'note': this.getGroupName() });
-    this.setState({ groepenArray: this.state.groepenArray })
-    this.setState({ groepText: '' });
-
-
+  
   }
 }
 
