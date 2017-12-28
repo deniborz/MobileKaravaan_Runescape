@@ -1,7 +1,8 @@
-import React from 'react';
+/*import React from 'react';
 import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, ScrollView } from 'react-native';
 
 import Vrienden from '../Vrienden/Vrienden';
+import NewGroep from '../Groepen/NewGroep';
 import { StackNavigator } from 'react-navigation';
 const util = require('util');
 export default class Groepdes extends React.Component {
@@ -22,12 +23,7 @@ export default class Groepdes extends React.Component {
             </View>
         );
     }
-    componentWillReceiveProps(nextProps) {
-        // update original states
-        this.setState({
-            latitude: nextProps.latitude,
-        });
-    }
+    
 }
 
 const styles = StyleSheet.create({
@@ -52,4 +48,4 @@ const styles = StyleSheet.create({
     }
 
 
-});
+});*/

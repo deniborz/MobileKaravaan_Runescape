@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, ScrollView, TextInput, AsyncStorage } from 'react-native';
 import { observer } from 'mobx-react';
 import Vrienden from '../Vrienden/Vrienden';
-import Groepdes from '../Groepen/Groepdes';
+/*import Groepdes from '../Groepen/Groepdes';*/
 import NewGroep from '../Groepen/NewGroep';
 import { StackNavigator } from 'react-navigation';
 const util = require('util');
@@ -22,7 +22,7 @@ export default class Groepen extends React.Component {
   render() {
 
     let groepen = this.state.groepenArray.map((val, key) => {
-      return <Groepdes key={key} keyval={key} val={val} />
+      return <Groepdes key={key} keyval ={key} val={val}  />
     });
 
     var { navigate } = this.props.navigation;
@@ -34,7 +34,9 @@ export default class Groepen extends React.Component {
           <TouchableOpacity style={styles.groepen} onPress={() => navigate("GroepPage", {})}>
             <Text style={styles.groeptext}>{this.state.groupnameGet}</Text>
           </TouchableOpacity>
+          
           {groepen}
+         
           
 
 
@@ -90,3 +92,23 @@ const styles = StyleSheet.create({
     color: 'white'
   }
 });
+class Groepdes extends React.Component {
+  static navigationOptions = {
+      title: 'Groepdes',
+  };
+
+  render() {
+
+
+      return (
+          <View style={styles.container} key={this.props.keyval}>
+              <TouchableOpacity style={styles.addGroup}>
+                  <Text style={styles.noteText}>{this.props.val.date}</Text>
+                  <Text style={styles.noteText}>{this.props.val.note}</Text>
+              </TouchableOpacity>
+
+          </View>
+      );
+  }
+  
+}

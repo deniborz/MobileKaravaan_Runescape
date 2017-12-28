@@ -19,6 +19,10 @@ export default class Login extends React.Component {
   };
 
   UserLoginFunction = () =>{
+    if(this.state.username == '' || this.state.password == ''){
+      alert("De gebruikersnaam/wachtwoord is ongeldig.");
+    }
+    else{
 
     if (AsyncStorage.getItem(this.state.username)) {
       AsyncStorage.getItem(this.state.username)
@@ -35,7 +39,7 @@ export default class Login extends React.Component {
         }
       });         
     }
-    
+  }
   }
 
 

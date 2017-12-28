@@ -2,15 +2,25 @@ import React from 'react';
 
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import AddVriend from '../Vrienden/AddVriend';
 const util = require('util');
 export default class Vrienden extends React.Component {
     static navigationOptions = {
         title: 'Vrienden',
     };
+    constructor(props){
+        super(props);
+        this.state = {
+          username: 'efef'
+        }
+      }
     render() {
         var { navigate } = this.props.navigation;
         return (
             <View style={styles.container} >
+            <Text style={ styles.lel}>
+            {this.props.navigation.state.params.username}
+            </Text>
                 <TouchableOpacity style={styles.addFriends} onPress={() => navigate("AddVriend", {})}>
                     <Text style={styles.addFriendsText}>Voeg nieuwe vrienden toe </Text>
                 </TouchableOpacity>
@@ -41,5 +51,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white'
         
+    },
+    lel: {
+        marginTop: 50,
     }
 });

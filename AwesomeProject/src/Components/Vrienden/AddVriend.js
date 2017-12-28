@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Alert, AsyncStorage } from 'react-native';
 import { StackNavigator, NavigationActions } from 'react-navigation';
+import Vrienden from '../Vrienden/Vrienden';
 const util = require('util');
 const backAction = NavigationActions.back({key: 'Vrienden'});
 
@@ -9,9 +10,34 @@ export default class AddVriend extends React.Component {
     static navigationOptions = {
         title: 'AddVriend',
     };
+    constructor(props){
+        super(props);
+        this.state = {
+          username: '',
+          vriendenArray: []
+        }
+      }
 
-    addFriend() {
-        alert('Vriendje toevoegen');    
+    addFriend = () => {
+        if(this.state.username == ''){
+            alert("De gebruikersnaam/wachtwoord is ongeldig.");
+          }
+          else{
+      
+          if (AsyncStorage.getItem(this.state.username)) {
+            AsyncStorage.getItem(this.state.username)
+            .then((value) => {
+              const data = JSON.parse(value);
+              if(data == null) {
+                alert("Deze gebruiker bestaat niet");
+              }
+              else {
+                this.props.navigation.navigate("Vrienden", {username: this.state.username});
+              }
+              
+            });         
+          }
+        }  
     } 
 
     render() {
@@ -21,7 +47,8 @@ export default class AddVriend extends React.Component {
             <View style={styles.container} >
                 <TextInput style={styles.addFriendInput}
                  placeholder="Enter username of friend"
-                 placeholderTextColor= '#3d7ca9'/>
+                 placeholderTextColor= '#3d7ca9'
+                 onChangeText={(username) => this.setState({username})} />
                 <TouchableOpacity style={styles.addFriends} onPress={this.addFriend}>
                     <Text style={styles.addFriendsText}>Voeg toe! </Text>
                 </TouchableOpacity>

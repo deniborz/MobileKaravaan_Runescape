@@ -11,22 +11,13 @@ export default class NewGroep extends React.Component {
 
   
   constructor(props) {
-    
-       super(props)
-    
-       this.state = {
+         super(props)
+         this.state = {
          groupname: ''
-        
-       }
-    
-}
+               }
+  }
 
 GroupRegistrationFunction = () =>{
-    
-    /*const { Username }  = this.state ;
-    const { Email }  = this.state ;
-    const { Password }  = this.state ;*/
-    
     let newGroup = {
         Groupname: this.state.groupname
         
@@ -36,10 +27,10 @@ GroupRegistrationFunction = () =>{
       const data = JSON.parse(value);
       if (data == null) {
         AsyncStorage.setItem(newGroup.Groupname, JSON.stringify(newGroup));
-        this.props.navigation.navigate('Groep', {});
+        this.props.navigation.navigate('Groep', {groupname: this.state.groupname});
       }
       else {
-        alert('groupname already taken');
+        alert('Groupname already exists.');
       } 
     });
 
@@ -61,6 +52,9 @@ render() {
                     underlineColorAndroid="transparent"
                     onChangeText={(groupname) => this.setState({groupname})}
                     />
+                    <Text style={styles.labels}> Vrienden</Text>
+                    <Text style={styles.labels}> Currencies</Text>
+
 
             </KeyboardAvoidingView>
 

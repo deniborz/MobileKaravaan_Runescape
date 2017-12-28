@@ -24,16 +24,15 @@ export default class Settings extends React.Component {
     }
 
     UserRegistrationFunction = () =>{
-        
-        /*const { Username }  = this.state ;
-        const { Email }  = this.state ;
-        const { Password }  = this.state ;*/
-        
         let newUser = {
             Username: this.state.username,
             Password: this.state.password,
             Email: this.state.email
         };
+        if(this.state.username == '' || this.state.password == ''){
+            alert("Gebruikersnaam en wachtwoord zijn verplicht.")
+        }
+        else{
         AsyncStorage.getItem(this.state.username)
         .then((value) => {
           const data = JSON.parse(value);
@@ -45,6 +44,7 @@ export default class Settings extends React.Component {
             alert('username already taken');
           } 
         });
+    }
 
     }
 
