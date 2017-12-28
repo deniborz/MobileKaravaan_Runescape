@@ -18,7 +18,7 @@ export default class Login extends React.Component {
     headerStyle: {marginTop: -100}
   };
 
-  UserLoginFunction = () =>{
+  UserLoginFunction = () => {
     if(this.state.username == '' || this.state.password == ''){
       alert("De gebruikersnaam/wachtwoord is ongeldig.");
     }
@@ -28,10 +28,10 @@ export default class Login extends React.Component {
       AsyncStorage.getItem(this.state.username)
       .then((value) => {
         const data = JSON.parse(value);
-        if(data == null) {
-          alert("De gebruikersnaam/wachtwoord is ongeldig.");
-        }
-        else if(data.Password == this.state.password) {
+        alert(data.Password + " | " + this.state.password);
+        if(data.Password == this.state.password) {
+          let activeUser = {User: this.state.username};
+          AsyncStorage.setItem('activeUser', JSON.stringify(activeUser));
           this.props.navigation.navigate("Overzicht", {});
         }
         else {

@@ -22,6 +22,10 @@ GroupRegistrationFunction = () =>{
         Groupname: this.state.groupname
         
     };
+    if(this.state.groupname == ''){
+      alert("Geen groepsnaam opgegeven.");
+    }
+    else{
     AsyncStorage.getItem(this.state.groupname)
     .then((value) => {
       const data = JSON.parse(value);
@@ -34,6 +38,7 @@ GroupRegistrationFunction = () =>{
       } 
     });
 
+}
 }
 
 

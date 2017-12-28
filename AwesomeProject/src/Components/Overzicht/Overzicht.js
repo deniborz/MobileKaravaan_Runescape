@@ -16,7 +16,7 @@ export default class Overzicht extends React.Component {
           <Text style={styles.navigationKnopText}>Groepen</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navigationKnop} onPress={() => navigate("Vrienden", {})}>
-          <Text style={styles.navigationKnopText}>Vrienden</Text>
+          <Text style={styles.navigationKnopText}>Vrienden </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navigationKnop} onPress={() => navigate("Instellingen", {})}>
           <Text style={styles.navigationKnopText}>Instellingen</Text>

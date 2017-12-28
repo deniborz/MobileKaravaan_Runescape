@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, AsyncStorage} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import AddVriend from '../Vrienden/AddVriend';
 const util = require('util');
@@ -11,16 +11,19 @@ export default class Vrienden extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-          username: 'efef'
+          username: 'efef',
+          vrienden: []
+         
         }
       }
     render() {
         var { navigate } = this.props.navigation;
+        
         return (
             <View style={styles.container} >
-            <Text style={ styles.lel}>
-            {this.props.navigation.state.params.username}
-            </Text>
+            <View style={ styles.lel}>
+            {this.ToonVrienden()}
+            </View>
                 <TouchableOpacity style={styles.addFriends} onPress={() => navigate("AddVriend", {})}>
                     <Text style={styles.addFriendsText}>Voeg nieuwe vrienden toe </Text>
                 </TouchableOpacity>
@@ -28,7 +31,39 @@ export default class Vrienden extends React.Component {
 
         );
     }
+    ToonVrienden = () =>{
+        var vrienden = [];
+        if (AsyncStorage.getItem('activeUser')) {
+            AsyncStorage.getItem('activeUser')
+            .then((value) => {
+                const data = JSON.parse(value);
+                if(data == null) {
+                alert("De gebruikersnaam/wachtwoord is ongeldig.");
+                }
+                else {
+                    if (AsyncStorage.getItem(data.User)) {
+                        AsyncStorage.getItem(data.User)
+                        .then((value) => {
+                            const data2 = JSON.parse(value);
+                            if(data2 == null) {
+                            alert("De gebruikersnaam is ongeldig.");
+                            }
+                            else {
+                                vrienden = data2.Vrienden;
+                                alert(data2.Vrienden);
+                            }
+                        });         
+                    }
+                }
+            });         
+        }
+        for (var i = 0;i<vrienden.length;i++) {
+            return(<Text> {vrienden[i]} {vrienden.length} </Text>)
+        }
+    }
 }
+
+
 
 const styles = StyleSheet.create({
     container: {

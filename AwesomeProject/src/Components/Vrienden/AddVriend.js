@@ -14,11 +14,12 @@ export default class AddVriend extends React.Component {
         super(props);
         this.state = {
           username: '',
-          vriendenArray: []
+          
         }
       }
 
     addFriend = () => {
+
         if(this.state.username == ''){
             alert("De gebruikersnaam/wachtwoord is ongeldig.");
           }
@@ -32,7 +33,33 @@ export default class AddVriend extends React.Component {
                 alert("Deze gebruiker bestaat niet");
               }
               else {
-                this.props.navigation.navigate("Vrienden", {username: this.state.username});
+                var activeUser;
+                AsyncStorage.getItem('activeUser')
+                    .then((value) => {
+                      const data2 = JSON.parse(value);
+                      if(data2 == null) {
+                        alert("Deze gebruiker bestaat niet");
+                      }
+                      else {
+                        activeUser = data2.User;
+                        AsyncStorage.getItem(activeUser).then((value) =>
+                        {
+                            const data3 = JSON.parse(value);
+                            let user = data3;
+                            user.Vrienden.push(this.state.username);
+
+                            AsyncStorage.setItem(activeUser, JSON.stringify(data3), () => {
+                                AsyncStorage.mergeItem(activeUser, JSON.stringify(user), () => {
+                                    AsyncStorage.getItem(activeUser, (err, result) => {
+                                        console.log(result);
+                                      });
+                                });
+                              });
+                            this.props.navigation.navigate("Vrienden", {});
+                        }
+                        )}
+                      
+                    }); 
               }
               
             });         
