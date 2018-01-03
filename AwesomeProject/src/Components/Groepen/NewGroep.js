@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, TextInput, ScrollView, AsyncStorage, KeyboardAvoidingView } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Groepdes from './Groepdes';
+import Groepen from '../Groepen/Groepen';
 const util = require('util');
 
 export default class NewGroep extends React.Component {
@@ -13,8 +14,9 @@ export default class NewGroep extends React.Component {
   constructor(props) {
          super(props)
          this.state = {
-         groupname: ''
+         groupname: '',
                }
+               this.setActiveUser();
   }
 
 GroupRegistrationFunction = () =>{
@@ -31,15 +33,59 @@ GroupRegistrationFunction = () =>{
       const data = JSON.parse(value);
       if (data == null) {
         AsyncStorage.setItem(newGroup.Groupname, JSON.stringify(newGroup));
-        this.props.navigation.navigate('Groep', {groupname: this.state.groupname});
-      }
+        this.addGroep();
+        
+    }
       else {
-        alert('Groupname already exists.');
-      } 
+        alert('Groupname already exists');
+      }
     });
 
 }
 }
+
+addGroep = () =>{
+    if (AsyncStorage.getItem(this.state.groupname)) {
+      AsyncStorage.getItem(this.state.groupname)
+      .then((value) => {
+        const data = JSON.parse(value);
+        if(data == null) {
+          alert("Deze groep bestaat niet.");
+        }
+        else {
+          let activeUser = this.state.username;
+                  AsyncStorage.getItem(activeUser).then((value) =>
+                  {
+                      const data3 = JSON.parse(value);
+                      const user = data3;
+                      let checkExists = false;
+                      for (const group of user.Groepen) {
+                          if(group.Groupname == this.state.groupname) {
+                              alert("Deze groep bestaat al");
+                              checkExists = true;
+                          }
+                      }
+                      if(!checkExists) {
+                          user.Groepen.push(data);
+                          AsyncStorage.setItem(activeUser, JSON.stringify(data3), () => {
+                              AsyncStorage.mergeItem(activeUser, JSON.stringify(user), () => {
+                                  AsyncStorage.getItem(activeUser, (err, result) => {
+                                      console.log(result);
+                                     
+                                  });
+                              });
+                          });
+                          this.props.navigation.navigate("Groep", {});
+                      }
+                  }
+                  )}
+                
+              }); 
+            }
+        
+      }         
+
+
 
 
 render() {
@@ -68,6 +114,21 @@ render() {
 
         </View >
     );
+}
+
+setActiveUser = () => {
+  if (AsyncStorage.getItem('activeUser')) {
+      AsyncStorage.getItem('activeUser')
+      .then((value) => {
+          const data = JSON.parse(value);
+          if(data == null) {
+          alert("De gebruikersnaam/wachtwoord is ongeldig.");
+          }
+          else {
+            this.setState({username: data.User});
+          }
+      });
+    }
 }
 }  
 

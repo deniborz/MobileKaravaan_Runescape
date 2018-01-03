@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, ScrollView, TextInput, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, TouchableHighlight, ScrollView, TextInput, AsyncStorage, FlatList } from 'react-native';
 import { observer } from 'mobx-react';
 import Vrienden from '../Vrienden/Vrienden';
-/*import Groepdes from '../Groepen/Groepdes';*/
 import NewGroep from '../Groepen/NewGroep';
+import {List, ListItem, SearchBar} from 'react-native-elements';
 import { StackNavigator } from 'react-navigation';
 const util = require('util');
 //@observer
@@ -11,104 +11,130 @@ export default class Groepen extends React.Component {
   static navigationOptions = {
     title: 'Groepen',
   };
+constructor(props){
+  super(props);
+  this.state = {
+    groupname: '',
+    groepen: [],
+    alleGroepen: []
 
-  state = {
-    groepenArray: [{ 'date': 'testdate', 'note': 'testgroep1' }],
-    groepText: '',
-    groupname: ''
   }
-
+  
+  this.ToonGroepen();
+}
 
   render() {
-
-    let groepen = this.state.groepenArray.map((val, key) => {
-      return <Groepdes key={key} keyval ={key} val={val}  />
-    });
-
     var { navigate } = this.props.navigation;
     return (
-
       <View style={styles.container}>
-
-        <ScrollView style={styles.scrollContainer}>
-          <TouchableOpacity style={styles.groepen} onPress={() => navigate("GroepPage", {})}>
-            <Text style={styles.groeptext}>{this.state.groupnameGet}</Text>
-          </TouchableOpacity>
-          
-          {groepen}
-         
-          
-
-
-        </ScrollView>
-        <TextInput style={styles.groepen}
-          onChangeText={(groepText) => this.setState({ groepText })} value={this.state.groepText}>
-        </TextInput>
-        <TouchableOpacity style={styles.addGroup} onPress={this.addGroep.bind(this)}>
-          <Text style={styles.addGroupText}>Voeg een nieuwe groep toe </Text>
+        <View style={styles.groupList}>
+          <List automaticallyAdjustContentInsets={false}>
+            <FlatList 
+                data={this.state.groepen}
+                renderItem={({item}) =>(
+                  <ListItem 
+                        containerStyle={{borderBottomColor: '#4d9280'}}
+                        roundAvatar
+                        component={TouchableHighlight}
+                        title={item.Groupname}
+                        avatar={{uri: 'http://www.freeiconspng.com/uploads/profile-icon-9.png'}}
+                        onPress={() => navigate("GroepPage", {groupname: this.state.groupname})} 
+                        />
+                )}
+                keyExtractor={item => item.Groupname}
+                ListHeaderComponent={this.renderHeader}
+                />
+                </List>
+        </View>
+        <TouchableOpacity style={styles.addGroups} onPress={() => navigate("NewGroep", {})}>
+          <Text style={styles.addGroupsText}>Voeg nieuwe groep toe </Text>
         </TouchableOpacity>
-
-
-
-
-
-
       </View>
     );
   }
   
-  addGroep() {
-    this.props.navigation.navigate("NewGroep", {})
-  
-  }
+  renderHeader = () => {
+    return <SearchBar placeholder="Search user" lightTheme containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
+}
+searchText = (e) => {
+  const text = e.toLowerCase()
+  /*const data = this.state.vrienden
+  const filteredName = data.filter((item) => {
+    return item.Username.toLowerCase().match(text)
+  })
+  if (!text || text === '') {
+    this.setState({
+      data: alleVrienden
+    })
+  } else if (!Array.isArray(filteredName) && !filteredName.length) {
+    // set no data flag to true so as to render flatlist conditionally
+    this.setState({
+      vrienden: []
+    })
+  } else if (Array.isArray(filteredName)) {
+    this.setState({
+      noData: false,
+      data: filteredName
+    })
+  }*/
 }
 
-
-
+ToonGroepen = () => {
+  if (AsyncStorage.getItem('activeUser')) {
+      AsyncStorage.getItem('activeUser')
+      .then((value) => {
+          const data = JSON.parse(value);
+          if(data == null) {
+          alert("De gebruikersnaam/wachtwoord is ongeldig.");
+          }
+          else {
+              if (AsyncStorage.getItem(data.User)) {
+                  AsyncStorage.getItem(data.User)
+                  .then((value) => {
+                      const data2 = JSON.parse(value);
+                      if(data2 == null) {
+                      alert("De gebruikersnaam is ongeldig.");
+                      }
+                      else {
+                          const groepen = data2.Groepen;
+                          if(groepen[0] != null) {
+                              this.setState({groepen: groepen});
+                              this.setState({alleGroepen: groepen});
+                          }
+                          return(groepen);
+                      }
+                  });         
+              }
+          }
+      });
+  }        
+}
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#659ec7',
+    backgroundColor: '#4d9280',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
-  groepen: {
-    backgroundColor: '#545646',
-    height: 75,
-    marginBottom: 3
+  groupList: {
+    width: '100%',
+    height: '90%',
+    marginTop: '-6%'
   },
-  groeptext: {
-    paddingHorizontal: 10
-  },
-  addGroup: {
+  addGroups: {
     position: 'absolute',
     bottom: 0,
     left: 0,
+    height: 50,
     width: '100%',
-    backgroundColor: '#245611',
+    backgroundColor: '#e2e8e5',
     paddingVertical: 25,
-    height: 75,
+    height: '15%'
   },
-  addGroupText: {
+  addGroupsText: {
     textAlign: 'center',
-    color: 'white'
+    color: '#4d9280',
+    fontSize: 25
   }
 });
-class Groepdes extends React.Component {
-  static navigationOptions = {
-      title: 'Groepdes',
-  };
-
-  render() {
-
-
-      return (
-          <View style={styles.container} key={this.props.keyval}>
-              <TouchableOpacity style={styles.addGroup}>
-                  <Text style={styles.noteText}>{this.props.val.date}</Text>
-                  <Text style={styles.noteText}>{this.props.val.note}</Text>
-              </TouchableOpacity>
-
-          </View>
-      );
-  }
-  
-}

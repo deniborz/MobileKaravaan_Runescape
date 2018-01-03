@@ -8,6 +8,12 @@ export default class GroepPage extends React.Component {
     static navigationOptions = {
         title: 'GroepPage',
     };
+    constructor(props){
+        super(props);
+        this.state={
+            groupname: ''
+        }
+    }
 
     render() {
 
@@ -16,7 +22,7 @@ export default class GroepPage extends React.Component {
             <View style={styles.container}>
                 <ScrollView>
                     <TouchableOpacity style={styles.groepen} onPress= {() => navigate('RekeningOverzicht', {})} >
-                        <Text style={styles.groeptext}>Vakantie</Text>
+                        <Text style={styles.groeptext}>Vakantie {this.props.navigation.state.params.groupname}</Text>
                     </TouchableOpacity>
 
                 </ScrollView>
@@ -32,7 +38,9 @@ export default class GroepPage extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#659ec7',
+        backgroundColor: '#4d9280',
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
     groepen: {
         backgroundColor: '#545646',

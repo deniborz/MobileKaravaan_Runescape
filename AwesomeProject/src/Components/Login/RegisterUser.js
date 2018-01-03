@@ -16,7 +16,8 @@ export default class Settings extends React.Component {
             email: '',
             password: '',
             vrienden: [],
-            language: 'en'
+            language: 'en',
+            groepen: []
         } 
     }
 
@@ -26,7 +27,8 @@ export default class Settings extends React.Component {
             Password: this.state.password,
             Email: this.state.email,
             Vrienden: this.state.vrienden,
-            Language: this.state.language
+            Language: this.state.language,
+            Groepen: this.state.groepen
         };
         if(this.state.username == '' || this.state.password == ''){
             alert("Gebruikersnaam en wachtwoord zijn verplicht.")
@@ -58,7 +60,7 @@ export default class Settings extends React.Component {
                     <Text style={styles.labels}>Gebruikersnaam</Text>
                     <TextInput style={styles.input}
                         placeholder="Gebruikersnaam"
-                        placeholderTextColor='#3d7ca9'
+                        placeholderTextColor='#e2e8e5'
                         underlineColorAndroid="transparent"
                         onChangeText={(username) => this.setState({username})}
                         onSubmitEditing={() => this.passwordInput.focus()}/>
@@ -67,7 +69,7 @@ export default class Settings extends React.Component {
                     <TextInput style={styles.input}
                         placeholder="Wachtwoord"
                         secureTextEntry
-                        placeholderTextColor='#3d7ca9'
+                        placeholderTextColor='#e2e8e5'
                         underlineColorAndroid="transparent"
                         ref={(input) => this.passwordInput = input}
                         onChangeText={password => this.setState({password})}
@@ -76,7 +78,7 @@ export default class Settings extends React.Component {
                    <Text style={styles.labels}>Email (Optioneel)</Text>
                     <TextInput style={styles.input}
                         placeholder="Email"
-                        placeholderTextColor='#3d7ca9'
+                        placeholderTextColor='#e2e8e5'
                         underlineColorAndroid="transparent"
                         ref={(input) => this.emailInput = input} 
                         onChangeText={email => this.setState({email})}/>

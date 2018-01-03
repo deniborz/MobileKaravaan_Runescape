@@ -43,7 +43,7 @@ export default class AddVriend extends React.Component {
                             const data3 = JSON.parse(value);
                             const user = data3;
                             let checkExists = false;
-                            for (const person of user.Vrienden) {
+                           for (const person of user.Vrienden) {
                                 if(person.Username == this.state.username) {
                                     alert("Deze gebruiker is al een vriend.");
                                     checkExists = true;
@@ -60,7 +60,7 @@ export default class AddVriend extends React.Component {
                                     });
                                 });
                                 this.props.navigation.navigate("Vrienden", {});
-                            }
+                           }
                         }
                         )}
                       
