@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, Image, View, Button, Alert, TextInput, Keyboard, KeyboardAvoidingView, TouchableOpacity, StatusBar, AsyncStorage } from 'react-native';
 
+import I18n from 'react-native-i18n';
+
 import { StackNavigator } from 'react-navigation';
 const util = require('util');
 export default class Login extends React.Component {
@@ -50,6 +52,7 @@ export default class Login extends React.Component {
     return (
       <KeyboardAvoidingView behavior="position" style={styles.container}>
           <Text style={styles.logo}>Karavaan</Text>
+          <Text>{I18n.t('greeting', {locale:'fr'})}</Text>
           <View style={styles.containerForm}>
             <TextInput placeholder="Gebruikersnaam"
               placeholderTextColor='#e2e8e5'

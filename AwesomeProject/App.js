@@ -15,6 +15,12 @@ import RegisterUser from './src/Components/Login/RegisterUser';
 import VeranderCurrency from './src/Components/Settings/VeranderCurrency';
 /*import Groepdes from './src/Components/Groepen/Groepdes';*/
 
+import I18n from 'react-native-i18n';
+
+import en from './src/Translations/en';
+import fr from './src/Translations/fr';
+import nl from './src/Translations/nl';
+
 import { StackNavigator } from 'react-navigation';
 
 const Navigation = StackNavigator({
@@ -30,6 +36,15 @@ const Navigation = StackNavigator({
   VeranderCurrency: { screen: VeranderCurrency},
  /* Groepdes: { screen: Groepdes}*/
 })
+
+I18n.fallbacks = true;
+
+I18n.translations = {
+  en,
+  fr,
+  nl
+};
+
 export default Navigation;
 
 /*class App extends React.Component {

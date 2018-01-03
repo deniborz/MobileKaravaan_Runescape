@@ -2,6 +2,9 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Alert, BackHandler, Keyboard, TouchableOpacity, AsyncStorage } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
+
+import I18n from 'react-native-i18n';
+
 const util = require('util');
 
 let listener = null;

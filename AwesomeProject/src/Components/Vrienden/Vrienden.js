@@ -5,6 +5,7 @@ import { StackNavigator } from 'react-navigation';
 import {List, ListItem, SearchBar} from 'react-native-elements';
 import AddVriend from '../Vrienden/AddVriend';
 const util = require('util');
+
 export default class Vrienden extends React.Component {
     static navigationOptions = {
         title: 'Vrienden',
@@ -21,11 +22,11 @@ export default class Vrienden extends React.Component {
 
     render() {
         var { navigate } = this.props.navigation;
+        
         return (
             <View style={styles.container}>
                 <View style={styles.friendList}>
                     <List automaticallyAdjustContentInsets={false}>
-                        <FlatList
                             data={this.state.vrienden}
                             renderItem={({item}) => (
                                 <ListItem
@@ -108,6 +109,8 @@ export default class Vrienden extends React.Component {
     }
 
 }
+
+
 
 const styles = StyleSheet.create({
     container: {

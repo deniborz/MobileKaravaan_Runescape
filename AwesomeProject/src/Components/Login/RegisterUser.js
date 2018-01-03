@@ -15,7 +15,8 @@ export default class Settings extends React.Component {
             username: '',
             email: '',
             password: '',
-            vrienden: []
+            vrienden: [],
+            language: 'en'
         } 
     }
 
@@ -24,7 +25,8 @@ export default class Settings extends React.Component {
             Username: this.state.username,
             Password: this.state.password,
             Email: this.state.email,
-            Vrienden: this.state.vrienden
+            Vrienden: this.state.vrienden,
+            Language: this.state.language
         };
         if(this.state.username == '' || this.state.password == ''){
             alert("Gebruikersnaam en wachtwoord zijn verplicht.")
