@@ -55,7 +55,7 @@ export default class Vrienden extends React.Component {
 
     searchText = (e) => {
         const text = e.toLowerCase();
-        const data = this.state.vrienden;
+        const data = this.state.alleVrienden;
         const filteredName = data.filter((item) => {
           return item.Username.toLowerCase().match(text)
         });
