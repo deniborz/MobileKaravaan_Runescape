@@ -34,6 +34,7 @@ GroupRegistrationFunction = () =>{
       if (data == null) {
         AsyncStorage.setItem(newGroup.Groupname, JSON.stringify(newGroup));
         this.addGroep();
+        
     }
       else {
         alert('Groupname already exists');
@@ -52,16 +53,7 @@ addGroep = () =>{
           alert("Deze groep bestaat niet.");
         }
         else {
-          
-          let activeUser;
-          AsyncStorage.getItem('activeUser')
-              .then((value) => {
-                const data2 = JSON.parse(value);
-                if(data2 == null || this.state.username == data2.User) {
-                  alert("Deze gebruiker is ongeldig.");
-                }
-                else {
-                  activeUser = data2.User;
+          let activeUser = this.state.username;
                   AsyncStorage.getItem(activeUser).then((value) =>
                   {
                       const data3 = JSON.parse(value);
@@ -75,25 +67,25 @@ addGroep = () =>{
                       }
                       if(!checkExists) {
                           user.Groepen.push(data);
-
                           AsyncStorage.setItem(activeUser, JSON.stringify(data3), () => {
                               AsyncStorage.mergeItem(activeUser, JSON.stringify(user), () => {
                                   AsyncStorage.getItem(activeUser, (err, result) => {
                                       console.log(result);
+                                     
                                   });
                               });
                           });
-                          this.props.navigation.navigate("Groepen", {});
+                          this.props.navigation.navigate("Groep", {});
                       }
                   }
                   )}
                 
               }); 
-        }
+            }
         
-      });         
-} 
-}
+      }         
+
+
 
 
 render() {

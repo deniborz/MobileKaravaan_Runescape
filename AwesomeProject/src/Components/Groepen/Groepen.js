@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, ScrollView, TextInput, AsyncStorage, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, TouchableHighlight, ScrollView, TextInput, AsyncStorage, FlatList } from 'react-native';
 import { observer } from 'mobx-react';
 import Vrienden from '../Vrienden/Vrienden';
 import NewGroep from '../Groepen/NewGroep';
@@ -19,7 +19,7 @@ constructor(props){
     alleGroepen: []
 
   }
-  this.setActiveUser();
+  
   this.ToonGroepen();
 }
 
@@ -27,27 +27,28 @@ constructor(props){
     var { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-      <Text style={styles.welcomeButtonText}>Welkom {this.state.username}</Text> 
-        <View style={styles.grouplist}>
+        <View style={styles.groupList}>
           <List automaticallyAdjustContentInsets={false}>
             <FlatList 
-                data ={this.state.groepen}
+                data={this.state.groepen}
                 renderItem={({item}) =>(
                   <ListItem 
                         containerStyle={{borderBottomColor: '#4d9280'}}
                         roundAvatar
+                        component={TouchableHighlight}
                         title={item.Groupname}
                         avatar={{uri: 'http://www.freeiconspng.com/uploads/profile-icon-9.png'}}
+                        onPress={() => navigate("GroepPage", {groupname: this.state.groupname})} 
                         />
                 )}
-                keyExtractor ={item =>item.Groupname}
+                keyExtractor={item => item.Groupname}
                 ListHeaderComponent={this.renderHeader}
                 />
                 </List>
-                <TouchableOpacity style={styles.addFriends} onPress={() => navigate("NewGroep", {})}>
-                    <Text style={styles.addFriendsText}>Voeg nieuwe vriend toe </Text>
-                </TouchableOpacity>
         </View>
+        <TouchableOpacity style={styles.addGroups} onPress={() => navigate("NewGroep", {})}>
+          <Text style={styles.addGroupsText}>Voeg nieuwe groep toe </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -95,7 +96,6 @@ ToonGroepen = () => {
                       alert("De gebruikersnaam is ongeldig.");
                       }
                       else {
-                        alert(data2.Groepen)
                           const groepen = data2.Groepen;
                           if(groepen[0] != null) {
                               this.setState({groepen: groepen});
@@ -109,57 +109,32 @@ ToonGroepen = () => {
       });
   }        
 }
-
-setActiveUser = () => {
-  if (AsyncStorage.getItem('activeUser')) {
-      AsyncStorage.getItem('activeUser')
-      .then((value) => {
-          const data = JSON.parse(value);
-          if(data == null) {
-          alert("De gebruikersnaam/wachtwoord is ongeldig.");
-          }
-          else {
-            this.setState({username: data.User});
-          }
-      });
-    }
 }
-
-
-}
-
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#659ec7',
-  },
-  groepen: {
-    backgroundColor: '#545646',
-    height: 75,
-    marginBottom: 3
-  },
-  groeptext: {
-    paddingHorizontal: 10
-  },
-  addGroup: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: '100%',
-    backgroundColor: '#245611',
-    paddingVertical: 25,
-    height: 75,
-  },
-  addGroupText: {
-    textAlign: 'center',
-    color: 'white'
+    backgroundColor: '#4d9280',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   groupList: {
     width: '100%',
-    height: '100%',
-    marginTop: '-6%',
-    marginBottom: '20%',
-}
+    height: '90%',
+    marginTop: '-6%'
+  },
+  addGroups: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    height: 50,
+    width: '100%',
+    backgroundColor: '#e2e8e5',
+    paddingVertical: 25,
+    height: '15%'
+  },
+  addGroupsText: {
+    textAlign: 'center',
+    color: '#4d9280',
+    fontSize: 25
+  }
 });

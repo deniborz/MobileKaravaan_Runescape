@@ -96,6 +96,7 @@ export default class Vrienden extends React.Component {
                                     this.setState({vrienden: vrienden});
                                     this.setState({alleVrienden: vrienden});
                                 }
+                               
                                 return(vrienden);
                             }
                         });         
@@ -116,9 +117,8 @@ const styles = StyleSheet.create({
     },
     friendList: {
         width: '100%',
-        height: '100%',
-        marginTop: '-6%',
-        marginBottom: '20%',
+        height: '90%',
+        marginTop: '-6%'
     },
     addFriends: {
         position: 'absolute',
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: '#e2e8e5',
         paddingVertical: 25,
-        height: 75
+        height: '15%'
     },
     addFriendsText: {
         textAlign: 'center',

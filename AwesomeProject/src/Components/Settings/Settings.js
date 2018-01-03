@@ -13,7 +13,7 @@ export default class Settings extends React.Component {
     super(props);
     this.state = {
       currency: 'Euro',
-      language: 'Nederlands'
+      language: ''
     }
   }
 
@@ -36,7 +36,7 @@ export default class Settings extends React.Component {
           <Picker.Item label = "Français" value = "Français" />
           <Picker.Item label = "English" value = "English" />
         </Picker>
-        <Text style={styles.label}>Munteenheid:</Text>
+        <Text style={styles.label}>Munteenheid: {this.state.language}</Text>
         <Picker selectedValue = {this.state.currency} onValueChange = {this.updateCurrency} style={styles.picker}>
           <Picker.Item label = "Euro" value = "Euro" />
           <Picker.Item label = "Dollar" value = "Dollar" />
