@@ -13,7 +13,7 @@ import Settings from './src/Components/Settings/Settings';
 import GroepPage from './src/Components/Groepen/GroepPage';
 import RegisterUser from './src/Components/Login/RegisterUser';
 import VeranderCurrency from './src/Components/Settings/VeranderCurrency';
-/*import Groepdes from './src/Components/Groepen/Groepdes';*/
+
 
 import { StackNavigator } from 'react-navigation';
 
@@ -28,7 +28,6 @@ const Navigation = StackNavigator({
   GroepPage: { screen: GroepPage },
   RegisterUser: { screen: RegisterUser },
   VeranderCurrency: { screen: VeranderCurrency},
- /* Groepdes: { screen: Groepdes}*/
 })
 export default Navigation;
 
