@@ -50,30 +50,28 @@ export default class Vrienden extends React.Component {
     }
 
     renderHeader = () => {
-        return <SearchBar placeholder="Search user" lightTheme containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
+        return <SearchBar placeholder="Search user" lightTheme onChangeText={this.searchText} containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
     }
 
     searchText = (e) => {
-        const text = e.toLowerCase()
-        /*const data = this.state.vrienden
+        const text = e.toLowerCase();
+        const data = this.state.alleVrienden;
         const filteredName = data.filter((item) => {
           return item.Username.toLowerCase().match(text)
-        })
+        });
         if (!text || text === '') {
           this.setState({
-            data: alleVrienden
-          })
+            vrienden: this.state.alleVrienden
+          });
         } else if (!Array.isArray(filteredName) && !filteredName.length) {
-          // set no data flag to true so as to render flatlist conditionally
           this.setState({
             vrienden: []
-          })
+          });
         } else if (Array.isArray(filteredName)) {
           this.setState({
-            noData: false,
-            data: filteredName
-          })
-        }*/
+            vrienden: filteredName
+          });
+        }
       }
 
     ToonVrienden = () => {
