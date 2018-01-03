@@ -14,48 +14,53 @@ export default class AddVriend extends React.Component {
         super(props);
         this.state = {
           username: '',
-          
         }
       }
 
     addFriend = () => {
 
-        if(this.state.username == ''){
-            alert("De gebruikersnaam/wachtwoord is ongeldig.");
-          }
-          else{
-      
+        if(this.state.username == '') alert("De gebruikersnaam is ongeldig.");
+        else{
           if (AsyncStorage.getItem(this.state.username)) {
             AsyncStorage.getItem(this.state.username)
             .then((value) => {
               const data = JSON.parse(value);
               if(data == null) {
-                alert("Deze gebruiker bestaat niet");
+                alert("Deze gebruiker bestaat niet.");
               }
               else {
-                var activeUser;
+                let activeUser;
                 AsyncStorage.getItem('activeUser')
                     .then((value) => {
                       const data2 = JSON.parse(value);
-                      if(data2 == null) {
-                        alert("Deze gebruiker bestaat niet");
+                      if(data2 == null || this.state.username == data2.User) {
+                        alert("Deze gebruiker is ongeldig.");
                       }
                       else {
                         activeUser = data2.User;
                         AsyncStorage.getItem(activeUser).then((value) =>
                         {
                             const data3 = JSON.parse(value);
-                            let user = data3;
-                            user.Vrienden.push(this.state.username);
+                            const user = data3;
+                            let checkExists = false;
+                            for (const person of user.Vrienden) {
+                                if(person.Username == this.state.username) {
+                                    alert("Deze gebruiker is al een vriend.");
+                                    checkExists = true;
+                                }
+                            }
+                            if(!checkExists) {
+                                user.Vrienden.push(data);
 
-                            AsyncStorage.setItem(activeUser, JSON.stringify(data3), () => {
-                                AsyncStorage.mergeItem(activeUser, JSON.stringify(user), () => {
-                                    AsyncStorage.getItem(activeUser, (err, result) => {
-                                        console.log(result);
-                                      });
+                                AsyncStorage.setItem(activeUser, JSON.stringify(data3), () => {
+                                    AsyncStorage.mergeItem(activeUser, JSON.stringify(user), () => {
+                                        AsyncStorage.getItem(activeUser, (err, result) => {
+                                            console.log(result);
+                                        });
+                                    });
                                 });
-                              });
-                            this.props.navigation.navigate("Vrienden", {});
+                                this.props.navigation.navigate("Vrienden", {});
+                            }
                         }
                         )}
                       
@@ -74,7 +79,8 @@ export default class AddVriend extends React.Component {
             <View style={styles.container} >
                 <TextInput style={styles.addFriendInput}
                  placeholder="Enter username of friend"
-                 placeholderTextColor= '#3d7ca9'
+                 placeholderTextColor='#e2e8e5'
+                 underlineColorAndroid="transparent"
                  onChangeText={(username) => this.setState({username})} />
                 <TouchableOpacity style={styles.addFriends} onPress={this.addFriend}>
                     <Text style={styles.addFriendsText}>Voeg toe! </Text>
@@ -88,32 +94,33 @@ export default class AddVriend extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#659ec7',
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: '#4d9280',
+        alignItems: 'center'
     },
     addFriends: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        width: '100%',
-        backgroundColor: '#245611',
-        paddingVertical: 25,
-        height: 75,
+        backgroundColor: '#e2e8e5',
+        paddingVertical: 10,
+        borderRadius: 5,
+        height: 55,
+        width: '80%'
     },
     addFriendsText: {
         textAlign: 'center',
-        color: 'white'
+        color: '#4d9280',
+        marginTop: 6,
+        fontSize: 15,
+        fontWeight: '500'
     },
     addFriendInput: {
-        position: 'absolute',
-        top: '20%',
-        left: '10%',
+        marginTop: 200,
         height: 40,
-        backgroundColor: 'rgba(255,255,255,0.2)',
-        marginBottom: 20,
+        backgroundColor: 'rgba(255,255,255,0.3)',
+        marginBottom: 15,
         paddingHorizontal: 10,
-        width: '80%',
-        borderRadius: 5
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#e2e8e5',
+        color: '#e2e8e5',
+        width: '80%'
     }
 });

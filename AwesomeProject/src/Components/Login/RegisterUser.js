@@ -10,17 +10,13 @@ export default class Settings extends React.Component {
     };
 
     constructor(props) {
-        
-           super(props)
-        
-           this.state = {
-        
-             username: '',
-             email: '',
-             password: '',
-             vrienden: []
-           }
-        
+        super(props)
+        this.state = {
+            username: '',
+            email: '',
+            password: '',
+            vrienden: []
+        } 
     }
 
     UserRegistrationFunction = () =>{
@@ -82,12 +78,11 @@ export default class Settings extends React.Component {
                         underlineColorAndroid="transparent"
                         ref={(input) => this.emailInput = input} 
                         onChangeText={email => this.setState({email})}/>
-                    
-
                 </KeyboardAvoidingView>
 
                 <TouchableOpacity style={styles.buttonContainer} onPress={this.UserRegistrationFunction}>
-                    <Text style={styles.buttonText}>REGISTREER</Text></TouchableOpacity>
+                    <Text style={styles.buttonText}>REGISTREER</Text>
+                </TouchableOpacity>
 
             </View >
         );
@@ -97,25 +92,29 @@ export default class Settings extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#659ec7',
+        backgroundColor: '#4d9280',
     },
     Title: {
-        textAlign: 'center',
-        marginTop: 100,
+        left: '16%',
+        marginTop: '20%',
         marginBottom: 25,
         fontSize: 50
     },
     labels: {
         marginLeft: '10%',
         marginTop: 5,
-        marginBottom: 5
+        marginBottom: 5,
+        color: '#e2e8e5'
     },
     input: {
         height: 40,
-        backgroundColor: 'rgba(255,255,255,0.2)',
+        backgroundColor: 'rgba(255,255,255,0.3)',
         marginBottom: 20,
         paddingHorizontal: 10,
         borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#e2e8e5',
+        color: '#e2e8e5',
         width: '80%',
         marginLeft: '10%'
     },
@@ -123,7 +122,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         left: 0,
-        backgroundColor: '#245611',
+        backgroundColor: '#e2e8e5',
         paddingVertical: 25,
         height: 75,
         width: '100%'

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TextInput, KeyboardAvoidingView, TouchableOpacity, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, Image, View, Button, Alert, TextInput, Keyboard, KeyboardAvoidingView, TouchableOpacity, StatusBar, AsyncStorage } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
 const util = require('util');
@@ -19,6 +19,7 @@ export default class Login extends React.Component {
   };
 
   UserLoginFunction = () => {
+    //AsyncStorage.clear();
     if(this.state.username == '' || this.state.password == ''){
       alert("De gebruikersnaam/wachtwoord is ongeldig.");
     }
@@ -28,10 +29,11 @@ export default class Login extends React.Component {
       AsyncStorage.getItem(this.state.username)
       .then((value) => {
         const data = JSON.parse(value);
-        alert(data.Password + " | " + this.state.password);
-        if(data.Password == this.state.password) {
+        if(data != null && data.Password == this.state.password) {
           let activeUser = {User: this.state.username};
           AsyncStorage.setItem('activeUser', JSON.stringify(activeUser));
+          this.passwordInput.setNativeProps({text: ''});
+          this.state.password = '';
           this.props.navigation.navigate("Overzicht", {});
         }
         else {
@@ -46,23 +48,20 @@ export default class Login extends React.Component {
   render() {
     var { navigate } = this.props.navigation;
     return (
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <View style={styles.container}>
-          <View style={styles.logoContainer}>
-            <Text style={styles.Title}>KARAVAAN</Text>
-          </View>
+      <KeyboardAvoidingView behavior="position" style={styles.container}>
+          <Text style={styles.logo}>Karavaan</Text>
           <View style={styles.containerForm}>
             <TextInput placeholder="Gebruikersnaam"
-              placeholderTextColor='#3d7ca9'
+              placeholderTextColor='#e2e8e5'
               style={styles.input}
               onSubmitEditing={() => this.passwordInput.focus()}
               underlineColorAndroid="transparent"
               onChangeText={(username) => this.setState({ username })}
             />
-            <Text>{this.username}</Text>
             <TextInput
+              secureTextEntry={true}
               placeholder="Wachtwoord"
-              placeholderTextColor='#3d7ca9'
+              placeholderTextColor='#e2e8e5'
               secureTextEntry
               style={styles.input}
               ref={(input) => this.passwordInput = input}
@@ -70,55 +69,62 @@ export default class Login extends React.Component {
               onChangeText={(password) => this.setState({ password })}
             />
             <TouchableOpacity style={styles.buttonContainer} onPress={this.UserLoginFunction}>
-              <Text style={styles.buttonText}>LOG IN</Text></TouchableOpacity>
-
+              <Text style={styles.buttonText}>LOG IN</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("RegisterUser", {})}>
-              <Text style={styles.buttonText}>REGISTREER</Text></TouchableOpacity>
+              <Text style={styles.buttonText}>REGISTREER</Text>
+            </TouchableOpacity>
           </View>
-        </View>
       </KeyboardAvoidingView>
 
 
     );
   }
-  login = () => {
-    AsyncStorage.getItem('UID123', (err, result) => {
-      console.log(result);
-    });
-  }
+  
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#659ec7',
+    backgroundColor: '#4d9280',
   },
-  logoContainer: {
+  logo: {
     alignItems: 'center',
     justifyContent: 'center',
-    flexGrow: 1
+    marginTop: '40%',
+    left: '20%',
+    color: '#e2e8e5',
+    fontSize: 60
   },
   input: {
     height: 40,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    marginBottom: 20,
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    marginBottom: 10,
     paddingHorizontal: 10,
-    borderRadius: 5
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#e2e8e5',
+    color: '#e2e8e5'
   },
   containerForm: {
+    marginTop: '50%',
     padding: 20
   },
-
   Title: {
-    fontSize: 50
+    fontSize: 50,
+    color: 'white'
   },
   buttonContainer: {
-    backgroundColor: '#245611',
+    backgroundColor: '#e2e8e5',
     paddingVertical: 10,
     marginBottom: 10,
-    borderRadius: 5
+    borderRadius: 5,
+    height: 55
   },
   buttonText: {
     textAlign: 'center',
-    color: '#FFFFFF'
+    color: '#4d9280',
+    marginTop: 6,
+    fontWeight: '500'
   }
 });
