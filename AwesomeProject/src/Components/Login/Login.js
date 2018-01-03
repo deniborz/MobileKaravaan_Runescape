@@ -52,7 +52,6 @@ export default class Login extends React.Component {
     return (
       <KeyboardAvoidingView behavior="position" style={styles.container}>
           <Text style={styles.logo}>Karavaan</Text>
-          <Text>{I18n.t('greeting', {locale:'fr'})}</Text>
           <View style={styles.containerForm}>
             <TextInput placeholder="Gebruikersnaam"
               placeholderTextColor='#e2e8e5'
