@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
         left: '16%',
         marginTop: '20%',
         marginBottom: 25,
-        fontSize: 50
+        fontSize: 50,
+        color: '#e2e8e5'
     },
     labels: {
         marginLeft: '10%',
@@ -133,6 +134,6 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         textAlign: 'center',
-        color: '#FFFFFF'
+        color: '#4d9280'
     }
 });

@@ -26,23 +26,22 @@ export default class Login extends React.Component {
       alert("De gebruikersnaam/wachtwoord is ongeldig.");
     }
     else{
-
-    if (AsyncStorage.getItem(this.state.username)) {
-      AsyncStorage.getItem(this.state.username)
-      .then((value) => {
-        const data = JSON.parse(value);
-        if(data != null && data.Password == this.state.password) {
-          let activeUser = {User: this.state.username};
-          AsyncStorage.setItem('activeUser', JSON.stringify(activeUser));
-          this.passwordInput.setNativeProps({text: ''});
-          this.state.password = '';
-          this.props.navigation.navigate("Overzicht", {});
-        }
-        else {
-          alert("De gebruikersnaam/wachtwoord is ongeldig.");
-        }
-      });         
-    }
+      if (AsyncStorage.getItem(this.state.username)) {
+        AsyncStorage.getItem(this.state.username)
+        .then((value) => {
+          const data = JSON.parse(value);
+          if(data != null && data.Password == this.state.password) {
+            let activeUser = {User: this.state.username};
+            AsyncStorage.setItem('activeUser', JSON.stringify(data));
+            this.passwordInput.setNativeProps({text: ''});
+            this.state.password = '';
+            this.props.navigation.navigate("Overzicht", {});
+          }
+          else {
+            alert("De gebruikersnaam/wachtwoord is ongeldig.");
+          }
+        });         
+      }
   }
   }
 

@@ -17,7 +17,11 @@ export default class Vrienden extends React.Component {
           vrienden: [],
           alleVrienden: []
         }
+    }
+
+    componentWillMount(){
         this.ToonVrienden();
+        console.log("update");
     }
 
     render() {
@@ -27,6 +31,7 @@ export default class Vrienden extends React.Component {
             <View style={styles.container}>
                 <View style={styles.friendList}>
                     <List automaticallyAdjustContentInsets={false}>
+                        <FlatList
                             data={this.state.vrienden}
                             renderItem={({item}) => (
                                 <ListItem
@@ -79,37 +84,25 @@ export default class Vrienden extends React.Component {
         if (AsyncStorage.getItem('activeUser')) {
             AsyncStorage.getItem('activeUser')
             .then((value) => {
-                const data = JSON.parse(value);
-                if(data == null) {
-                alert("De gebruikersnaam/wachtwoord is ongeldig.");
+                let userData = JSON.parse(value);
+                if(userData == null) {
+                    alert("Er is een probleem met de actieve gebruiker.");
                 }
                 else {
-                    if (AsyncStorage.getItem(data.User)) {
-                        AsyncStorage.getItem(data.User)
-                        .then((value) => {
-                            const data2 = JSON.parse(value);
-                            if(data2 == null) {
-                            alert("De gebruikersnaam is ongeldig.");
-                            }
-                            else {
-                                const vrienden = data2.Vrienden;
-                                if(vrienden[0] != null) {
-                                    this.setState({vrienden: vrienden});
-                                    this.setState({alleVrienden: vrienden});
-                                }
-                               
-                                return(vrienden);
-                            }
-                        });         
+                    const vrienden = userData.Vrienden;
+                    if(vrienden[0] != null) {
+                        this.setState({vrienden: vrienden});
+                        this.setState({alleVrienden: vrienden});
                     }
+                    console.log("activeUser: " + userData);
+                    console.log("vrienden: " + vrienden);
+                    return(vrienden);
                 }
             });
-        }        
+        }
     }
 
 }
-
-
 
 const styles = StyleSheet.create({
     container: {
