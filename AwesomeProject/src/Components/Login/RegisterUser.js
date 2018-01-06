@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Alert, TextInput, KeyboardAvoidingView, TouchableOpacity, AsyncStorage } from 'react-native';
 
 import Vrienden from '../Vrienden/Vrienden';
+import I18n from 'react-native-i18n';
 
 export default class Settings extends React.Component {
     static navigationOptions = {
@@ -16,7 +17,7 @@ export default class Settings extends React.Component {
             email: '',
             password: '',
             vrienden: [],
-            language: 'en',
+            language: 'nl',
             groepen: []
         } 
     }
@@ -31,7 +32,7 @@ export default class Settings extends React.Component {
             Groepen: this.state.groepen
         };
         if(this.state.username == '' || this.state.password == ''){
-            alert("Gebruikersnaam en wachtwoord zijn verplicht.")
+            alert("Username and/or password are required.")
         }
         else{
         AsyncStorage.getItem(this.state.username)
@@ -57,17 +58,17 @@ export default class Settings extends React.Component {
                 <KeyboardAvoidingView behavior="position">
                     <Text style={styles.Title}>KARAVAAN   </Text>
 
-                    <Text style={styles.labels}>Gebruikersnaam</Text>
+                    <Text style={styles.labels}>{I18n.t('username', {locale: 'en'})}</Text>
                     <TextInput style={styles.input}
-                        placeholder="Gebruikersnaam"
+                        placeholder={I18n.t('username', {locale: 'en'})}
                         placeholderTextColor='#e2e8e5'
                         underlineColorAndroid="transparent"
                         onChangeText={(username) => this.setState({username})}
                         onSubmitEditing={() => this.passwordInput.focus()}/>
 
-                    <Text style={styles.labels}>Wachtwoord</Text>
+                    <Text style={styles.labels}>{I18n.t('password', {locale: 'en'})}</Text>
                     <TextInput style={styles.input}
-                        placeholder="Wachtwoord"
+                        placeholder={I18n.t('password', {locale: 'en'})}
                         secureTextEntry
                         placeholderTextColor='#e2e8e5'
                         underlineColorAndroid="transparent"
@@ -75,7 +76,7 @@ export default class Settings extends React.Component {
                         onChangeText={password => this.setState({password})}
                         onSubmitEditing={() => this.emailInput.focus()} />
 
-                   <Text style={styles.labels}>Email (Optioneel)</Text>
+                   <Text style={styles.labels}>Email (Optional)</Text>
                     <TextInput style={styles.input}
                         placeholder="Email"
                         placeholderTextColor='#e2e8e5'
@@ -85,7 +86,7 @@ export default class Settings extends React.Component {
                 </KeyboardAvoidingView>
 
                 <TouchableOpacity style={styles.buttonContainer} onPress={this.UserRegistrationFunction}>
-                    <Text style={styles.buttonText}>REGISTREER</Text>
+                    <Text style={styles.buttonText}>REGISTER</Text>
                 </TouchableOpacity>
 
             </View >

@@ -23,7 +23,7 @@ export default class Login extends React.Component {
   UserLoginFunction = () => {
     //AsyncStorage.clear();
     if(this.state.username == '' || this.state.password == ''){
-      alert("De gebruikersnaam/wachtwoord is ongeldig.");
+      alert("Username and/or password are invalid.");
     }
     else{
       if (AsyncStorage.getItem(this.state.username)) {
@@ -38,7 +38,7 @@ export default class Login extends React.Component {
             this.props.navigation.navigate("Overzicht", {});
           }
           else {
-            alert("De gebruikersnaam/wachtwoord is ongeldig.");
+            alert("Username and/or password are invalid.");
           }
         });         
       }
@@ -52,7 +52,7 @@ export default class Login extends React.Component {
       <KeyboardAvoidingView behavior="position" style={styles.container}>
           <Text style={styles.logo}>Karavaan</Text>
           <View style={styles.containerForm}>
-            <TextInput placeholder="Gebruikersnaam"
+            <TextInput placeholder={I18n.t('username', {locale: 'en'})}
               placeholderTextColor='#e2e8e5'
               style={styles.input}
               onSubmitEditing={() => this.passwordInput.focus()}
@@ -61,7 +61,7 @@ export default class Login extends React.Component {
             />
             <TextInput
               secureTextEntry={true}
-              placeholder="Wachtwoord"
+              placeholder={I18n.t('password', {locale: 'en'})}
               placeholderTextColor='#e2e8e5'
               secureTextEntry
               style={styles.input}
@@ -73,7 +73,7 @@ export default class Login extends React.Component {
               <Text style={styles.buttonText}>LOG IN</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("RegisterUser", {})}>
-              <Text style={styles.buttonText}>REGISTREER</Text>
+              <Text style={styles.buttonText}>REGISTER</Text>
             </TouchableOpacity>
           </View>
       </KeyboardAvoidingView>

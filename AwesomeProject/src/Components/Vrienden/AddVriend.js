@@ -3,6 +3,8 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Alert, AsyncStorage } from 'react-native';
 import { StackNavigator, NavigationActions } from 'react-navigation';
 import Vrienden from '../Vrienden/Vrienden';
+import I18n from 'react-native-i18n';
+
 const util = require('util');
 const backAction = NavigationActions.back({key: 'Vrienden'});
 
@@ -16,6 +18,15 @@ export default class AddVriend extends React.Component {
             username: '',
         }
     }
+
+    getActiveUser = () => { 
+        if (AsyncStorage.getItem('activeUser')) {
+         AsyncStorage.getItem('activeUser')
+         .then((value) => {
+              const user = JSON.parse(value);});
+        }
+        return user;
+      }
 
     addFriend = () => {
         if(this.state.username == '') alert("De gebruikersnaam is ongeldig.");
@@ -84,12 +95,12 @@ export default class AddVriend extends React.Component {
         return (
             <View style={styles.container} >
                 <TextInput style={styles.addFriendInput}
-                 placeholder="Enter username of friend"
+                 placeholder={I18n.t('searchnewfriend', {locale: this.getActiveUser.Language})}
                  placeholderTextColor='#e2e8e5'
                  underlineColorAndroid="transparent"
                  onChangeText={(username) => this.setState({username})} />
                 <TouchableOpacity style={styles.addFriends} onPress={this.addFriend}>
-                    <Text style={styles.addFriendsText}>Voeg toe! </Text>
+                    <Text style={styles.addFriendsText}>{I18n.t('addnewfriend', {locale: this.getActiveUser.Language})}</Text>
                 </TouchableOpacity>
             </View>
 

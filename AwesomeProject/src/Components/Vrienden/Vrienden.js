@@ -4,6 +4,8 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, AsyncStorage, FlatList
 import { StackNavigator } from 'react-navigation';
 import {List, ListItem, SearchBar} from 'react-native-elements';
 import AddVriend from '../Vrienden/AddVriend';
+import I18n from 'react-native-i18n';
+
 const util = require('util');
 
 export default class Vrienden extends React.Component {
@@ -48,7 +50,7 @@ export default class Vrienden extends React.Component {
                     </List>
                 </View>
                 <TouchableOpacity style={styles.addFriends} onPress={() => navigate("AddVriend", {})}>
-                    <Text style={styles.addFriendsText}>Voeg nieuwe vriend toe </Text>
+                    <Text style={styles.addFriendsText}>{I18n.t('addfriend', {locale: this.getActiveUser.Language})}</Text>
                 </TouchableOpacity>
             </View>
 
@@ -58,6 +60,15 @@ export default class Vrienden extends React.Component {
     renderHeader = () => {
         return <SearchBar placeholder="Search user" lightTheme onChangeText={this.searchText} containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
     }
+
+    getActiveUser = () => { 
+        if (AsyncStorage.getItem('activeUser')) {
+         AsyncStorage.getItem('activeUser')
+         .then((value) => {
+              const user = JSON.parse(value);});
+        }
+        return user;
+      }
 
     searchText = (e) => {
         const text = e.toLowerCase();

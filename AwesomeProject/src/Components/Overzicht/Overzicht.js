@@ -24,17 +24,18 @@ export default class Overzicht extends React.Component {
 
   render() {
     var { navigate } = this.props.navigation;
+    
     return (
       <View style={styles.container}>
-        <Text style={styles.welcomeButtonText}>Welkom {this.state.username}</Text> 
+        <Text style={styles.welcomeButtonText}>{I18n.t('greet', {locale: this.getActiveUser.Language})} {this.state.username}</Text> 
         <TouchableOpacity style={styles.navigationButton} onPress={() => navigate("Groep", {})}>
-          <Text style={styles.navigationButtonText}>Groepen</Text>
+          <Text style={styles.navigationButtonText}>{I18n.t('groups', {locale: this.getActiveUser.Language})}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navigationButton} onPress={() => navigate("Vrienden", {})}>
-          <Text style={styles.navigationButtonText}>Vrienden </Text>
+          <Text style={styles.navigationButtonText}>{I18n.t('friends', {locale: this.getActiveUser.Language})} </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navigationButton} onPress={() => navigate("Instellingen", {})}>
-          <Text style={styles.navigationButtonText}>Instellingen</Text>
+          <Text style={styles.navigationButtonText}>{I18n.t('settings', {locale: this.getActiveUser.Language})}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -44,7 +45,7 @@ export default class Overzicht extends React.Component {
     if (AsyncStorage.getItem('activeUser')) {
         AsyncStorage.getItem('activeUser')
         .then((value) => {
-            const data = JSON.parse(value);
+             const data = JSON.parse(value);
             if(data == null) {
             alert("De gebruikersnaam/wachtwoord is ongeldig.");
             }
@@ -54,6 +55,17 @@ export default class Overzicht extends React.Component {
         });
       }
   }
+
+   getActiveUser = () => { 
+     if (AsyncStorage.getItem('activeUser')) {
+      AsyncStorage.getItem('activeUser')
+      .then((value) => {
+           const user = JSON.parse(value);});
+     }
+     return user;
+   }
+
+
 
 }
 
