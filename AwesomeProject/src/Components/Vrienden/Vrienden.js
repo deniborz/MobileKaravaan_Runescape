@@ -27,6 +27,7 @@ export default class Vrienden extends React.Component {
             <View style={styles.container}>
                 <View style={styles.friendList}>
                     <List automaticallyAdjustContentInsets={false}>
+                    <FlatList
                             data={this.state.vrienden}
                             renderItem={({item}) => (
                                 <ListItem
