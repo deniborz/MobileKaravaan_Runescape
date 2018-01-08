@@ -1,7 +1,7 @@
 export default {
       //login
-      username: 'Username',
-      password: 'Password',
+      username: 'Gebruikersnaam',
+      password: 'Wachtwoord',
       invalid: 'Gebruikersnaam en/of wachtwoord zijn ongeldig.',      
       //overzicht
       greet: 'Welkom',

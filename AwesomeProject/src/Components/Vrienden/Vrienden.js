@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { StyleSheet, Text, View, Image, TouchableOpacity, AsyncStorage, FlatList} from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { StyleSheet, Text, View, Image, BackHandler, TouchableOpacity, AsyncStorage, FlatList} from 'react-native';
+import { StackNavigator, NavigationActions } from 'react-navigation';
 import {List, ListItem, SearchBar} from 'react-native-elements';
 import AddVriend from '../Vrienden/AddVriend';
 import I18n from 'react-native-i18n';
@@ -15,20 +15,14 @@ export default class Vrienden extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-          username: '',
+          username: this.props.navigation.state.params.username,
           vrienden: [],
           alleVrienden: []
         }
     }
 
-    componentWillMount(){
-        this.ToonVrienden();
-        console.log("update");
-    }
-
     render() {
         var { navigate } = this.props.navigation;
-        
         return (
             <View style={styles.container}>
                 <View style={styles.friendList}>
@@ -49,8 +43,8 @@ export default class Vrienden extends React.Component {
                         />
                     </List>
                 </View>
-                <TouchableOpacity style={styles.addFriends} onPress={() => navigate("AddVriend", {})}>
-                    <Text style={styles.addFriendsText}>{I18n.t('addfriend', {locale: this.getActiveUser.Language})}</Text>
+                <TouchableOpacity style={styles.addFriends} onPress={() => navigate("AddVriend", {username : this.state.username})}>
+                    <Text style={styles.addFriendsText}>{I18n.t('addfriend')}</Text>
                 </TouchableOpacity>
             </View>
 
@@ -60,15 +54,6 @@ export default class Vrienden extends React.Component {
     renderHeader = () => {
         return <SearchBar placeholder="Search user" lightTheme onChangeText={this.searchText} containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
     }
-
-    getActiveUser = () => { 
-        if (AsyncStorage.getItem('activeUser')) {
-         AsyncStorage.getItem('activeUser')
-         .then((value) => {
-              const user = JSON.parse(value);});
-        }
-        return user;
-      }
 
     searchText = (e) => {
         const text = e.toLowerCase();
@@ -92,22 +77,17 @@ export default class Vrienden extends React.Component {
       }
 
     ToonVrienden = () => {
-        if (AsyncStorage.getItem('activeUser')) {
-            AsyncStorage.getItem('activeUser')
+        if (AsyncStorage.getItem(this.state.username)) {
+            AsyncStorage.getItem(this.state.username)
             .then((value) => {
                 let userData = JSON.parse(value);
                 if(userData == null) {
                     alert("Er is een probleem met de actieve gebruiker.");
                 }
-                else {
-                    const vrienden = userData.Vrienden;
-                    if(vrienden[0] != null) {
-                        this.setState({vrienden: vrienden});
-                        this.setState({alleVrienden: vrienden});
-                    }
-                    console.log("activeUser: " + userData);
-                    console.log("vrienden: " + vrienden);
-                    return(vrienden);
+                const vrienden = userData.Vrienden;
+                if(vrienden[0] != null) {
+                    this.setState({vrienden: vrienden});
+                    this.setState({alleVrienden: vrienden});
                 }
             });
         }

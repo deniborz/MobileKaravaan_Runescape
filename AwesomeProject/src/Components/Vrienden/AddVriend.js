@@ -3,8 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Alert, AsyncStorage } from 'react-native';
 import { StackNavigator, NavigationActions } from 'react-navigation';
 import Vrienden from '../Vrienden/Vrienden';
-import I18n from 'react-native-i18n';
-
+import Overzicht from '../Overzicht/Overzicht';
 const util = require('util');
 const backAction = NavigationActions.back({key: 'Vrienden'});
 
@@ -15,78 +14,63 @@ export default class AddVriend extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            username: '',
+            username: this.props.navigation.state.params.username,
+            friendUsername: ''
         }
     }
 
-    getActiveUser = () => { 
-        if (AsyncStorage.getItem('activeUser')) {
-         AsyncStorage.getItem('activeUser')
-         .then((value) => {
-              const user = JSON.parse(value);});
-        }
-        return user;
-      }
+    componentWillMount() {
+        this.props.navigation.dispatch(backAction);
+    }
 
     addFriend = () => {
-        if(this.state.username == '') alert("De gebruikersnaam is ongeldig.");
+        if(this.state.friendUsername == '') alert("De gebruikersnaam is ongeldig.");
         else{
-            if (AsyncStorage.getItem(this.state.username)) {
-                AsyncStorage.getItem(this.state.username)
+            if (AsyncStorage.getItem(this.state.friendUsername)) {
+                AsyncStorage.getItem(this.state.friendUsername)
                   .then((value) => {
                     const friendData = JSON.parse(value);
                     if(friendData == null) {
                         alert("Deze gebruiker bestaat niet.");
                     }
                     else {
-                        AsyncStorage.getItem('activeUser')
-                          .then((value) => {
-                            const userData = JSON.parse(value);
-                            let checkExists = false;
-                            if(userData == null || this.state.username == userData.Username) {
-                                alert("Deze gebruiker is ongeldig.");
-                                checkExists=true;
-                            }
-                            const activeUser = userData;
-                            const friend = friendData;
-                            for (const person of activeUser.Vrienden) {
-                                if(person.Username == friend.Username) {
-                                    alert("Deze gebruiker is al een vriend.");
-                                    checkExists = true;
+                        if (AsyncStorage.getItem(this.state.username)) {
+                            AsyncStorage.getItem(this.state.username)
+                            .then((value) => {
+                                const userData = JSON.parse(value);
+                                let checkExists = false;
+                                if(userData == null || this.state.friendUsername == userData.Username) {
+                                    alert("Deze gebruiker is ongeldig.");
+                                    checkExists=true;
                                 }
-                            }
-                            if(!checkExists) {
-                                activeUser.Vrienden.push(friendData);
-                                /*friend.Vrienden.push(userData);
-
-                                AsyncStorage.setItem(friend.Username, JSON.stringify(friendData), () => {
-                                    AsyncStorage.mergeItem(friend.Username, JSON.stringify(friend), () => {
-                                        AsyncStorage.getItem(friend.Username, (err, result) => {
-                                            console.log(result);
+                                const activeUser = userData;
+                                const friend = friendData;
+                                for (const person of activeUser.Vrienden) {
+                                    if(person.Username == friend.Username) {
+                                        alert("Deze gebruiker is al een vriend.");
+                                        checkExists = true;
+                                    }
+                                }
+                                if(!checkExists) {
+                                    activeUser.Vrienden.push(friendData);
+                                    /*friend.Vrienden.push(activeUser);
+                                            AsyncStorage.setItem(friend.Username, JSON.stringify(friendData), () => {
+                                                AsyncStorage.mergeItem(friend.Username, JSON.stringify(friend));
+                                            });*/
+            
+                                    AsyncStorage.setItem(activeUser.Username, JSON.stringify(userData), () => {
+                                        AsyncStorage.mergeItem(activeUser.Username, JSON.stringify(activeUser), () => {
+                                            this.props.navigation.navigate("Vrienden", {username : this.state.username});
                                         });
                                     });
-                                });*/
-
-                                AsyncStorage.setItem(activeUser.Username, JSON.stringify(userData), () => {
-                                    AsyncStorage.mergeItem(activeUser.Username, JSON.stringify(activeUser), () => {
-                                        AsyncStorage.getItem(activeUser.Username, (err, result) => {
-                                            AsyncStorage.setItem("activeUser", JSON.stringify(userData), () => {
-                                                AsyncStorage.mergeItem("activeUser", JSON.stringify(activeUser), () => {
-                                                    AsyncStorage.getItem(activeUser.Username, (err, result) => {
-                                                        this.props.navigation.navigate("Vrienden", {});
-                                                    });
-                                                })
-                                            });
-                                        });
-                                    });
-                                });
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
-                }); 
+                });
             }
               
-        }         
+        }
     }
 
     render() {
@@ -95,12 +79,12 @@ export default class AddVriend extends React.Component {
         return (
             <View style={styles.container} >
                 <TextInput style={styles.addFriendInput}
-                 placeholder={I18n.t('searchnewfriend', {locale: this.getActiveUser.Language})}
+                 placeholder="Enter username of friend"
                  placeholderTextColor='#e2e8e5'
                  underlineColorAndroid="transparent"
-                 onChangeText={(username) => this.setState({username})} />
+                 onChangeText={(friendUsername) => this.setState({friendUsername})} />
                 <TouchableOpacity style={styles.addFriends} onPress={this.addFriend}>
-                    <Text style={styles.addFriendsText}>{I18n.t('addnewfriend', {locale: this.getActiveUser.Language})}</Text>
+                    <Text style={styles.addFriendsText}>Voeg toe! </Text>
                 </TouchableOpacity>
             </View>
 

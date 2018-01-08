@@ -13,17 +13,19 @@ export default class Groepen extends React.Component {
   static navigationOptions = {
     title: 'Groepen',
   };
-constructor(props){
-  super(props);
-  this.state = {
-    groupname: '',
-    groepen: [],
-    alleGroepen: []
-
+  constructor(props){
+    super(props);
+    this.state = {
+      username: this.props.navigation.state.params.username,
+      groupname: '',
+      groepen: [],
+      alleGroepen: []
+    }
   }
-  
-  this.ToonGroepen();
-}
+
+  componentWillMount(){
+    this.ToonGroepen();
+  }
 
   render() {
     var { navigate } = this.props.navigation;
@@ -41,7 +43,7 @@ constructor(props){
                         title={item.Groupname}
                         avatar={{uri: 'http://www.freeiconspng.com/uploads/profile-icon-9.png'}}
                         onPress={() => navigate("GroepPage", {groupname: this.state.groupname})} 
-                        />
+                  />
                 )}
                 keyExtractor={item => item.Groupname}
                 ListHeaderComponent={this.renderHeader}

@@ -32,10 +32,11 @@ export default class Login extends React.Component {
           const data = JSON.parse(value);
           if(data != null && data.Password == this.state.password) {
             let activeUser = {User: this.state.username};
-            AsyncStorage.setItem('activeUser', JSON.stringify(data));
+            AsyncStorage.setItem('activeUser', JSON.stringify(activeUser));
+            I18n.locale = data.Language;
             this.passwordInput.setNativeProps({text: ''});
             this.state.password = '';
-            this.props.navigation.navigate("Overzicht", {});
+            this.props.navigation.navigate("Overzicht", {username : this.state.username});
           }
           else {
             alert("Username and/or password are invalid.");

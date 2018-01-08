@@ -17,7 +17,8 @@ export default class Settings extends React.Component {
             email: '',
             password: '',
             vrienden: [],
-            language: 'nl',
+            language: 'en',
+            currency: 'Euro',
             groepen: []
         } 
     }
@@ -29,6 +30,7 @@ export default class Settings extends React.Component {
             Email: this.state.email,
             Vrienden: this.state.vrienden,
             Language: this.state.language,
+            Currency: this.state.currency,
             Groepen: this.state.groepen
         };
         if(this.state.username == '' || this.state.password == ''){
@@ -58,17 +60,17 @@ export default class Settings extends React.Component {
                 <KeyboardAvoidingView behavior="position">
                     <Text style={styles.Title}>KARAVAAN   </Text>
 
-                    <Text style={styles.labels}>{I18n.t('username', {locale: 'en'})}</Text>
+                    <Text style={styles.labels}>{I18n.t('username')}</Text>
                     <TextInput style={styles.input}
-                        placeholder={I18n.t('username', {locale: 'en'})}
+                        placeholder={I18n.t('username')}
                         placeholderTextColor='#e2e8e5'
                         underlineColorAndroid="transparent"
                         onChangeText={(username) => this.setState({username})}
                         onSubmitEditing={() => this.passwordInput.focus()}/>
 
-                    <Text style={styles.labels}>{I18n.t('password', {locale: 'en'})}</Text>
+                    <Text style={styles.labels}>{I18n.t('password')}</Text>
                     <TextInput style={styles.input}
-                        placeholder={I18n.t('password', {locale: 'en'})}
+                        placeholder={I18n.t('password')}
                         secureTextEntry
                         placeholderTextColor='#e2e8e5'
                         underlineColorAndroid="transparent"
