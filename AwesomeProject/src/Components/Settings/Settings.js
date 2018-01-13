@@ -13,7 +13,7 @@ export default class Settings extends React.Component {
     super(props);
     this.state = {
       currency: 'Euro',
-      language: ''
+      language: 'English'
     }
   }
 
@@ -65,13 +65,13 @@ export default class Settings extends React.Component {
       <View style={styles.container}>
 
 
-        <Text style={styles.label}>Taal:</Text>
+        <Text style={styles.label}>Taal: {this.state.language}</Text>
         <Picker selectedValue={this.state.language} onValueChange={this.setLanguage} style={styles.picker}>
           <Picker.Item label="Nederlands" value="Nederlands" />
           <Picker.Item label="Français" value="Français" />
           <Picker.Item label="English" value="English" />
         </Picker>
-        <Text style={styles.label}>Munteenheid: {this.state.language}</Text>
+        <Text style={styles.label}>Munteenheid: {this.state.currency}</Text>
         <Picker selectedValue = {this.state.currency} onValueChange = {this.updateCurrency} style={styles.picker}>
           <Picker.Item label = "Euro" value = "Euro" />
           <Picker.Item label = "Dollar" value = "Dollar" />

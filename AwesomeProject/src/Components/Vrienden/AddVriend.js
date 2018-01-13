@@ -8,69 +8,75 @@ const backAction = NavigationActions.back({key: 'Vrienden'});
 
 export default class AddVriend extends React.Component {
     static navigationOptions = {
-        title: 'AddVriend',
+        title: 'Add Friend',
     };
     constructor(props){
         super(props);
         this.state = {
-          username: '',
+            username: '',
         }
-      }
+    }
 
     addFriend = () => {
-
         if(this.state.username == '') alert("De gebruikersnaam is ongeldig.");
         else{
-          if (AsyncStorage.getItem(this.state.username)) {
-            AsyncStorage.getItem(this.state.username)
-            .then((value) => {
-              const data = JSON.parse(value);
-              if(data == null) {
-                alert("Deze gebruiker bestaat niet.");
-              }
-              else {
-                let activeUser;
-                AsyncStorage.getItem('activeUser')
-                    .then((value) => {
-                      const data2 = JSON.parse(value);
-                      if(data2 == null || this.state.username == data2.User) {
-                        alert("Deze gebruiker is ongeldig.");
-                      }
-                      else {
-                        activeUser = data2.User;
-                        AsyncStorage.getItem(activeUser).then((value) =>
-                        {
-                            const data3 = JSON.parse(value);
-                            const user = data3;
+            if (AsyncStorage.getItem(this.state.username)) {
+                AsyncStorage.getItem(this.state.username)
+                  .then((value) => {
+                    const friendData = JSON.parse(value);
+                    if(friendData == null) {
+                        alert("Deze gebruiker bestaat niet.");
+                    }
+                    else {
+                        AsyncStorage.getItem('activeUser')
+                          .then((value) => {
+                            const userData = JSON.parse(value);
                             let checkExists = false;
-                           for (const person of user.Vrienden) {
-                                if(person.Username == this.state.username) {
+                            if(userData == null || this.state.username == userData.Username) {
+                                alert("Deze gebruiker is ongeldig.");
+                                checkExists=true;
+                            }
+                            const activeUser = userData;
+                            const friend = friendData;
+                            for (const person of activeUser.Vrienden) {
+                                if(person.Username == friend.Username) {
                                     alert("Deze gebruiker is al een vriend.");
                                     checkExists = true;
                                 }
                             }
                             if(!checkExists) {
-                                user.Vrienden.push(data);
+                                activeUser.Vrienden.push(friendData);
+                                /*friend.Vrienden.push(userData);
 
-                                AsyncStorage.setItem(activeUser, JSON.stringify(data3), () => {
-                                    AsyncStorage.mergeItem(activeUser, JSON.stringify(user), () => {
-                                        AsyncStorage.getItem(activeUser, (err, result) => {
+                                AsyncStorage.setItem(friend.Username, JSON.stringify(friendData), () => {
+                                    AsyncStorage.mergeItem(friend.Username, JSON.stringify(friend), () => {
+                                        AsyncStorage.getItem(friend.Username, (err, result) => {
                                             console.log(result);
                                         });
                                     });
+                                });*/
+
+                                AsyncStorage.setItem(activeUser.Username, JSON.stringify(userData), () => {
+                                    AsyncStorage.mergeItem(activeUser.Username, JSON.stringify(activeUser), () => {
+                                        AsyncStorage.getItem(activeUser.Username, (err, result) => {
+                                            AsyncStorage.setItem("activeUser", JSON.stringify(userData), () => {
+                                                AsyncStorage.mergeItem("activeUser", JSON.stringify(activeUser), () => {
+                                                    AsyncStorage.getItem(activeUser.Username, (err, result) => {
+                                                        this.props.navigation.navigate("Vrienden", {});
+                                                    });
+                                                })
+                                            });
+                                        });
+                                    });
                                 });
-                                this.props.navigation.navigate("Vrienden", {});
-                           }
-                        }
-                        )}
-                      
-                    }); 
-              }
+                            }
+                        });
+                    }
+                }); 
+            }
               
-            });         
-          }
-        }  
-    } 
+        }         
+    }
 
     render() {
         var {navigate } = this.props.navigation;

@@ -19,6 +19,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo/vector-icons": "^6.2.2",
     "cors": "^2.8.4",
     "expo": "^21.0.0",
     "mobx": "^3.3.3",
@@ -27,10 +28,10 @@
     "react": "^16.0.0-alpha.12",
     "react-dom": "^16.2.0",
     "react-native": "^0.48.4",
-    "react-native-i18n": "^2.0.10",
     "react-native-elements": "^0.18.5",
+    "react-native-i18n": "^2.0.10",
     "react-native-vector-icons": "^4.4.3",
-    "react-navigation": "^1.0.0-beta.21",
+    "react-navigation": "^1.0.0-beta.22",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
