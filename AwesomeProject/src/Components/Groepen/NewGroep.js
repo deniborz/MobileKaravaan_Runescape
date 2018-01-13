@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, TextInput, Scr
 import { StackNavigator } from 'react-navigation';
 import Groepdes from './Groepdes';
 import Groepen from '../Groepen/Groepen';
+import I18n from 'react-native-i18n';
+
 const util = require('util');
 
 export default class NewGroep extends React.Component {
@@ -42,6 +44,15 @@ GroupRegistrationFunction = () =>{
     });
 
 }
+}
+
+getActiveUser = () => { 
+  if (AsyncStorage.getItem('activeUser')) {
+   AsyncStorage.getItem('activeUser')
+   .then((value) => {
+        const user = JSON.parse(value);});
+  }
+  return user;
 }
 
 addGroep = () =>{

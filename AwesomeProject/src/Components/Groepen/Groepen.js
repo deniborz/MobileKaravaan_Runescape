@@ -5,23 +5,27 @@ import Vrienden from '../Vrienden/Vrienden';
 import NewGroep from '../Groepen/NewGroep';
 import {List, ListItem, SearchBar} from 'react-native-elements';
 import { StackNavigator } from 'react-navigation';
+import I18n from 'react-native-i18n';
+
 const util = require('util');
 //@observer
 export default class Groepen extends React.Component {
   static navigationOptions = {
     title: 'Groepen',
   };
-constructor(props){
-  super(props);
-  this.state = {
-    groupname: '',
-    groepen: [],
-    alleGroepen: []
-
+  constructor(props){
+    super(props);
+    this.state = {
+      username: this.props.navigation.state.params.username,
+      groupname: '',
+      groepen: [],
+      alleGroepen: []
+    }
   }
-  
-  this.ToonGroepen();
-}
+
+  componentWillMount(){
+    this.ToonGroepen();
+  }
 
   render() {
     var { navigate } = this.props.navigation;
@@ -39,7 +43,7 @@ constructor(props){
                         title={item.Groupname}
                         avatar={{uri: 'http://www.freeiconspng.com/uploads/profile-icon-9.png'}}
                         onPress={() => navigate("GroepPage", {groupname: this.state.groupname})} 
-                        />
+                  />
                 )}
                 keyExtractor={item => item.Groupname}
                 ListHeaderComponent={this.renderHeader}
@@ -47,15 +51,25 @@ constructor(props){
                 </List>
         </View>
         <TouchableOpacity style={styles.addGroups} onPress={() => navigate("NewGroep", {})}>
-          <Text style={styles.addGroupsText}>Voeg nieuwe groep toe </Text>
+          <Text style={styles.addGroupsText}>{I18n.t('addgroup', {locale: this.getActiveUser.Language})}</Text>
         </TouchableOpacity>
       </View>
     );
   }
+
+  getActiveUser = () => { 
+    if (AsyncStorage.getItem('activeUser')) {
+     AsyncStorage.getItem('activeUser')
+     .then((value) => {
+          const user = JSON.parse(value);});
+    }
+    return user;
+  }
   
   renderHeader = () => {
-    return <SearchBar placeholder="Search user" lightTheme containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
+    return <SearchBar placeholder={I18n.t('searchgroup', {locale: this.getActiveUser.Language})} lightTheme containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
 }
+
 searchText = (e) => {
   const text = e.toLowerCase()
   /*const data = this.state.vrienden

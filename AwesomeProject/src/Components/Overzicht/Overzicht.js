@@ -7,54 +7,39 @@ import I18n from 'react-native-i18n';
 
 const util = require('util');
 
-let listener = null;
-
 export default class Overzicht extends React.Component {
   static navigationOptions = {
-    title: 'Overzicht',
+    title: "Overzicht",
   };
   constructor(props){
     super(props);
     this.state = {
-      username: ''
+      username: this.props.navigation.state.params.username,
     }
     Keyboard.dismiss();
-    this.setActiveUser();
-}
+  }
+
+  componentWillMount(){
+    console.log("is this working?");
+  }
 
   render() {
     var { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Text style={styles.welcomeButtonText}>Welkom {this.state.username}</Text> 
-        <TouchableOpacity style={styles.navigationButton} onPress={() => navigate("Groep", {})}>
-          <Text style={styles.navigationButtonText}>Groepen</Text>
+        <Text style={styles.welcomeButtonText}>{I18n.t('greet')} {this.state.username}</Text> 
+        <TouchableOpacity style={styles.navigationButton} onPress={() => navigate("Groep", {username : this.state.username})}>
+          <Text style={styles.navigationButtonText}>{I18n.t('groups')}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navigationButton} onPress={() => navigate("Vrienden", {})}>
-          <Text style={styles.navigationButtonText}>Vrienden </Text>
+        <TouchableOpacity style={styles.navigationButton} onPress={() => navigate("Vrienden", {username : this.state.username})}>
+          <Text style={styles.navigationButtonText}>{I18n.t('friends')} </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navigationButton} onPress={() => navigate("Instellingen", {})}>
-          <Text style={styles.navigationButtonText}>Instellingen</Text>
+        <TouchableOpacity style={styles.navigationButton} onPress={() => navigate("Instellingen", {username : this.state.username})}>
+          <Text style={styles.navigationButtonText}>{I18n.t('settings')}</Text>
         </TouchableOpacity>
       </View>
     );
   }
-
-  setActiveUser = () => {
-    if (AsyncStorage.getItem('activeUser')) {
-        AsyncStorage.getItem('activeUser')
-        .then((value) => {
-            const data = JSON.parse(value);
-            if(data == null) {
-            alert("De gebruikersnaam/wachtwoord is ongeldig.");
-            }
-            else {
-              this.setState({username: data.User});
-            }
-        });
-      }
-  }
-
 }
 
 const styles = StyleSheet.create({
