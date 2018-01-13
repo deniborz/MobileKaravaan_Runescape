@@ -13,6 +13,7 @@ import Settings from './src/Components/Settings/Settings';
 import GroepPage from './src/Components/Groepen/GroepPage';
 import RegisterUser from './src/Components/Login/RegisterUser';
 import VeranderCurrency from './src/Components/Settings/VeranderCurrency';
+import Rekening from './src/Components/Groepen/Rekening';
 
 
 import I18n from 'react-native-i18n';
@@ -34,6 +35,7 @@ const Navigation = StackNavigator({
   GroepPage: { screen: GroepPage },
   RegisterUser: { screen: RegisterUser },
   VeranderCurrency: { screen: VeranderCurrency},
+  Rekening: {screen: Rekening}
 })
 
 I18n.fallbacks = true;

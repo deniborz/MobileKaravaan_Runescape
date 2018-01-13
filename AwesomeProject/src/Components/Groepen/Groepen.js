@@ -72,7 +72,7 @@ export default class Groepen extends React.Component {
 
 searchText = (e) => {
   const text = e.toLowerCase()
-  /*const data = this.state.vrienden
+  const data = this.state.vrienden
   const filteredName = data.filter((item) => {
     return item.Username.toLowerCase().match(text)
   })
@@ -90,7 +90,7 @@ searchText = (e) => {
       noData: false,
       data: filteredName
     })
-  }*/
+  }
 }
 
 ToonGroepen = () => {

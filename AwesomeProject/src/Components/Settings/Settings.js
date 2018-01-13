@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#4d9280',
-
   },
   knop: {
     width: '80%',

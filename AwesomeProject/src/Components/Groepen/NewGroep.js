@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, TextInput, ScrollView, AsyncStorage, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, TextInput, FlatList, ScrollView, AsyncStorage, KeyboardAvoidingView, Picker } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import {List, ListItem, SearchBar} from 'react-native-elements';
 import Groepdes from './Groepdes';
 import Groepen from '../Groepen/Groepen';
 import I18n from 'react-native-i18n';
@@ -17,13 +18,29 @@ export default class NewGroep extends React.Component {
          super(props)
          this.state = {
          groupname: '',
+         rekening: '',
+         currency: '',
+         vrienden: [],
+         username: this.props.navigation.state.params.username
                }
                this.setActiveUser();
   }
+  
+getActiveUser = () => { 
+  if (AsyncStorage.getItem('activeUser')) {
+   AsyncStorage.getItem('activeUser')
+   .then((value) => {
+        const user = JSON.parse(value);});
+  }
+  return user;
+}
 
 GroupRegistrationFunction = () =>{
     let newGroup = {
-        Groupname: this.state.groupname
+        Groupname: this.state.groupname,
+        Rekening: this.state.rekening,
+        Currency: this.state.currency,
+        Vrienden: this.state.vrienden
         
     };
     if(this.state.groupname == ''){
@@ -44,15 +61,6 @@ GroupRegistrationFunction = () =>{
     });
 
 }
-}
-
-getActiveUser = () => { 
-  if (AsyncStorage.getItem('activeUser')) {
-   AsyncStorage.getItem('activeUser')
-   .then((value) => {
-        const user = JSON.parse(value);});
-  }
-  return user;
 }
 
 addGroep = () =>{
@@ -96,7 +104,29 @@ addGroep = () =>{
         
       }         
 
+addFriendToGroupFunction = () =>{
+  let newFriend = {
+      name: this.state.groupname,    
+  };
+  if(this.state.groupname == ''){
+    alert("Geen groepsnaam opgegeven.");
+  }
+  else{
+  AsyncStorage.getItem(this.state.groupname)
+  .then((value) => {
+    const data = JSON.parse(value);
+    if (data == null) {
+      AsyncStorage.setItem(newGroup.Groupname, JSON.stringify(newGroup));
+      this.addGroep();
+      
+  }
+    else {
+      alert('Groupname already exists');
+    }
+  });
 
+}
+}
 
 
 render() {
@@ -110,13 +140,40 @@ render() {
                 <Text style={styles.labels}>Groepsnaam</Text>
                 <TextInput style={styles.input}
                     placeholder="Groepsnaam"
-                    placeholderTextColor='#3d7ca9'
+                    placeholderTextColor='#e2e8e5'
                     underlineColorAndroid="transparent"
                     onChangeText={(groupname) => this.setState({groupname})}
                     />
                     <Text style={styles.labels}> Vrienden</Text>
+                    <TextInput style={styles.input}
+                          placeholder="Search user"
+                          placeholderTextColor='#e2e8e5'
+                          underlineColorAndroid="transparent"
+                          onChangeText={this.addSearchbar}
+                          />
+                    <List automaticallyAdjustContentInsets={false}>
+                    <FlatList 
+                        data={this.state.vrienden}
+                        renderItem={({item}) =>(
+                          <ListItem 
+                                containerStyle={{borderBottomColor: '#4d9280'}}
+                                roundAvatar
+                                component={TouchableHighlight}
+                                title={item.Groupname}
+                                avatar={{uri: 'http://www.freeiconspng.com/uploads/profile-icon-9.png'}}
+                                onPress={() => navigate("GroepPage", {groupname: this.state.groupname})} 
+                          />
+                        )}
+                        keyExtractor={item => item.Groupname}
+                        ListHeaderComponent={this.renderHeader}
+                        />
+                        </List>
                     <Text style={styles.labels}> Currencies</Text>
-
+                    <Picker selectedValue={this.state.currency} onValueChange={this.updateCurrency} style={styles.picker}>
+          <Picker.Item label="Euro (€)" value="Euro (€)" />
+          <Picker.Item label="Dollar ($)" value="Dollar ($)" />
+          <Picker.Item label="Pound (£)" value="Pound (£)" />
+        </Picker>
 
             </KeyboardAvoidingView>
 
@@ -125,6 +182,9 @@ render() {
 
         </View >
     );
+}
+updateCurrency = (currency) => {
+  this.setState({ currency: currency });
 }
 
 setActiveUser = () => {
@@ -141,12 +201,60 @@ setActiveUser = () => {
       });
     }
 }
+
+addSearchbar = () => {
+  return <TextInput style={styles.input}
+      placeholder="Search user"
+      placeholderTextColor='#3d7ca9'
+      underlineColorAndroid="transparent"
+      onChangeText={this.addSearchbar}
+      />
+  }
+
+searchText = (e) => {
+  const text = e.toLowerCase();
+ // const data = this.getVrienden();
+  /*const filteredName = data.filter((item) => {
+    return item.Username.toLowerCase().match(text)
+  });
+  if (!text || text === '') {
+    this.setState({
+      vrienden: data
+    });
+  } else if (!Array.isArray(filteredName) && !filteredName.length) {
+    this.setState({
+      vrienden: []
+    });
+  } else if (Array.isArray(filteredName)) {
+    this.setState({
+      vrienden: filteredName
+    });
+  }*/
+}
+
+getVrienden = () => {
+  if (AsyncStorage.getItem(this.state.username)) {
+      AsyncStorage.getItem(this.state.username)
+      .then((value) => {
+          let userData = JSON.parse(value);
+          if(userData == null) {
+              alert("Er is een probleem met de actieve gebruiker.");
+          }
+          const vrienden = userData.Vrienden;
+          if(vrienden[0] != null) {
+              return vrienden;
+          }
+      });
+  }
+}
 }  
 
 const styles = StyleSheet.create({
 container: {
-    flex: 1,
-    backgroundColor: '#659ec7',
+  flex: 1,
+  backgroundColor: '#4d9280',
+  alignItems: 'center',
+  justifyContent: 'space-between'
 },
 Title: {
     textAlign: 'center',
@@ -157,29 +265,43 @@ Title: {
 labels: {
     marginLeft: '10%',
     marginTop: 5,
-    marginBottom: 5
+    marginBottom: 5,
+    color: '#e2e8e5'
 },
 input: {
-    height: 40,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    width: '80%',
-    marginLeft: '10%'
+  height: 40,
+  backgroundColor: 'rgba(255,255,255,0.3)',
+  marginBottom: 10,
+  paddingHorizontal: 10,
+  borderRadius: 5,
+  borderWidth: 1,
+  borderColor: '#e2e8e5',
+  color: '#e2e8e5'
 },
 buttonContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    backgroundColor: '#245611',
-    paddingVertical: 25,
-    height: 75,
-    width: '100%'
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  height: 50,
+  width: '100%',
+  backgroundColor: '#e2e8e5',
+  paddingVertical: 25,
+  height: '15%'
 },
 buttonText: {
-    textAlign: 'center',
-    color: '#FFFFFF'
+  textAlign: 'center',
+  color: '#4d9280',
+  fontSize: 25
+},
+picker: {
+  width: '80%',
+  backgroundColor: 'rgba(255,255,255,0.3)',
+  borderRadius: 5,
+  borderWidth: 1,
+  borderColor: '#e2e8e5',
+  color: '#e2e8e5',
+  paddingVertical: 10,
+  margin: 20
 }
 });
   /*constructor(props) {
