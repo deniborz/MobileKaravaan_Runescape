@@ -12,6 +12,7 @@ export default class GroepPage extends React.Component {
     constructor(props){
         super(props);
         this.state={
+            username: this.props.navigation.state.params.username,
             groupname: this.props.navigation.state.params.groupname,
             rekeningName: '',
         }
@@ -30,12 +31,13 @@ export default class GroepPage extends React.Component {
                         containerStyle={{borderBottomColor: '#4d9280'}}
                         roundAvatar
                         component={TouchableHighlight}
-                        title={item.Groupname}
+                        title={item.Username}
+                        title={item.Email}
                         avatar={{uri: 'http://www.freeiconspng.com/uploads/profile-icon-9.png'}}
                         onPress={() => navigate("Rekening", {name: this.state.rekeningName})} 
                   />
                 )}
-                keyExtractor={item => item.Groupname}
+                keyExtractor={item => item.Username}
                 ListHeaderComponent={this.renderHeader}
                 />
                 </List>
@@ -46,10 +48,49 @@ export default class GroepPage extends React.Component {
             </View>
         );
     }
-}
 
-renderHeader = () => {
-    return <SearchBar placeholder={I18n.t('searchgroup', {locale: this.getActiveUser.Language})} lightTheme containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
+    renderHeader = () => {
+        return <SearchBar placeholder={I18n.t('searchgroup')} lightTheme onChangeText={this.searchText} containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
+    }
+
+    searchText = (e) => {
+        const text = e.toLowerCase();
+        const data = this.state.alleGroepsleden;
+        const filteredName = data.filter((item) => {
+        return item.Username.toLowerCase().match(text)
+        });
+        if (!text || text === '') {
+        this.setState({
+            groepsleden: this.state.alleGroepsleden
+        });
+        } else if (!Array.isArray(filteredName) && !filteredName.length) {
+        this.setState({
+            groepsleden: []
+        });
+        } else if (Array.isArray(filteredName)) {
+        this.setState({
+            groepsleden: filteredName
+        });
+        }
+    }
+
+    ToonGroepsleden = () => {
+        if (AsyncStorage.getItem(this.state.username)) {
+            AsyncStorage.getItem(this.state.username)
+            .then((value) => {
+                let userData = JSON.parse(value);
+                if(userData == null) {
+                    alert("Er is een probleem met de actieve gebruiker.");
+                }
+                const groepsleden = userData.Groepsleden;
+                console.log(groepsleden);
+                if(groepsleden[0] != null) {
+                    this.setState({groepsleden: groepsleden});
+                    this.setState({Groepsleden: groepsleden});
+                }
+            });
+        }
+    }
 }
 
 const styles = StyleSheet.create({

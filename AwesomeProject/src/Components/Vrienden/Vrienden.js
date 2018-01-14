@@ -21,6 +21,10 @@ export default class Vrienden extends React.Component {
         }
     }
 
+    componentWillMount() {
+        this.ToonVrienden();
+    }
+
     render() {
         var { navigate } = this.props.navigation;
         return (
@@ -74,7 +78,7 @@ export default class Vrienden extends React.Component {
             vrienden: filteredName
           });
         }
-      }
+    }
 
     ToonVrienden = () => {
         if (AsyncStorage.getItem(this.state.username)) {
@@ -85,6 +89,7 @@ export default class Vrienden extends React.Component {
                     alert("Er is een probleem met de actieve gebruiker.");
                 }
                 const vrienden = userData.Vrienden;
+                console.log(vrienden);
                 if(vrienden[0] != null) {
                     this.setState({vrienden: vrienden});
                     this.setState({alleVrienden: vrienden});

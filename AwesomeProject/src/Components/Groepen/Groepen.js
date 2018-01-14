@@ -42,7 +42,7 @@ export default class Groepen extends React.Component {
                         component={TouchableHighlight}
                         title={item.Groupname}
                         avatar={{uri: 'http://www.freeiconspng.com/uploads/profile-icon-9.png'}}
-                        onPress={() => navigate("GroepPage", {groupname: this.state.groupname})} 
+                        onPress={() => navigate("GroepPage", {groupname: this.state.groupname, username : this.state.username})} 
                   />
                 )}
                 keyExtractor={item => item.Groupname}
@@ -50,8 +50,8 @@ export default class Groepen extends React.Component {
                 />
                 </List>
         </View>
-        <TouchableOpacity style={styles.addGroups} onPress={() => navigate("NewGroep", {})}>
-          <Text style={styles.addGroupsText}>{I18n.t('addgroup', {locale: this.getActiveUser.Language})}</Text>
+        <TouchableOpacity style={styles.addGroups} onPress={() => navigate("NewGroep", {username : this.state.username})}>
+          <Text style={styles.addGroupsText}>{I18n.t('addgroup')}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -67,61 +67,46 @@ export default class Groepen extends React.Component {
   }
   
   renderHeader = () => {
-    return <SearchBar placeholder={I18n.t('searchgroup', {locale: this.getActiveUser.Language})} lightTheme containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
+    return <SearchBar placeholder={I18n.t('searchgroup')} lightTheme containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
 }
 
 searchText = (e) => {
   const text = e.toLowerCase()
-  const data = this.state.vrienden
+  const data = this.state.groepen
   const filteredName = data.filter((item) => {
     return item.Username.toLowerCase().match(text)
   })
   if (!text || text === '') {
     this.setState({
-      data: alleVrienden
+      data: alleGroepen
     })
   } else if (!Array.isArray(filteredName) && !filteredName.length) {
-    // set no data flag to true so as to render flatlist conditionally
     this.setState({
-      vrienden: []
+      groepen: []
     })
   } else if (Array.isArray(filteredName)) {
     this.setState({
-      noData: false,
-      data: filteredName
-    })
+      groepen: filteredName
+    });
   }
 }
 
 ToonGroepen = () => {
-  if (AsyncStorage.getItem('activeUser')) {
-      AsyncStorage.getItem('activeUser')
-      .then((value) => {
-          const data = JSON.parse(value);
-          if(data == null) {
-          alert("De gebruikersnaam/wachtwoord is ongeldig.");
-          }
-          else {
-              if (AsyncStorage.getItem(data.User)) {
-                  AsyncStorage.getItem(data.User)
-                  .then((value) => {
-                      const data2 = JSON.parse(value);
-                      if(data2 == null) {
-                      alert("De gebruikersnaam is ongeldig.");
-                      }
-                      else {
-                          const groepen = data2.Groepen;
-                          if(groepen[0] != null) {
-                              this.setState({groepen: groepen});
-                              this.setState({alleGroepen: groepen});
-                          }
-                          return(groepen);
-                      }
-                  });         
-              }
-          }
-      });
-  }        
+  if (AsyncStorage.getItem(this.state.username)) {
+    AsyncStorage.getItem(this.state.username)
+    .then((value) => {
+        let userData = JSON.parse(value);
+        if(userData == null) {
+            alert("Er is een probleem met de actieve gebruiker.");
+        }
+        const groepen = userData.Groepen;
+        console.log(groepen);
+        if(groepen[0] != null) {
+            this.setState({groepen: groepen});
+            this.setState({alleGroepen: groepen});
+        }
+    });
+}
 }
 }
 const styles = StyleSheet.create({

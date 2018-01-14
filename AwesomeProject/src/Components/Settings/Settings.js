@@ -39,7 +39,6 @@ export default class Settings extends React.Component {
           this.setState({ currency: userData.Currency });
       });
     }
-    this.props.navigation.navigator.replacePreviousAndPop("Overzicht");
   }
 
   updateCurrency = (currency) => {
