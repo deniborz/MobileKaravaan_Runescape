@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, Text, View, Image, BackHandler, TouchableOpacity, AsyncStorage, FlatList} from 'react-native';
+import { StyleSheet, Text, View, Image, BackHandler, TouchableOpacity, Keyboard, AsyncStorage, FlatList} from 'react-native';
 import { StackNavigator, NavigationActions } from 'react-navigation';
 import {List, ListItem, SearchBar} from 'react-native-elements';
 import AddVriend from '../Vrienden/AddVriend';
@@ -19,6 +19,7 @@ export default class Vrienden extends React.Component {
           vrienden: [],
           alleVrienden: []
         }
+        Keyboard.dismiss();
     }
 
     componentWillMount() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, TextInput, FlatList, ScrollView, AsyncStorage, KeyboardAvoidingView, Picker } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, TextInput, FlatList, ScrollView, AsyncStorage, KeyboardAvoidingView, Picker, TouchableHighlight } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import {List, ListItem, SearchBar} from 'react-native-elements';
 import Groepdes from './Groepdes';
@@ -25,6 +25,10 @@ export default class NewGroep extends React.Component {
                }
                this.setActiveUser();
   }
+  
+  componentWillMount() {
+    this.ToonVrienden();
+}
   
 getActiveUser = () => { 
   if (AsyncStorage.getItem('activeUser')) {
@@ -133,7 +137,7 @@ render() {
     var { navigate } = this.props.navigation;
     return (
         <View style={styles.container}>
-
+          
                 <Text style={styles.labels}>Groepsnaam</Text>
                 <TextInput style={styles.input}
                     placeholder="Groepsnaam"
@@ -149,6 +153,7 @@ render() {
                           onPress={this.addSearchbar}
                           onChangeText={this.addSearchbar}
                           />
+                          <View style={styles.friendList}>
                     <List automaticallyAdjustContentInsets={false}>
                     <FlatList 
                         data={this.state.vrienden}
@@ -157,7 +162,7 @@ render() {
                                 containerStyle={{borderBottomColor: '#4d9280'}}
                                 roundAvatar
                                 component={TouchableHighlight}
-                                title={item.Groupname}
+                                title={item.Username}
                                 avatar={{uri: 'http://www.freeiconspng.com/uploads/profile-icon-9.png'}}
                                 onPress={() => navigate("GroepPage", {groupname: this.state.groupname})} 
                           />
@@ -173,7 +178,7 @@ render() {
           <Picker.Item label="Pound (£)" value="Pound (£)" />
         </Picker>
 
-          
+          </View>
 
             <TouchableOpacity style={styles.buttonContainer} onPress={this.GroupRegistrationFunction}>
                 <Text style={styles.buttonText}>Maak groep</Text></TouchableOpacity>
@@ -198,6 +203,24 @@ setActiveUser = () => {
           }
       });
     }
+}
+
+ToonVrienden = () => {
+  if (AsyncStorage.getItem(this.state.username)) {
+      AsyncStorage.getItem(this.state.username)
+      .then((value) => {
+          let userData = JSON.parse(value);
+          if(userData == null) {
+              alert("Er is een probleem met de actieve gebruiker.");
+          }
+          const vrienden = userData.Vrienden;
+          console.log(vrienden);
+          if(vrienden[0] != null) {
+              this.setState({vrienden: vrienden});
+              this.setState({alleVrienden: vrienden});
+          }
+      });
+  }
 }
 
 addSearchbar = () => {
@@ -252,25 +275,17 @@ container: {
   flex: 1,
   backgroundColor: '#4d9280',
   alignItems: 'center',
-  justifyContent: 'space-between'
-},
-Title: {
-    textAlign: 'center',
-    marginTop: 100,
-    marginBottom: 25,
-    fontSize: 50
+  
 },
 labels: {
     marginTop: 5,
     marginBottom: 5,
-    marginLeft: '-20%',
+    width: '80%',
     color: '#e2e8e5'
 },
 input: {
   height: 40,
   backgroundColor: 'rgba(255,255,255,0.3)',
-  marginBottom: 10,
-  paddingHorizontal: 10,
   borderRadius: 5,
   borderWidth: 1,
   borderColor: '#e2e8e5',
@@ -301,6 +316,11 @@ picker: {
   color: '#e2e8e5',
   paddingVertical: 10,
   margin: 20
+},
+friendList: {
+  width: '80%',
+  height: '30%',
+  marginTop: '-6%'
 }
 });
   /*constructor(props) {

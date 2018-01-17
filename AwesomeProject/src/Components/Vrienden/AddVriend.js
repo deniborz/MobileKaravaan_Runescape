@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Alert, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Alert, Keyboard, AsyncStorage } from 'react-native';
 import { StackNavigator, NavigationActions } from 'react-navigation';
 import Vrienden from '../Vrienden/Vrienden';
 import Overzicht from '../Overzicht/Overzicht';
@@ -17,6 +17,7 @@ export default class AddVriend extends React.Component {
             username: this.props.navigation.state.params.username,
             friendUsername: ''
         }
+        Keyboard.dismiss();
     }
 
     componentWillMount() {
