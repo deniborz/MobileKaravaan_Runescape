@@ -134,9 +134,6 @@ render() {
     return (
         <View style={styles.container}>
 
-            <KeyboardAvoidingView behavior="position">
-                <Text style={styles.Title}>KARAVAAN   </Text>
-
                 <Text style={styles.labels}>Groepsnaam</Text>
                 <TextInput style={styles.input}
                     placeholder="Groepsnaam"
@@ -149,6 +146,7 @@ render() {
                           placeholder="Search user"
                           placeholderTextColor='#e2e8e5'
                           underlineColorAndroid="transparent"
+                          onPress={this.addSearchbar}
                           onChangeText={this.addSearchbar}
                           />
                     <List automaticallyAdjustContentInsets={false}>
@@ -175,7 +173,7 @@ render() {
           <Picker.Item label="Pound (£)" value="Pound (£)" />
         </Picker>
 
-            </KeyboardAvoidingView>
+          
 
             <TouchableOpacity style={styles.buttonContainer} onPress={this.GroupRegistrationFunction}>
                 <Text style={styles.buttonText}>Maak groep</Text></TouchableOpacity>
@@ -213,8 +211,8 @@ addSearchbar = () => {
 
 searchText = (e) => {
   const text = e.toLowerCase();
- // const data = this.getVrienden();
-  /*const filteredName = data.filter((item) => {
+  const data = this.getVrienden();
+  const filteredName = data.filter((item) => {
     return item.Username.toLowerCase().match(text)
   });
   if (!text || text === '') {
@@ -229,7 +227,7 @@ searchText = (e) => {
     this.setState({
       vrienden: filteredName
     });
-  }*/
+  }
 }
 
 getVrienden = () => {
@@ -263,9 +261,9 @@ Title: {
     fontSize: 50
 },
 labels: {
-    marginLeft: '10%',
     marginTop: 5,
     marginBottom: 5,
+    marginLeft: '-20%',
     color: '#e2e8e5'
 },
 input: {
@@ -276,7 +274,8 @@ input: {
   borderRadius: 5,
   borderWidth: 1,
   borderColor: '#e2e8e5',
-  color: '#e2e8e5'
+  color: '#e2e8e5',
+  width: '80%'
 },
 buttonContainer: {
   position: 'absolute',

@@ -27,6 +27,7 @@ export default class Overzicht extends React.Component {
     var { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
+      
         <Text style={styles.welcomeButtonText}>{I18n.t('greet')} {this.state.username}</Text> 
         <TouchableOpacity style={styles.navigationButton} onPress={() => navigate("Groep", {username : this.state.username})}>
           <Text style={styles.navigationButtonText}>{I18n.t('groups')}</Text>
@@ -37,7 +38,8 @@ export default class Overzicht extends React.Component {
         <TouchableOpacity style={styles.navigationButton} onPress={() => navigate("Instellingen", {username : this.state.username})}>
           <Text style={styles.navigationButtonText}>{I18n.t('settings')}</Text>
         </TouchableOpacity>
-      </View>
+        </View>
+      
     );
   }
 }
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#4d9280',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   navigationButton: {
     width: '75%',

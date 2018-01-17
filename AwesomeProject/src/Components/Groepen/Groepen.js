@@ -41,7 +41,7 @@ export default class Groepen extends React.Component {
                         roundAvatar
                         component={TouchableHighlight}
                         title={item.Groupname}
-                        avatar={{uri: 'http://www.freeiconspng.com/uploads/profile-icon-9.png'}}
+                        avatar={{uri: 'http://www.freeiconspng.com/uploads/black-white-group-png-icon-3.png'}}
                         onPress={() => navigate("GroepPage", {groupname: this.state.groupname, username : this.state.username})} 
                   />
                 )}
@@ -67,18 +67,18 @@ export default class Groepen extends React.Component {
   }
   
   renderHeader = () => {
-    return <SearchBar placeholder={I18n.t('searchgroup')} lightTheme containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
+    return <SearchBar placeholder={I18n.t('searchgroup')} onChangeText={this.searchText} lightTheme containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
 }
 
 searchText = (e) => {
   const text = e.toLowerCase()
-  const data = this.state.groepen
+  const data = this.state.alleGroepen
   const filteredName = data.filter((item) => {
-    return item.Username.toLowerCase().match(text)
+    return item.Groupname.toLowerCase().match(text)
   })
   if (!text || text === '') {
     this.setState({
-      data: alleGroepen
+      groepen: this.state.alleGroepen
     })
   } else if (!Array.isArray(filteredName) && !filteredName.length) {
     this.setState({

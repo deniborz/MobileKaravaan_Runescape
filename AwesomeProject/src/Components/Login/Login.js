@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     color: '#e2e8e5'
   },
   containerForm: {
-    marginTop: '50%',
+    marginTop: '45%',
     padding: 20
   },
   Title: {

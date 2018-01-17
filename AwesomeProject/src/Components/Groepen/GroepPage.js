@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import {List, ListItem, SearchBar} from 'react-native-elements';
-
+import I18n from 'react-native-i18n';
 import Vrienden from '../Vrienden/Vrienden';
 import { StackNavigator } from 'react-navigation';
 const util = require('util');
@@ -23,6 +23,7 @@ export default class GroepPage extends React.Component {
         var { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
+            <View style={styles.groupList}>
                 <List automaticallyAdjustContentInsets={false}>
             <FlatList 
                 data={this.state.groepen}
@@ -41,6 +42,7 @@ export default class GroepPage extends React.Component {
                 ListHeaderComponent={this.renderHeader}
                 />
                 </List>
+                </View>
                 <TouchableOpacity style={styles.addGroup} onPress={() => navigate("Rekening", {})}>
                     <Text style={styles.addGroupText}>Voeg een nieuwe rekening toe </Text>
                 </TouchableOpacity>
@@ -50,7 +52,7 @@ export default class GroepPage extends React.Component {
     }
 
     renderHeader = () => {
-        return <SearchBar placeholder={I18n.t('searchgroup')} lightTheme onChangeText={this.searchText} containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
+        return <SearchBar placeholder={I18n.t('searchgroup')} lightTheme onChangeText={this.searchText} containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}} style={styles.searchbar} />
     }
 
     searchText = (e) => {
@@ -126,5 +128,10 @@ const styles = StyleSheet.create({
     lel: {
         fontSize: 50,
         marginTop: 50
-    }
+    },
+    groupList: {
+        width: '100%',
+        height: '90%',
+        marginTop: '-6%'
+      }
 });
