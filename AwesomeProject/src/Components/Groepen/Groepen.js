@@ -42,7 +42,7 @@ export default class Groepen extends React.Component {
                         component={TouchableHighlight}
                         title={item.Groupname}
                         avatar={{uri: 'http://www.freeiconspng.com/uploads/black-white-group-png-icon-3.png'}}
-                        onPress={() => navigate("GroepPage", {groupname: this.state.groupname, username : this.state.username})} 
+                        onPress={() => navigate("GroepPage", {groupname: item.Groupname, username : this.state.username})} 
                   />
                 )}
                 keyExtractor={item => item.Groupname}

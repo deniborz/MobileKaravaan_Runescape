@@ -51,6 +51,7 @@ export default class Login extends React.Component {
     var { navigate } = this.props.navigation;
     return (
       <KeyboardAvoidingView behavior="position" style={styles.container}>
+     
           <Text style={styles.logo}>Karavaan</Text>
           <View style={styles.containerForm}>
             <TextInput placeholder={I18n.t('username', {locale: 'en'})}
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '40%',
-    left: '20%',
+    left: '15%',
     color: '#e2e8e5',
     fontSize: 60
   },

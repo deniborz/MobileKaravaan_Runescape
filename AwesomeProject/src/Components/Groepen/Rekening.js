@@ -10,11 +10,13 @@ export default class Login extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      groupname: this.props.navigation.state.params.groupname,
       name: '',
       vrienden: [],
       currency: '',
       date: '',
       wayOfSplit: '',
+      bedrag: ''
     }
   }
   
@@ -111,6 +113,13 @@ addGroep = () =>{
                     underlineColorAndroid="transparent"
                     onChangeText={(name) => this.setState({name})}
                     />
+                    <Text style={styles.labels}>Bedrag:</Text>
+        <TextInput style={styles.input}
+                    placeholder="Bedrag"
+                    placeholderTextColor='#e2e8e5'
+                    underlineColorAndroid="transparent"
+                    onChangeText={(bedrag) => this.setState({bedrag})}
+                    />
         <Text style={styles.labels}>Currency:</Text>
             <Picker selectedValue={this.state.currency} onValueChange={this.updateCurrency} style={styles.picker}>
             <Picker.Item label="Euro (€)" value="Euro (€)" />
@@ -153,16 +162,15 @@ const styles = StyleSheet.create({
 },
 input: {
   width: '80%',
-  height: 40,
+  height: 30,
   backgroundColor: 'rgba(255,255,255,0.3)',
-  marginBottom: 10,
   paddingHorizontal: 10,
   borderRadius: 5,
   borderWidth: 1,
   borderColor: '#e2e8e5',
   color: '#e2e8e5',
-  paddingVertical: 10,
-  margin: 20
+  paddingVertical: 5,
+  marginLeft: '10%'
 },
   addRekening: {
     position: 'absolute',
@@ -186,7 +194,7 @@ picker: {
     borderWidth: 1,
     borderColor: '#e2e8e5',
     color: '#e2e8e5',
-    paddingVertical: 10,
-    margin: 20
+    paddingVertical: 5,
+    marginLeft: '10%'
   }
 });

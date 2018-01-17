@@ -5,8 +5,8 @@ export default {
     invalid: 'Username and/or password are invalid.',
     //overzicht
     greet: 'Welcome',
-    groups: 'My groups',
-    friends: 'My Friends',
+    groups: 'Groups',
+    friends: 'Friends',
     settings: 'Settings',
     //settings
     lang: 'Language:',

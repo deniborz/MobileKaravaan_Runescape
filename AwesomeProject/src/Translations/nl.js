@@ -5,8 +5,8 @@ export default {
       invalid: 'Gebruikersnaam en/of wachtwoord zijn ongeldig.',      
       //overzicht
       greet: 'Welkom',
-      groups: 'Mijn groepen',
-      friends: 'Mijn vrienden',
+      groups: 'Groepen',
+      friends: 'Vrienden',
       settings: 'Instellingen',
       //settings
       lang: 'Taal:',

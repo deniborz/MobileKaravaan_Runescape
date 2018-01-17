@@ -9,6 +9,7 @@ const util = require('util');
 export default class Settings extends React.Component {
   static navigationOptions = {
     title: 'Settings',
+    
   };
 
   constructor(props) {
@@ -106,28 +107,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#4d9280',
   },
-  knop: {
-    width: '80%',
-    backgroundColor: '#245611',
-    paddingVertical: 10,
-    margin: 20,
-    borderRadius: 5,
-    alignSelf: 'center'
-  },
-  knopText: {
-    textAlign: 'center',
-    color: '#fff'
-  },
-  text: {
-    fontSize: 30,
-    alignSelf: 'center',
-    color: 'red'
-  },
   label: {
     color: '#e2e8e5',
-    margin: 20,
+    marginLeft: 20,
     fontSize: 30
-
   },
   picker: {
     width: '80%',
@@ -136,24 +119,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e2e8e5',
     color: '#e2e8e5',
-    paddingVertical: 10,
-    margin: 20
+    marginLeft: 20,
+    marginTop: 5
   },
-  save: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    height: 40,
-    width: '100%',
-    backgroundColor: '#e2e8e5',
-    paddingVertical: 20,
-    height: '15%'
-},
-savetext: {
-    textAlign: 'center',
-    color: '#4d9280',
-    fontSize: 25
-},
+  
 buttonContainer: {
   position: 'absolute',
   bottom: 0,

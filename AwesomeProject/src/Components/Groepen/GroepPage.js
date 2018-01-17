@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import {List, ListItem, SearchBar} from 'react-native-elements';
 import I18n from 'react-native-i18n';
-import Vrienden from '../Vrienden/Vrienden';
+
 import { StackNavigator } from 'react-navigation';
 const util = require('util');
 export default class GroepPage extends React.Component {
@@ -16,6 +16,7 @@ export default class GroepPage extends React.Component {
             groupname: this.props.navigation.state.params.groupname,
             rekeningName: '',
         }
+        
     }
 
     render() {
@@ -23,7 +24,7 @@ export default class GroepPage extends React.Component {
         var { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
-           
+           <Text style={styles.welcomeButtonText}>{I18n.t('greet')} {this.state.groupname.charAt(0).toUpperCase() + this.state.groupname.slice(1)}</Text> 
             <View style={styles.groupList}>
                 <List automaticallyAdjustContentInsets={false}>
             <FlatList 
@@ -40,11 +41,11 @@ export default class GroepPage extends React.Component {
                   />
                 )}
                 keyExtractor={item => item.Username}
-                ListHeaderComponent={this.renderHeader}
+                //ListHeaderComponent={this.renderHeader}
                 />
                 </List>
                 </View>
-                <TouchableOpacity style={styles.addGroup} onPress={() => navigate("Rekening", {})}>
+                <TouchableOpacity style={styles.addGroup} onPress={() => navigate("Rekening", {groupname: this.state.groupname})}>
                     <Text style={styles.addGroupText}>Voeg een nieuwe rekening toe </Text>
                 </TouchableOpacity>
 

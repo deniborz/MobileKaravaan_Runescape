@@ -10,6 +10,7 @@ const util = require('util');
 export default class Overzicht extends React.Component {
   static navigationOptions = {
     title: "Overzicht",
+    headerStyle: {marginTop: -100}
   };
   constructor(props){
     super(props);
@@ -28,7 +29,7 @@ export default class Overzicht extends React.Component {
     return (
       <View style={styles.container}>
       
-        <Text style={styles.welcomeButtonText}>{I18n.t('greet')} {this.state.username}</Text> 
+        <Text style={styles.welcomeButtonText}>{I18n.t('greet')} {this.state.username.charAt(0).toUpperCase() + this.state.username.slice(1)}</Text> 
         <TouchableOpacity style={styles.navigationButton} onPress={() => navigate("Groep", {username : this.state.username})}>
           <Text style={styles.navigationButtonText}>{I18n.t('groups')}</Text>
         </TouchableOpacity>

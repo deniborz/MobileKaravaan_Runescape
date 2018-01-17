@@ -10,6 +10,7 @@ const backAction = NavigationActions.back({key: 'Vrienden'});
 export default class AddVriend extends React.Component {
     static navigationOptions = {
         title: 'Add Friend',
+        headerStyle: {marginTop: -100}
     };
     constructor(props){
         super(props);
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
         fontWeight: '500'
     },
     addFriendInput: {
-        marginTop: 200,
+        marginTop: 280,
         height: 40,
         backgroundColor: 'rgba(255,255,255,0.3)',
         marginBottom: 15,

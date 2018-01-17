@@ -11,6 +11,7 @@ const util = require('util');
 export default class NewGroep extends React.Component {
   static navigationOptions = {
     title: 'NewGroep',
+    headerStyle: {marginTop: -100}
   };
 
   
@@ -110,7 +111,7 @@ addGroep = () =>{
 
 addFriendToGroupFunction = () =>{
   let newFriend = {
-      name: this.state.groupname,    
+      name: this.state.username,    
   };
   if(this.state.groupname == ''){
     alert("Geen groepsnaam opgegeven.");
@@ -138,7 +139,7 @@ render() {
     return (
         <View style={styles.container}>
           
-                <Text style={styles.labels}>Groepsnaam</Text>
+                <Text style={styles.labels2}>Groepsnaam</Text>
                 <TextInput style={styles.input}
                     placeholder="Groepsnaam"
                     placeholderTextColor='#e2e8e5'
@@ -164,7 +165,7 @@ render() {
                                 component={TouchableHighlight}
                                 title={item.Username}
                                 avatar={{uri: 'http://www.freeiconspng.com/uploads/profile-icon-9.png'}}
-                                onPress={() => navigate("GroepPage", {groupname: this.state.groupname})} 
+                                onPress={this.addFriendToGroupFunction} 
                           />
                         )}
                         keyExtractor={item => item.Groupname}
@@ -283,6 +284,12 @@ labels: {
     width: '80%',
     color: '#e2e8e5'
 },
+labels2: {
+  marginTop: 100,
+  marginBottom: 5,
+  width: '80%',
+  color: '#e2e8e5'
+},
 input: {
   height: 40,
   backgroundColor: 'rgba(255,255,255,0.3)',
@@ -308,14 +315,15 @@ buttonText: {
   fontSize: 25
 },
 picker: {
-  width: '80%',
+  width: '100%',
   backgroundColor: 'rgba(255,255,255,0.3)',
   borderRadius: 5,
   borderWidth: 1,
   borderColor: '#e2e8e5',
   color: '#e2e8e5',
   paddingVertical: 10,
-  margin: 20
+  marginRight: '20%',
+  alignItems: 'center'
 },
 friendList: {
   width: '80%',
