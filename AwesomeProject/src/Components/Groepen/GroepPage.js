@@ -23,6 +23,7 @@ export default class GroepPage extends React.Component {
         var { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
+           
             <View style={styles.groupList}>
                 <List automaticallyAdjustContentInsets={false}>
             <FlatList 

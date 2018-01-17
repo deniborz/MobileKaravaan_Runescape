@@ -94,6 +94,8 @@ export default class Settings extends React.Component {
           <Picker.Item label="Dollar ($)" value="Dollar ($)" />
           <Picker.Item label="Pound (£)" value="Pound (£)" />
         </Picker>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("Overzicht", {username : this.state.username})}>
+                <Text style={styles.buttonText}>Save</Text></TouchableOpacity>
       </View>
     )
   }
@@ -151,5 +153,20 @@ savetext: {
     textAlign: 'center',
     color: '#4d9280',
     fontSize: 25
+},
+buttonContainer: {
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  height: 50,
+  width: '100%',
+  backgroundColor: '#e2e8e5',
+  paddingVertical: 25,
+  height: '15%'
+},
+buttonText: {
+  textAlign: 'center',
+  color: '#4d9280',
+  fontSize: 25
 }
 });
