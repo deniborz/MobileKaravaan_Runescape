@@ -30,7 +30,7 @@ export default class Settings extends React.Component {
           if (this.state.language == 'nl') {
             this.setState({ languageFull: "Nederlands" });
           } else if (this.state.language == 'fr') {
-            this.setState({ languageFull: "français"})
+            this.setState({ languageFull: "Français"})
           } else if (this.state.language == 'en') {
             this.setState({ languageFull: "English"})
           } else {
@@ -56,11 +56,11 @@ export default class Settings extends React.Component {
             I18n.locale = activeUser.Language;
             this.setState({ language: activeUser.Language });
             this.setState({ languageFull: "Nederlands" });
-          } else if (language == 'français') {
+          } else if (language == 'Français') {
             activeUser.Language = 'fr';
             I18n.locale = activeUser.Language;
             this.setState({ language: activeUser.Language });
-            this.setState({ languageFull: "français" });
+            this.setState({ languageFull: "Français" });
           } else if (language == 'English') {
             activeUser.Language = 'en';
             I18n.locale = activeUser.Language;
@@ -85,7 +85,7 @@ export default class Settings extends React.Component {
         <Text style={styles.label}>{I18n.t('lang')}</Text>
         <Picker selectedValue={this.state.languageFull} onValueChange={this.setLanguage} style={styles.picker}>
           <Picker.Item label="Nederlands" value="Nederlands" />
-          <Picker.Item label="français" value="français" />
+          <Picker.Item label="Français" value="Français" />
           <Picker.Item label="English" value="English" />
         </Picker>
         <Text style={styles.label}>{I18n.t('currency')}</Text>
