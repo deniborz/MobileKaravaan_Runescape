@@ -17,6 +17,7 @@ export default class Settings extends React.Component {
     this.state = {
       username: this.props.navigation.state.params.username,
       currency: '',
+      currencyFull: '',
       language: '',
       languageFull: ''
     }
@@ -38,12 +39,47 @@ export default class Settings extends React.Component {
             alert('fout');
           }
           this.setState({ currency: userData.Currency });
+          if (this.state.currency == 'EUR') {
+            this.setState({ currencyFull: "Euro" });
+          } else if (this.state.currency == 'USD') {
+            this.setState({ currencyFull: "Dollar"})
+          } else if (this.state.currency == 'GBP') {
+            this.setState({ currencyFull: "Pound"})
+          } else {
+            alert('fout');
+          }
       });
     }
   }
 
-  updateCurrency = (currency) => {
-    this.setState({ currency: currency });
+  setCurrency = (currency) => {
+    if (AsyncStorage.getItem(this.state.username)) {
+      AsyncStorage.getItem(this.state.username)
+        .then((value) => {
+          const userData = JSON.parse(value);
+          const activeUser = userData;
+          if (currency == 'EUR') {
+            activeUser.Currency = 'EUR';
+            this.setState({ currency: activeUser.Currency });
+            this.setState({ currencyFull: "Euro" });
+          } else if (currency == 'USD') {
+            activeUser.Currency = 'USD';
+            this.setState({ currency: activeUser.Currency });
+            this.setState({ currencyFull: "Dollar" });
+          } else if (currency == 'GBP') {
+            activeUser.Currency = 'GBP';
+            this.setState({ currency: activeUser.Currency });
+            this.setState({ currencyFull: "Pound" });
+          } else {
+            alert('currency error');
+          }
+
+          AsyncStorage.setItem(activeUser.Username, JSON.stringify(userData), () => {
+            AsyncStorage.mergeItem(activeUser.Username, JSON.stringify(activeUser), () => {
+            });
+          });
+        });
+    }
   }
 
   setLanguage = (language) => {
@@ -90,10 +126,10 @@ export default class Settings extends React.Component {
           <Picker.Item label="English" value="English" />
         </Picker>
         <Text style={styles.label}>{I18n.t('currency')}</Text>
-        <Picker selectedValue={this.state.currency} onValueChange={this.updateCurrency} style={styles.picker}>
-          <Picker.Item label="Euro (€)" value="Euro (€)" />
-          <Picker.Item label="Dollar ($)" value="Dollar ($)" />
-          <Picker.Item label="Pound (£)" value="Pound (£)" />
+        <Picker selectedValue={this.state.currencyFull} onValueChange={this.setCurrency} style={styles.picker}>
+          <Picker.Item label="Euro" value="Euro" />
+          <Picker.Item label="Dollar" value="Dollar" />
+          <Picker.Item label="Pound" value="Pound" />
         </Picker>
         <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("Overzicht", {username : this.state.username})}>
                 <Text style={styles.buttonText}>Save</Text></TouchableOpacity>

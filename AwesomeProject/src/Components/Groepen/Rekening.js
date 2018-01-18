@@ -25,8 +25,53 @@ export default class Login extends React.Component {
     //headerStyle: {marginTop: -100}
   };
 
-  updateCurrency = (currency) => {
-    this.setState({ currency: currency });
+  componentWillMount() {
+    if (AsyncStorage.getItem(this.state.username)) {
+      AsyncStorage.getItem(this.state.username)
+        .then((value) => {
+          const userData = JSON.parse(value);
+          this.setState({ currency: userData.Currency });
+          if (this.state.currency == 'EUR') {
+            this.setState({ currencyFull: "Euro" });
+          } else if (this.state.currency == 'USD') {
+            this.setState({ currencyFull: "Dollar"})
+          } else if (this.state.currency == 'GBP') {
+            this.setState({ currencyFull: "Pound"})
+          } else {
+            alert('fout');
+          }
+      });
+    }
+  }
+  
+  setCurrency = (currency) => {
+    if (AsyncStorage.getItem(this.state.username)) {
+      AsyncStorage.getItem(this.state.username)
+        .then((value) => {
+          const userData = JSON.parse(value);
+          const activeUser = userData;
+          if (currency == 'Euro') {
+            activeUser.Currency = 'EUR';
+            this.setState({ currency: activeUser.Currency });
+            this.setState({ currencyFull: "Euro" });
+          } else if (currency == 'USD') {
+            activeUser.Currency = 'USD';
+            this.setState({ currency: activeUser.Currency });
+            this.setState({ currencyFull: "Dollar" });
+          } else if (currency == 'GBP') {
+            activeUser.Currency = 'GBP';
+            this.setState({ currency: activeUser.Currency });
+            this.setState({ currencyFull: "Pound" });
+          } else {
+            alert('currency error');
+          }
+
+          AsyncStorage.setItem(activeUser.Username, JSON.stringify(userData), () => {
+            AsyncStorage.mergeItem(activeUser.Username, JSON.stringify(activeUser), () => {
+            });
+          });
+        });
+    }
   }
 
   setWayOfSplit = (wayOfSplit) => {
@@ -121,10 +166,10 @@ addGroep = () =>{
                     onChangeText={(bedrag) => this.setState({bedrag})}
                     />
         <Text style={styles.labels}>Currency:</Text>
-            <Picker selectedValue={this.state.currency} onValueChange={this.updateCurrency} style={styles.picker}>
-            <Picker.Item label="Euro (€)" value="Euro (€)" />
-            <Picker.Item label="Dollar ($)" value="Dollar ($)" />
-            <Picker.Item label="Pound (£)" value="Pound (£)" />
+            <Picker selectedValue={this.state.currency} onValueChange={this.setCurrency} style={styles.picker}>
+            <Picker.Item label="Euro (€)" value="Euro" />
+            <Picker.Item label="Dollar ($)" value="Dollar" />
+            <Picker.Item label="Pound (£)" value="Pound" />
         </Picker>
         <Text style={styles.labels}>Date:</Text>
         <TextInput style={styles.input}
