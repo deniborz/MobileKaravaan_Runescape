@@ -255,14 +255,13 @@ buttonText: {
   fontSize: 25
 },
 picker: {
-  width: '100%',
+  width: '80%',
   backgroundColor: 'rgba(255,255,255,0.3)',
   borderRadius: 5,
   borderWidth: 1,
   borderColor: '#e2e8e5',
   color: '#e2e8e5',
   paddingVertical: 10,
-  marginRight: '20%',
   alignItems: 'center'
 },
 friendList: {
