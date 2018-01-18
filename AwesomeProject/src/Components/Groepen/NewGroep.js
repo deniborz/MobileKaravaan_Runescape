@@ -23,7 +23,7 @@ export default class NewGroep extends React.Component {
       groupname: '',
       rekening: '',
       currency: '',
-      vrienden: '',
+      vrienden: [],
       selectedVrienden: []
     }
   }
@@ -32,7 +32,7 @@ export default class NewGroep extends React.Component {
     this.ToonVrienden();
   }
 
-  onSelectedItemsChange = selectedVrienden => {
+  onSelectedItemsChange = selectedItems => {
     this.setState({ selectedVrienden });
   };
 
@@ -141,6 +141,30 @@ export default class NewGroep extends React.Component {
       });
     }
   }
+  renderHeader = () => {
+    return <SearchBar placeholder="Search user" lightTheme onChangeText={this.searchText} containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
+}
+
+searchText = (e) => {
+    const text = e.toLowerCase();
+    const data = this.state.vrienden;
+    const filteredName = data.filter((item) => {
+      return item.Username.toLowerCase().match(text)
+    });
+    if (!text || text === '') {
+      this.setState({
+        vrienden: this.state.vrienden
+      });
+    } else if (!Array.isArray(filteredName) && !filteredName.length) {
+      this.setState({
+        vrienden: []
+      });
+    } else if (Array.isArray(filteredName)) {
+      this.setState({
+        vrienden: filteredName
+      });
+    }
+}
 
   render() {
       var { navigate } = this.props.navigation;
@@ -155,27 +179,25 @@ export default class NewGroep extends React.Component {
               onChangeText={(groupname) => this.setState({groupname})}
             />
             <Text style={styles.labels}> Vrienden</Text>
-            <MultiSelect
-              hideTags
-              items={this.state.vrienden}
-              uniqueKey="username"
-              ref={(component) => { this.multiSelect = component }}
-              onSelectedItemsChange={this.onSelectedItemsChange}
-              selectedItems={selectedVrienden}
-              selectText="Pick Items"
-              searchInputPlaceholderText="Search Items..."
-              altFontFamily="ProximaNova-Light"
-              tagRemoveIconColor="#CCC"
-              tagBorderColor="#CCC"
-              tagTextColor="#CCC"
-              selectedItemTextColor="#CCC"
-              selectedItemIconColor="#CCC"
-              itemTextColor="#000"
-              searchInputStyle={{ color: '#CCC' }}
-              submitButtonColor="#CCC"
-              submitButtonText="Submit"
-            />
-            <View>{this.multiSelect.getSelectedItemsExt(selectedVrienden)}</View>
+            <View style={styles.friendList}>
+            <List automaticallyAdjustContentInsets={false}>
+                <FlatList
+                    data={this.state.vrienden}
+                    renderItem={({item}) => (
+                        <ListItem
+                            containerStyle={{borderBottomColor: '#4d9280'}}
+                            roundAvatar
+                            title={item.Username}
+                            subtitle={item.Email}
+                            avatar={{uri: 'http://www.freeiconspng.com/uploads/profile-icon-9.png'}}
+                            />
+                    )}
+                    keyExtractor={item => item.Username}
+                    ListHeaderComponent={this.renderHeader}
+                />
+            </List>
+        </View>
+            
             <Text style={styles.labels}> Currencies</Text>
             <Picker selectedValue={this.state.currency} onValueChange={this.updateCurrency} style={styles.picker}>
               <Picker.Item label="Euro (€)" value="Euro (€)" />
