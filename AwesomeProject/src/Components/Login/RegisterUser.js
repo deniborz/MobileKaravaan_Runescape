@@ -18,7 +18,7 @@ export default class Settings extends React.Component {
             password: '',
             vrienden: [],
             language: 'en',
-            currency: 'Euro',
+            currency: 'EUR',
             groepen: []
         } 
     }
