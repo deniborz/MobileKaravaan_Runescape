@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Alert, TouchableOpacity, TextInput, FlatList, ScrollView, AsyncStorage, KeyboardAvoidingView, Picker, TouchableHighlight } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import {List, ListItem, SearchBar} from 'react-native-elements';
+import MultiSelect from 'react-native-multiple-select';
 import Groepdes from './Groepdes';
 import Groepen from '../Groepen/Groepen';
 import I18n from 'react-native-i18n';
@@ -9,66 +10,79 @@ import I18n from 'react-native-i18n';
 const util = require('util');
 
 export default class NewGroep extends React.Component {
+  
   static navigationOptions = {
     title: 'NewGroep',
     headerStyle: {marginTop: -100}
   };
-
   
   constructor(props) {
-         super(props)
-         this.state = {
-         groupname: '',
-         rekening: '',
-         currency: '',
-         vrienden: [],
-         username: this.props.navigation.state.params.username
-               }
-               this.setActiveUser();
+    super(props)
+    this.state = {
+      username: this.props.navigation.state.params.username,
+      groupname: '',
+      rekening: '',
+      currency: '',
+      vrienden: '',
+      selectedVrienden: []
+    }
   }
   
   componentWillMount() {
     this.ToonVrienden();
-}
-  
-getActiveUser = () => { 
-  if (AsyncStorage.getItem('activeUser')) {
-   AsyncStorage.getItem('activeUser')
-   .then((value) => {
-        const user = JSON.parse(value);});
   }
-  return user;
-}
 
-GroupRegistrationFunction = () =>{
+  onSelectedItemsChange = selectedVrienden => {
+    this.setState({ selectedVrienden });
+  };
+
+  updateCurrency = (currency) => {
+    this.setState({ currency: currency });
+  }
+  
+  ToonVrienden = () => {
+    if (AsyncStorage.getItem(this.state.username)) {
+      AsyncStorage.getItem(this.state.username)
+      .then((value) => {
+        let userData = JSON.parse(value);
+        if(userData == null) {
+          alert("Er is een probleem met de actieve gebruiker.");
+        }
+        const vrienden = userData.Vrienden;
+        console.log(vrienden);
+        if(vrienden[0] != null) {
+          this.setState({vrienden: vrienden});
+        }
+      });
+    }
+  }
+
+  GroupRegistrationFunction = () => {
     let newGroup = {
-        Groupname: this.state.groupname,
-        Rekening: this.state.rekening,
-        Currency: this.state.currency,
-        Vrienden: this.state.vrienden
-        
+      Groupname: this.state.groupname,
+      Rekening: this.state.rekening,
+      Currency: this.state.currency,
+      Vrienden: this.state.vrienden   
     };
-    if(this.state.groupname == ''){
+    if(this.state.groupname == '') {
       alert("Geen groepsnaam opgegeven.");
     }
-    else{
-    AsyncStorage.getItem(this.state.groupname)
-    .then((value) => {
-      const data = JSON.parse(value);
-      if (data == null) {
-        AsyncStorage.setItem(newGroup.Groupname, JSON.stringify(newGroup));
-        this.addGroep();
-        
+    else {
+      AsyncStorage.getItem(this.state.groupname)
+      .then((value) => {
+        const data = JSON.parse(value);
+        if (data == null) {
+          AsyncStorage.setItem(newGroup.Groupname, JSON.stringify(newGroup));
+          this.addGroep();
+        }
+        else {
+          alert('Groupname already exists');
+        }
+      });
     }
-      else {
-        alert('Groupname already exists');
-      }
-    });
+  }
 
-}
-}
-
-addGroep = () =>{
+  addGroep = () =>{
     if (AsyncStorage.getItem(this.state.groupname)) {
       AsyncStorage.getItem(this.state.groupname)
       .then((value) => {
@@ -78,198 +92,102 @@ addGroep = () =>{
         }
         else {
           let activeUser = this.state.username;
-                  AsyncStorage.getItem(activeUser).then((value) =>
-                  {
-                      const data3 = JSON.parse(value);
-                      const user = data3;
-                      let checkExists = false;
-                      for (const group of user.Groepen) {
-                          if(group.Groupname == this.state.groupname) {
-                              alert("Deze groep bestaat al");
-                              checkExists = true;
-                          }
-                      }
-                      if(!checkExists) {
-                          user.Groepen.push(data);
-                          AsyncStorage.setItem(activeUser, JSON.stringify(data3), () => {
-                              AsyncStorage.mergeItem(activeUser, JSON.stringify(user), () => {
-                                  AsyncStorage.getItem(activeUser, (err, result) => {
-                                      console.log(result);
-                                     
-                                  });
-                              });
-                          });
-                          this.props.navigation.navigate("Groep", {});
-                      }
-                  }
-                  )}
-                
-              }); 
+          AsyncStorage.getItem(activeUser).then((value) => {
+            const data3 = JSON.parse(value);
+            const user = data3;
+            let checkExists = false;
+            for (const group of user.Groepen) {
+              if(group.Groupname == this.state.groupname) {
+                alert("Deze groep bestaat al");
+                checkExists = true;
+              }
             }
-        
-      }         
+            if(!checkExists) {
+              user.Groepen.push(data);
+              AsyncStorage.setItem(activeUser, JSON.stringify(data3), () => {
+                AsyncStorage.mergeItem(activeUser, JSON.stringify(user), () => {
+                  AsyncStorage.getItem(activeUser, (err, result) => {
+                    console.log(result);                
+                  });
+                });
+              });
+              this.props.navigation.navigate("Groep", {});
+            }
+          })
+        }          
+      }); 
+    }      
+  }        
 
-addFriendToGroupFunction = () =>{
-  let newFriend = {
-      name: this.state.username,    
-  };
-  if(this.state.groupname == ''){
-    alert("Geen groepsnaam opgegeven.");
-  }
-  else{
-  AsyncStorage.getItem(this.state.groupname)
-  .then((value) => {
-    const data = JSON.parse(value);
-    if (data == null) {
-      AsyncStorage.setItem(newGroup.Groupname, JSON.stringify(newGroup));
-      this.addGroep();
-      
-  }
-    else {
-      alert('Groupname already exists');
+  addFriendToGroupFunction = () =>{
+    let newFriend = {
+        name: this.state.username,    
+    };
+    if(this.state.groupname == ''){
+      alert("Geen groepsnaam opgegeven.");
     }
-  });
-
-}
-}
-
-
-render() {
-    var { navigate } = this.props.navigation;
-    return (
-        <View style={styles.container}>
+    else{
+      AsyncStorage.getItem(this.state.groupname)
+      .then((value) => {
+        const data = JSON.parse(value);
+        if (data == null) {
+          AsyncStorage.setItem(newGroup.Groupname, JSON.stringify(newGroup));
+          this.addGroep();
           
-                <Text style={styles.labels2}>Groepsnaam</Text>
-                <TextInput style={styles.input}
-                    placeholder="Groepsnaam"
-                    placeholderTextColor='#e2e8e5'
-                    underlineColorAndroid="transparent"
-                    onChangeText={(groupname) => this.setState({groupname})}
-                    />
-                    <Text style={styles.labels}> Vrienden</Text>
-                    <TextInput style={styles.input}
-                          placeholder="Search user"
-                          placeholderTextColor='#e2e8e5'
-                          underlineColorAndroid="transparent"
-                          onPress={this.addSearchbar}
-                          onChangeText={this.addSearchbar}
-                          />
-                          <View style={styles.friendList}>
-                    <List automaticallyAdjustContentInsets={false}>
-                    <FlatList 
-                        data={this.state.vrienden}
-                        renderItem={({item}) =>(
-                          <ListItem 
-                                containerStyle={{borderBottomColor: '#4d9280'}}
-                                roundAvatar
-                                component={TouchableHighlight}
-                                title={item.Username}
-                                avatar={{uri: 'http://www.freeiconspng.com/uploads/profile-icon-9.png'}}
-                                onPress={this.addFriendToGroupFunction} 
-                          />
-                        )}
-                        keyExtractor={item => item.Groupname}
-                        ListHeaderComponent={this.renderHeader}
-                        />
-                        </List>
-                    <Text style={styles.labels}> Currencies</Text>
-                    <Picker selectedValue={this.state.currency} onValueChange={this.updateCurrency} style={styles.picker}>
-          <Picker.Item label="Euro (€)" value="Euro (€)" />
-          <Picker.Item label="Dollar ($)" value="Dollar ($)" />
-          <Picker.Item label="Pound (£)" value="Pound (£)" />
-        </Picker>
-
-          </View>
-
-            <TouchableOpacity style={styles.buttonContainer} onPress={this.GroupRegistrationFunction}>
-                <Text style={styles.buttonText}>Maak groep</Text></TouchableOpacity>
-
-        </View >
-    );
-}
-updateCurrency = (currency) => {
-  this.setState({ currency: currency });
-}
-
-setActiveUser = () => {
-  if (AsyncStorage.getItem('activeUser')) {
-      AsyncStorage.getItem('activeUser')
-      .then((value) => {
-          const data = JSON.parse(value);
-          if(data == null) {
-          alert("De gebruikersnaam/wachtwoord is ongeldig.");
-          }
-          else {
-            this.setState({username: data.User});
-          }
+      }
+        else {
+          alert('Groupname already exists');
+        }
       });
     }
-}
-
-ToonVrienden = () => {
-  if (AsyncStorage.getItem(this.state.username)) {
-      AsyncStorage.getItem(this.state.username)
-      .then((value) => {
-          let userData = JSON.parse(value);
-          if(userData == null) {
-              alert("Er is een probleem met de actieve gebruiker.");
-          }
-          const vrienden = userData.Vrienden;
-          console.log(vrienden);
-          if(vrienden[0] != null) {
-              this.setState({vrienden: vrienden});
-              this.setState({alleVrienden: vrienden});
-          }
-      });
-  }
-}
-
-addSearchbar = () => {
-  return <TextInput style={styles.input}
-      placeholder="Search user"
-      placeholderTextColor='#3d7ca9'
-      underlineColorAndroid="transparent"
-      onChangeText={this.addSearchbar}
-      />
   }
 
-searchText = (e) => {
-  const text = e.toLowerCase();
-  const data = this.getVrienden();
-  const filteredName = data.filter((item) => {
-    return item.Username.toLowerCase().match(text)
-  });
-  if (!text || text === '') {
-    this.setState({
-      vrienden: data
-    });
-  } else if (!Array.isArray(filteredName) && !filteredName.length) {
-    this.setState({
-      vrienden: []
-    });
-  } else if (Array.isArray(filteredName)) {
-    this.setState({
-      vrienden: filteredName
-    });
+  render() {
+      var { navigate } = this.props.navigation;
+      const { selectedVrienden } = this.state;
+      return (
+          <View style={styles.container}>
+            <Text style={styles.labels2}>Groepsnaam</Text>
+            <TextInput style={styles.input}
+              placeholder="Groepsnaam"
+              placeholderTextColor='#e2e8e5'
+              underlineColorAndroid="transparent"
+              onChangeText={(groupname) => this.setState({groupname})}
+            />
+            <Text style={styles.labels}> Vrienden</Text>
+            <MultiSelect
+              hideTags
+              items={this.state.vrienden}
+              uniqueKey="username"
+              ref={(component) => { this.multiSelect = component }}
+              onSelectedItemsChange={this.onSelectedItemsChange}
+              selectedItems={selectedVrienden}
+              selectText="Pick Items"
+              searchInputPlaceholderText="Search Items..."
+              altFontFamily="ProximaNova-Light"
+              tagRemoveIconColor="#CCC"
+              tagBorderColor="#CCC"
+              tagTextColor="#CCC"
+              selectedItemTextColor="#CCC"
+              selectedItemIconColor="#CCC"
+              itemTextColor="#000"
+              searchInputStyle={{ color: '#CCC' }}
+              submitButtonColor="#CCC"
+              submitButtonText="Submit"
+            />
+            <View>{this.multiSelect.getSelectedItemsExt(selectedVrienden)}</View>
+            <Text style={styles.labels}> Currencies</Text>
+            <Picker selectedValue={this.state.currency} onValueChange={this.updateCurrency} style={styles.picker}>
+              <Picker.Item label="Euro (€)" value="Euro (€)" />
+              <Picker.Item label="Dollar ($)" value="Dollar ($)" />
+              <Picker.Item label="Pound (£)" value="Pound (£)" />
+            </Picker>
+            <TouchableOpacity style={styles.buttonContainer} onPress={this.GroupRegistrationFunction}>
+              <Text style={styles.buttonText}>Maak groep</Text></TouchableOpacity>
+          </View >
+      );
   }
 }
-
-getVrienden = () => {
-  if (AsyncStorage.getItem(this.state.username)) {
-      AsyncStorage.getItem(this.state.username)
-      .then((value) => {
-          let userData = JSON.parse(value);
-          if(userData == null) {
-              alert("Er is een probleem met de actieve gebruiker.");
-          }
-          const vrienden = userData.Vrienden;
-          if(vrienden[0] != null) {
-              return vrienden;
-          }
-      });
-  }
-}
-}  
 
 const styles = StyleSheet.create({
 container: {

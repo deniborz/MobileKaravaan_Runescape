@@ -26,6 +26,7 @@ export default class Overzicht extends React.Component {
 
   render() {
     var { navigate } = this.props.navigation;
+    //this.forceUpdate();
     return (
       <View style={styles.container}>
       
