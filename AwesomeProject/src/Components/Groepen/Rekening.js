@@ -53,7 +53,7 @@ export default class Login extends React.Component {
           if (currency == 'Euro') {
             activeUser.Currency = 'EUR';
             this.setState({ currency: activeUser.Currency });
-            this.setState({ currencyFull: "Euro" });
+            this.setState({ currencyFull: "Euro" });  
           } else if (currency == 'Dollar') {
             activeUser.Currency = 'USD';
             this.setState({ currency: activeUser.Currency });

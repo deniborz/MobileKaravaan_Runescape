@@ -23,6 +23,7 @@ export default class NewGroep extends React.Component {
       groupname: '',
       rekening: '',
       currency: '',
+      currencyFull: '',
       vrienden: [],
       selectedVrienden: []
     }
@@ -36,8 +37,24 @@ export default class NewGroep extends React.Component {
     this.setState({ selectedVrienden });
   };
 
-  updateCurrency = (currency) => {
-    this.setState({ currency: currency });
+  updateCurrency = (selectedCurrency) => {
+
+    if (selectedCurrency == 'Euro') {
+      this.state.currency = 'EUR';
+      this.setState({ currencyFull: "Euro" });
+      alert(this.state.currency);
+    } else if (selectedCurrency == 'Dollar') {
+      this.state.currency = 'USD';
+      this.setState({ currencyFull: "Dollar" });
+      alert(this.state.currency);      
+    } else if (selectedCurrency == 'Pound') {
+      this.state.currency = 'GBP';
+      this.setState({ currencyFull: "Pound" });
+      alert(this.state.currency);      
+    } else {
+      alert('currency error');
+    }
+
   }
   
   ToonVrienden = () => {
@@ -119,7 +136,8 @@ export default class NewGroep extends React.Component {
     }      
   }        
 
-  addFriendToGroupFunction = () =>{
+  addFriendToGroupFunction = (vriend) =>{
+    alert(vriend);
     let newFriend = {
         name: this.state.username,    
     };
@@ -138,11 +156,17 @@ export default class NewGroep extends React.Component {
         else {
           alert('Groupname already exists');
         }
+        
+          this.setState({ 
+            vrienden: this.state.vrienden.concat([vriend])
+          })
+          data.Vrienden = this.state.vrienden;
       });
-    }
+    } 
+
   }
   renderHeader = () => {
-    return <SearchBar placeholder="Search user" lightTheme onChangeText={this.searchText} containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
+    return <SearchBar onBlur={this.addFriendToGroupFunction()} placeholder="Search user" lightTheme onChangeText={this.searchText} containerStyle={{backgroundColor: '#e2e8e5'}} inputStyle={{backgroundColor: '#e2e8e5'}}/>
 }
 
 searchText = (e) => {
@@ -199,10 +223,10 @@ searchText = (e) => {
         </View>
             
             <Text style={styles.labels}> Currencies</Text>
-            <Picker selectedValue={this.state.currency} onValueChange={this.updateCurrency} style={styles.picker}>
-              <Picker.Item label="Euro (€)" value="Euro (€)" />
-              <Picker.Item label="Dollar ($)" value="Dollar ($)" />
-              <Picker.Item label="Pound (£)" value="Pound (£)" />
+            <Picker selectedValue={this.state.currencyFull} onValueChange={this.updateCurrency} style={styles.picker}>
+              <Picker.Item label="Euro" value="Euro" />
+              <Picker.Item label="Dollar" value="Dollar" />
+              <Picker.Item label="Pound" value="Pound" />
             </Picker>
             <TouchableOpacity style={styles.buttonContainer} onPress={this.GroupRegistrationFunction}>
               <Text style={styles.buttonText}>Maak groep</Text></TouchableOpacity>
