@@ -54,11 +54,11 @@ export default class Login extends React.Component {
             activeUser.Currency = 'EUR';
             this.setState({ currency: activeUser.Currency });
             this.setState({ currencyFull: "Euro" });
-          } else if (currency == 'USD') {
+          } else if (currency == 'Dollar') {
             activeUser.Currency = 'USD';
             this.setState({ currency: activeUser.Currency });
             this.setState({ currencyFull: "Dollar" });
-          } else if (currency == 'GBP') {
+          } else if (currency == 'Pound') {
             activeUser.Currency = 'GBP';
             this.setState({ currency: activeUser.Currency });
             this.setState({ currencyFull: "Pound" });
@@ -167,9 +167,9 @@ addGroep = () =>{
                     />
         <Text style={styles.labels}>Currency:</Text>
             <Picker selectedValue={this.state.currency} onValueChange={this.setCurrency} style={styles.picker}>
-            <Picker.Item label="Euro (€)" value="Euro" />
-            <Picker.Item label="Dollar ($)" value="Dollar" />
-            <Picker.Item label="Pound (£)" value="Pound" />
+            <Picker.Item label="Euro" value="Euro" />
+            <Picker.Item label="Dollar" value="Dollar" />
+            <Picker.Item label="Pound" value="Pound" />
         </Picker>
         <Text style={styles.labels}>Date:</Text>
         <TextInput style={styles.input}

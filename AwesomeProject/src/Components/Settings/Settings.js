@@ -58,15 +58,15 @@ export default class Settings extends React.Component {
         .then((value) => {
           const userData = JSON.parse(value);
           const activeUser = userData;
-          if (currency == 'EUR') {
+          if (currency == 'Euro') {
             activeUser.Currency = 'EUR';
             this.setState({ currency: activeUser.Currency });
             this.setState({ currencyFull: "Euro" });
-          } else if (currency == 'USD') {
+          } else if (currency == 'Dollar') {
             activeUser.Currency = 'USD';
             this.setState({ currency: activeUser.Currency });
             this.setState({ currencyFull: "Dollar" });
-          } else if (currency == 'GBP') {
+          } else if (currency == 'Pound') {
             activeUser.Currency = 'GBP';
             this.setState({ currency: activeUser.Currency });
             this.setState({ currencyFull: "Pound" });
@@ -74,6 +74,7 @@ export default class Settings extends React.Component {
             alert('currency error');
           }
 
+          alert(activeUser.Currency);
           AsyncStorage.setItem(activeUser.Username, JSON.stringify(userData), () => {
             AsyncStorage.mergeItem(activeUser.Username, JSON.stringify(activeUser), () => {
             });
