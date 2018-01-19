@@ -9,7 +9,7 @@ const util = require('util');
 export default class Settings extends React.Component {
   static navigationOptions = {
     title: 'Settings',
-    
+    headerStyle: {marginTop: -100}
   };
 
   constructor(props) {
@@ -36,7 +36,7 @@ export default class Settings extends React.Component {
           } else if (this.state.language == 'en') {
             this.setState({ languageFull: "English"})
           } else {
-            alert('fout');
+            //alert('fout');
           }
           this.setState({ currency: userData.Currency });
           if (this.state.currency == 'EUR') {
@@ -46,7 +46,7 @@ export default class Settings extends React.Component {
           } else if (this.state.currency == 'GBP') {
             this.setState({ currencyFull: "Pound"})
           } else {
-            alert('fout');
+           // alert('fout');
           }
       });
     }
@@ -71,10 +71,10 @@ export default class Settings extends React.Component {
             this.setState({ currency: activeUser.Currency });
             this.setState({ currencyFull: "Pound" });
           } else {
-            alert('currency error');
+           // alert('currency error');
           }
 
-          alert(activeUser.Currency);
+          //alert(activeUser.Currency);
           AsyncStorage.setItem(activeUser.Username, JSON.stringify(userData), () => {
             AsyncStorage.mergeItem(activeUser.Username, JSON.stringify(activeUser), () => {
             });
@@ -105,7 +105,7 @@ export default class Settings extends React.Component {
             this.setState({ language: activeUser.Language });
             this.setState({ languageFull: "English" });
           } else {
-            alert('Language error');
+            //alert('Language error');
           }
 
           AsyncStorage.setItem(activeUser.Username, JSON.stringify(userData), () => {
@@ -120,6 +120,7 @@ export default class Settings extends React.Component {
     var { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
+        <View style={styles.pushdown}>
         <Text style={styles.label}>{I18n.t('lang')}</Text>
         <Picker selectedValue={this.state.languageFull} onValueChange={this.setLanguage} style={styles.picker}>
           <Picker.Item label="Nederlands" value="Nederlands" />
@@ -132,6 +133,7 @@ export default class Settings extends React.Component {
           <Picker.Item label="Dollar" value="Dollar" />
           <Picker.Item label="Pound" value="Pound" />
         </Picker>
+        </View>
         <TouchableOpacity style={styles.buttonContainer} onPress={() => navigate("Overzicht", {username : this.state.username})}>
                 <Text style={styles.buttonText}>Save</Text></TouchableOpacity>
       </View>
@@ -143,6 +145,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#4d9280',
+  },
+  pushdown: {
+    marginTop: 100
   },
   label: {
     color: '#e2e8e5',

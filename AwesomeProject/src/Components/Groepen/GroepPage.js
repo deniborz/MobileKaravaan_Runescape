@@ -37,7 +37,7 @@ export default class GroepPage extends React.Component {
                         title={item.Username}
                         title={item.Email}
                         avatar={{uri: 'http://www.freeiconspng.com/uploads/profile-icon-9.png'}}
-                        onPress={() => navigate("Rekening", {name: this.state.rekeningName})} 
+                        onPress={() => navigate("Rekening", {rekeningname: this.state.rekeningName, groupname: this.state.groupname})} 
                   />
                 )}
                 keyExtractor={item => item.Username}
@@ -45,7 +45,7 @@ export default class GroepPage extends React.Component {
                 />
                 </List>
                 </View>
-                <TouchableOpacity style={styles.addGroup} onPress={() => navigate("Rekening", {groupname: this.state.groupname})}>
+                <TouchableOpacity style={styles.addGroup} onPress={() => navigate("newRekening", {groupname: this.state.groupname})}>
                     <Text style={styles.addGroupText}>Voeg een nieuwe rekening toe </Text>
                 </TouchableOpacity>
 
